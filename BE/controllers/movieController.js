@@ -20,6 +20,18 @@ export const getAllMovies = async (req, res) => {
   }
 };
 
+//get movie detail
+export const getMovieDetails = async(req,res) =>{
+  try {
+    const movieName = req.params.name;
+    const imdbID = String(req.params.id);
+    const movies = await Movie.find({imdbID});
+    return res.json(movies);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 //get few movies
 export const getFewMovies = async (req, res) => {
   try {
