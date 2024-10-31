@@ -1,0 +1,114 @@
+.recommendations-section {
+    margin-left: 60px;
+    padding: 20px;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.heading h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.see-all-link {
+    color: #e50914;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 90px;
+}
+
+.recommendations-list {
+    display: flex;
+    overflow-x: auto;
+    padding-top: 10px;
+    gap: 46px; /* Use gap instead of margin for better spacing */
+}
+
+.movie-card, .event-card {
+    width: 230px;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px; /* Consistent border radius for cards */
+}
+
+.movie-card img, .event-card img {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+.movie-info, .event-info {
+    padding: 10px;
+}
+
+.movie-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #555;
+}
+
+.like-icon,
+.star-icon {
+    color: #e50914;
+}
+
+mat-card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+mat-card-subtitle {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .recommendations-section {
+        margin-left: 30px;
+    }
+    .see-all-link {
+        margin-right: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heading h3 {
+        font-size: 20px;
+    }
+    .see-all-link {
+        font-size: 12px;
+        margin-right: 20px;
+    }
+    .movie-card, .event-card {
+        width: 180px;
+    }
+    .movie-card img, .event-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heading h3 {
+        font-size: 18px;
+    }
+    .see-all-link {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .movie-card, .event-card {
+        width: 150px;
+    }
+    .movie-card img, .event-card img {
+        height: 180px;
+    }
+}

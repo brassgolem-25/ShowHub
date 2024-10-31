@@ -1,0 +1,17 @@
+.tabs-container {
+    display: flex;
+    justify-content: start;
+    background-color: #f5f5f5;
+    padding: 10px 0;
+  }
+  
+  .tabs-container a {
+    color: #333;
+    font-weight: 420;
+    margin-left: 10px;
+    text-decoration: none;
+  }
+
+  .tabs{
+    margin-left: 40px;
+  }

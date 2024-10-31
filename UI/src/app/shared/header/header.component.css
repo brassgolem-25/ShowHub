@@ -1,0 +1,23 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 50px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e50914; /* Customize color */
+}
+
+.search-bar {
+  width: 60%;
+  height: 56px;
+}
+
+.location {
+  color: #333;
+}
