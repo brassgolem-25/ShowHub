@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../shared/types/movie';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,6 @@ export class MovieService {
     return this.http.get<Movie[]>('http://localhost:3000/api/movies/all');
   }
 
-  getFilteredMovies(filterArr:string[]){
-    return this.movieObservable.pipe().subscribe
+  getFilteredMovies(selectedLanguages:string[],selectedGenres:string[]){
   }
 }

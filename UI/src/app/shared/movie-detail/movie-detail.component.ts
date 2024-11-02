@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-detail',
@@ -21,12 +22,14 @@ export class MovieDetailComponent implements OnInit {
   selectedFormats: string[] = [];
   filteredMovies: Movie[] = [];
 
-  constructor(private ms: MovieService) {
-
+  constructor(private ms: MovieService,private route:ActivatedRoute,private router: Router) {
+    console.log(router)
     ms.getAllMovies().subscribe((moviesArr: Movie[]) => {
       this.movies = moviesArr;
       this.loading = false;
     })
+
+    console.log(router);
 
   }
 
@@ -51,12 +54,18 @@ export class MovieDetailComponent implements OnInit {
     '3D SCREEN X', 'IMAX 2D', 'IMAX 3D'
   ];
 
+
+
   toggleLanguage(language:string){
+
     if(this.selectedLanguages.includes(language)){
       this.selectedLanguages.splice(this.selectedLanguages.indexOf(language),1);
     }else {
       this.selectedLanguages.push(language);
     }
+    const languageQuery = this.selectedLanguages.join(',');
+    this.router.navigate(['/explore/movies'],{queryParams: {languages:languageQuery}})
+
   }
 
   toggleGenre(genre:string){
@@ -68,7 +77,10 @@ export class MovieDetailComponent implements OnInit {
   }
   
   clearFilter(filterType:string){
-    if(filterType == 'langugae') {this.selectedLanguages = [];}
+    if(filterType == 'language') {
+      this.selectedLanguages = [];
+      this.router.navigate(['/explore/movies']);
+    }
     else if(filterType == 'format') {this.selectedFormats = []}
     else {this.selectedGenres = []}
   
@@ -80,6 +92,12 @@ export class MovieDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.route.queryParamMap.subscribe(params => {
+      console.log(params.get('languages')?.split(','));
+      const languageQuery = params.get('languages')?.split(',');
+      this.selectedLanguages = languageQuery ? languageQuery:[];
+    })
 
   }
 }
