@@ -1,8 +1,8 @@
-<mat-card class="carousel-card">
-    <img mat-card-image src="assets/promoted-movie.jpg" alt="Promoted Movie">
-    <mat-card-content>
-      <h3>Promoted Movie Title</h3>
-      <p>Short description of the movie...</p>
-    </mat-card-content>
-  </mat-card>
+<div class="carousel">
+  <div class="carousel-slide" *ngFor="let slide of slides; let i = index" [ngClass]="{'active': i === currentSlide}">
+    <img [src]="slide.img" [alt]="slide.alt" class="slide-image">
+  </div>
   
+  <button (click)="prevSlide()" class="carousel-button prev">❮</button>
+  <button (click)="nextSlide()" class="carousel-button next">❯</button>
+</div>

@@ -3,20 +3,16 @@
     <div class="recommendations-section">
         <div class="heading">
             <h3>Recommended Movies</h3>
-            <a href="#" class="see-all-link">See All ›</a>
+            <a routerLink="/explore/movies" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
             <mat-card class="movie-card" *ngFor="let movie of movies">
-                <img mat-card-image [src]="movie.image" alt="{{ movie.title }}" />
+                <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" />
                 <div class="movie-info">
                     <div class="movie-stats">
-                        <ng-container *ngIf="movie.likes">
-                            <span class="like-icon">👍</span> {{ movie.likes }} Likes
+                        <ng-container *ngIf="movie.imdbRating">
+                            <span class="star-icon">⭐</span> {{ movie.imdbRating }} / 10
                         </ng-container>
-                        <ng-container *ngIf="movie.rating">
-                            <span class="star-icon">⭐</span> {{ movie.rating }} / 10
-                        </ng-container>
-                        <span>{{ movie.votes }} Votes</span>
                     </div>
                     <mat-card-title>{{ movie.title }}</mat-card-title>
                     <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>
@@ -35,10 +31,10 @@
             <!-- Event Cards -->
             <mat-card *ngFor="let event of events">
                 <div class="event-card">
-                    <img [src]="event.image" [alt]="event.title">
+                    <img mat-card-image [src]="event.poster" [alt]="event.title">
                     <div class="event-info">
                         <mat-card-title>{{ event.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ event.date }}</mat-card-subtitle>
+                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
                     </div>
                 </div>
             </mat-card>
@@ -54,10 +50,10 @@
         <div class="recommendations-list">
             <mat-card *ngFor="let game of gameEvents">
                 <div class="event-card">
-                    <img [src]="game.image" [alt]="game.title">
+                    <img mat-card-image [src]="game.poster" [alt]="game.title">
                     <div class="event-info">
                         <mat-card-title>{{ game.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ game.date }}</mat-card-subtitle>
+                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
                     </div>
                 </div>
             </mat-card>
@@ -73,10 +69,10 @@
         <div class="recommendations-list">
             <mat-card *ngFor="let e of funEvents">
                 <div class="event-card">
-                    <img [src]="e.image" [alt]="e.title">
+                    <img mat-card-image [src]="e.poster" [alt]="e.title">
                     <div class="event-info">
                         <mat-card-title>{{ e.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ e.date }}</mat-card-subtitle>
+                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
                     </div>
                 </div>
             </mat-card>

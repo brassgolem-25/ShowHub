@@ -1,1 +1,58 @@
-<p>movie-detail works!</p>
+<app-generic-header></app-generic-header>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="!loading" class="movie-container">
+    <!-- Filter Section -->
+    <div class="filters">
+      <div class="filter-group">
+        <h3>Languages</h3>
+        <div class="filter-options">
+          <button [ngStyle]="{'background-color': selectedLanguages.includes(language) ? '#f14c4c' : '#fff'}" *ngFor="let language of languages" (click)="toggleLanguage(language)">{{ language }}</button>
+        </div>
+        <button class="clear" (click)="clearFilter('language')">Clear</button>
+      </div>
+  
+      <div class="filter-group">
+        <h3>Genres</h3>
+        <div class="filter-options">
+          <button [ngStyle]="{'background-color': selectedGenres.includes(genre) ? '#f14c4c' : '#fff'}" *ngFor="let genre of genres" (click)="toggleGenre(genre)">{{ genre }}</button>
+        </div>
+        <button class="clear" (click)="clearFilter('genre')">Clear</button>
+      </div>
+  
+      <div class="filter-group">
+        <h3>Format</h3>
+        <div class="filter-options">
+          <button [ngStyle]="{'background-color': selectedFormats.includes(format) ? '#f14c4c' : '#fff'}" *ngFor="let format of formats" (click)="toggleFormat(format)">{{ format }}</button>
+        </div>
+        <button class="clear" (click)="clearFilter('format')">Clear</button>
+      </div>
+    </div>
+  
+    <!-- Movies Section -->
+    <div class="movies">
+      <h2>Movies In Mumbai</h2>
+      <div class="movie-filters">
+        <button [ngStyle]="{'background-color': selectedLanguages.includes(language) ? '#f14c4c' : '#fff'}" *ngFor="let language of languages" (click)="toggleLanguage(language)">{{ language }}</button>
+      </div>
+  
+      <div class="coming-soon">
+        <h3>Coming Soon</h3>
+        <button class="explore">Explore Upcoming Movies</button>
+      </div>
+  
+      <!-- Movie Cards -->
+      <div class="movie-grid">
+        <div *ngFor="let movie of movies" class="movie-card">
+          <img [src]="movie.poster" alt="Movie Poster" />
+          <div class="movie-details">
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.language }}</p>
+            <div class="movie-ratings">
+                <span><span class="star-icon">⭐</span> {{ movie.imdbRating }} / 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
