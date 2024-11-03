@@ -22,6 +22,13 @@ export class MovieService {
     return this.http.get<Movie[]>('http://localhost:3000/api/movies/all');
   }
 
-  getFilteredMovies(selectedLanguages:string[],selectedGenres:string[]){
+  getFilteredMovies(selectedLanguages:string[] | undefined,selectedGenres:string[] | undefined){
+    return this.movieObservable.pipe(map((movieArr : Movie[])=>{
+        return movieArr.filter((movie: Movie)=>{
+          const isLanguageSelected = selectedLanguages?.length === 0 || selectedLanguages?.includes(movie.language); 
+          const isGenreSelected = selectedGenres?.length === 0 || selectedGenres?.includes(movie.genre); 
+          return isLanguageSelected && isGenreSelected;
+        })
+    }))
   }
 }

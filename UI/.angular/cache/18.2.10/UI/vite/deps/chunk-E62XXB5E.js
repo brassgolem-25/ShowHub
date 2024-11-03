@@ -1,15 +1,17 @@
 import {
   Injectable,
   NgZone,
+  inject,
+  setClassMetadata,
+  ɵɵdefineInjectable
+} from "./chunk-FDUYSLZ7.js";
+import {
   Observable,
   Subject,
   filter,
-  inject,
-  setClassMetadata,
   shareReplay,
-  takeUntil,
-  ɵɵdefineInjectable
-} from "./chunk-K6NSBM6S.js";
+  takeUntil
+} from "./chunk-PF6LNL77.js";
 
 // node_modules/@angular/cdk/fesm2022/observers/private.mjs
 var loopLimitExceededErrorHandler = (e) => {
@@ -123,4 +125,4 @@ var SharedResizeObserver = class _SharedResizeObserver {
 export {
   SharedResizeObserver
 };
-//# sourceMappingURL=chunk-KJ6XRD2T.js.map
+//# sourceMappingURL=chunk-E62XXB5E.js.map

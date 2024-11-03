@@ -43,7 +43,7 @@
       <!-- Movie Cards -->
       <div class="movie-grid">
         <div *ngFor="let movie of movies" class="movie-card">
-          <img [src]="movie.poster" alt="Movie Poster" />
+          <a [routerLink]="['/movies',movie.title,movie.imdbID]"><img [src]="movie.poster" alt="Movie Poster" /></a>
           <div class="movie-details">
             <h3>{{ movie.title }}</h3>
             <p>{{ movie.language }}</p>

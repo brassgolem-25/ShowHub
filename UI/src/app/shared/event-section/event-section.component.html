@@ -1,0 +1,58 @@
+<app-header></app-header>
+<app-tabs></app-tabs>
+<div class="movie-detail-container">
+    <div class="header">
+      <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="poster" />
+      <div class="details">
+        <h1>{{ movie.title }}</h1>
+        <p class="rating">{{ movie.imdbRating }} / 10</p>
+        <button class="rate-btn">Rate Now</button>
+        <div class="formats">2D</div>
+        <div class="languages">{{ movie.language }}</div>
+        <p class="duration">{{ movie.runtime }} | {{ movie.genre }} | {{ movie.released }}</p>
+        <button class="book-tickets">Book Tickets</button>
+      </div>
+    </div>
+  
+    <section class="about">
+      <h2>About the Movie</h2>
+      <p>{{ movie.plot }}</p>
+    </section>
+  
+    <section class="cast">
+      <h2>Cast</h2>
+      <div class="cast-grid">
+        <div *ngFor="let castMember of movieCast">
+          <img [src]="movieCastImg(castMember)" alt="{{ castMember }}" />
+          <p>{{ castMember }}</p>
+          <p>Actor</p>
+        </div>
+      </div>
+    </section>
+  
+    <section class="crew">
+      <h2>Crew</h2>
+      <div class="crew-grid">
+        <!-- <div *ngFor="let crewMember of movie.crew">
+          <img [src]="crewMember.image" alt="{{ crewMember.name }}" />
+          <p>{{ crewMember.name }}</p>
+        </div> -->
+      </div>
+    </section>
+  
+    <section class="reviews">
+      <h2>Top Reviews</h2>
+      <div class="review-tags">
+        <!-- <button *ngFor="let tag of movie.reviewTags">{{ tag }}</button> -->
+      </div>
+      <div class="review-list">
+        <p>Tushar</p>
+        <!-- <div *ngFor="let review of reviews">
+          <p>{{ review.user }}</p>
+          <p>{{ review.comment }}</p>
+          <p>{{ review.rating }}</p>
+        </div> -->
+      </div>
+    </section>
+  </div>
+  

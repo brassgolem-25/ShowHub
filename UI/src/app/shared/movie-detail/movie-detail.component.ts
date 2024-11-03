@@ -4,33 +4,29 @@ import { CommonModule } from '@angular/common';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [GenericHeaderComponent, CommonModule, LoadingSpinnerComponent],
+  imports: [GenericHeaderComponent, CommonModule, LoadingSpinnerComponent,RouterModule],
   templateUrl: './movie-detail.component.html',
   styleUrl: './movie-detail.component.css'
 })
 export class MovieDetailComponent implements OnInit {
   movies: Movie[] = [];
   loading: boolean = true;
-  clicked:boolean=false;
+  clicked: boolean = false;
   selectedLanguages: string[] = [];
   selectedGenres: string[] = [];
   selectedFormats: string[] = [];
   filteredMovies: Movie[] = [];
 
-  constructor(private ms: MovieService,private route:ActivatedRoute,private router: Router) {
-    console.log(router)
-    ms.getAllMovies().subscribe((moviesArr: Movie[]) => {
+  constructor(private mS: MovieService, private route: ActivatedRoute, private router: Router) {
+    mS.getAllMovies().subscribe((moviesArr: Movie[]) => {
       this.movies = moviesArr;
       this.loading = false;
     })
-
-    console.log(router);
-
   }
 
   languages: string[] = [
@@ -55,48 +51,98 @@ export class MovieDetailComponent implements OnInit {
   ];
 
 
+  //refactor the code later
+  toggleLanguage(language: string) {
 
-  toggleLanguage(language:string){
-
-    if(this.selectedLanguages.includes(language)){
-      this.selectedLanguages.splice(this.selectedLanguages.indexOf(language),1);
-    }else {
+    if (this.selectedLanguages.includes(language)) {
+      this.selectedLanguages.splice(this.selectedLanguages.indexOf(language), 1);
+    } else {
       this.selectedLanguages.push(language);
     }
     const languageQuery = this.selectedLanguages.join(',');
-    this.router.navigate(['/explore/movies'],{queryParams: {languages:languageQuery}})
-
+    if (this.selectedLanguages.length > 0) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { languages: languageQuery },
+        queryParamsHandling: 'merge'
+      })
+    }else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { languages: null },
+        queryParamsHandling: 'merge'
+      })
+    }
   }
 
-  toggleGenre(genre:string){
-    if(this.selectedGenres.includes(genre)){
-      this.selectedGenres.splice(this.selectedGenres.indexOf(genre),1)
-    }else {
+  toggleGenre(genre: string) {
+    if (this.selectedGenres.includes(genre)) {
+      this.selectedGenres.splice(this.selectedGenres.indexOf(genre), 1)
+    } else {
       this.selectedGenres.push(genre);
     }
-  }
-  
-  clearFilter(filterType:string){
-    if(filterType == 'language') {
-      this.selectedLanguages = [];
-      this.router.navigate(['/explore/movies']);
+    const genreQuery = this.selectedGenres.join(',');
+    if (this.selectedGenres.length > 0) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { genre: genreQuery },
+        queryParamsHandling: 'merge'
+      })
+    }else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { genre: null },
+        queryParamsHandling: 'merge'
+      })
     }
-    else if(filterType == 'format') {this.selectedFormats = []}
-    else {this.selectedGenres = []}
-  
   }
 
-  toggleFormat(format:string){
+  clearFilter(filterType: string) {
+    if (filterType == 'language') {
+      this.selectedLanguages = [];
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { languages: null },
+        queryParamsHandling: 'merge'
+      })
+    }
+    else if (filterType == 'format') {
+      //handdle later
+    }
+    else {
+      this.selectedGenres = []
+
+      this.selectedFormats = []
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { genre: null },
+        queryParamsHandling: 'merge'
+      })
+
+    }
+
+  }
+
+  toggleFormat(format: string) {
     //later on
   }
 
 
-  ngOnInit(): void {
+  ngOnInit() {
 
+    // route handling for persistent changes even after refreshing the URL
     this.route.queryParamMap.subscribe(params => {
-      console.log(params.get('languages')?.split(','));
-      const languageQuery = params.get('languages')?.split(',');
-      this.selectedLanguages = languageQuery ? languageQuery:[];
+      const languageQuery = params.get('languages')?.split(',') ?? [];
+      const genreQuery = params.get('genre')?.split(',') ?? [];
+      this.loading = true;
+      this.mS.getFilteredMovies(languageQuery, genreQuery).subscribe((data: any) => {
+        this.movies = data;
+        this.loading = false;
+      })
+
+      this.selectedLanguages = languageQuery ? languageQuery : [];
+      this.selectedGenres = genreQuery ? genreQuery : [];
+
     })
 
   }
