@@ -14,7 +14,7 @@ export const createTheater = async (req, res) => {
 // Get all Theaters
 export const getAllTheaters = async (req, res) => {
   try {
-    const theaters = await Theater.find();
+    const theaters = await Theater.find({},{_id:0,__v:0});
     return res.json(theaters);
   } catch (error) {
     return res.status(500).json({ message: error.message });

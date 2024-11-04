@@ -28,9 +28,7 @@ export const createShowtime = async (req, res) => {
 // Get all Theaters
 export const getAllShowtimes = async (req, res) => {
     try {
-        const showtimes = await Showtime.find()
-          .populate('imdbID', 'title')       // Populate movie title
-          .populate('theaterID', 'name');     // Populate theater name
+        const showtimes = await Showtime.find({},{_id:0,__v:0});
         res.status(200).json(showtimes);
       } catch (error) {
         res.status(500).json({ error: error.message });

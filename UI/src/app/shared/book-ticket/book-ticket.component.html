@@ -1,0 +1,62 @@
+<app-header></app-header>
+<app-tabs></app-tabs>
+<div class="movie-header">
+    <h2>{{ movie.title }} - {{ movie.language }}</h2>
+    <div class="genres">
+        <span *ngFor="let genre of movie.genres">{{ genre }}</span>
+    </div>
+</div>
+
+<hr class="divider-line">
+
+<div class="date-filter-section">
+    <button class="arrow-btn">&#x276E;</button>
+    <div class="dates" *ngFor="let date of dates;let i = index ">
+        <button [ngClass]="i==0 ? 'selected':''">{{date}}</button>
+    </div>
+    <button class="arrow-btn">&#x276F;</button>
+    
+    <div class="filters">
+        <select>
+            <option>Hindi - 2D</option>
+            <option>Hindi - 3D</option>
+            <!-- Other options -->
+        </select>
+        <select>
+            <option>Filter Sub Regions</option>
+            <!-- Other options -->
+        </select>
+        <select>
+            <option>Filter Price Range</option>
+            <!-- Other options -->
+        </select>
+        <select>
+            <option>Filter Show Timings</option>
+            <!-- Other options -->
+        </select>
+        <span class="search-icon">&#128269;</span> <!-- Search icon -->
+    </div>
+</div>
+
+
+<div class="theater-list">
+    <div class="theater-card" *ngFor="let theater of theaters">
+        <div class="theater-info">
+            <div class="theater-name">
+                {{ theater.name }}
+                <span class="info-icon">ℹ️</span>
+            </div>
+            <div class="features">
+                <span *ngFor="let feature of theater.features">{{ feature }}</span>
+            </div>
+            <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
+        </div>
+        <div class="showtimes">
+            <div *ngFor="let showtime of theater.showtimes" class="showtime-box"
+                [class.sold-out]="!showtime.seatsAvailable">
+                <span class="time">{{ showtime.time }}</span>
+                <span class="format">{{ showtime.format }}</span>
+            </div>
+        </div>
+    </div>
+</div>

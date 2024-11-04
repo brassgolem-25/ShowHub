@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from '../types/movie';
 import { HeaderComponent } from '../header/header.component';
 import { TabsComponent } from '../tabs/tabs.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-event-section',
   standalone: true,
-  imports: [CommonModule,HeaderComponent,TabsComponent],
+  imports: [CommonModule,HeaderComponent,TabsComponent,RouterModule],
   templateUrl: './event-section.component.html',
   styleUrl: './event-section.component.css'
 })
