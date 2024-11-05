@@ -26,7 +26,11 @@ export const getMovieDetails = async(req,res) =>{
     const movieName = req.params.name;
     const imdbID = String(req.params.id);
     const movies = await Movie.find({imdbID},{_id:0,__v:0});
-    return res.json(movies);
+    if(movies.length == 0) return res.json({message:"No Movie Found with imdbID"});
+    if(movies[0].title===movieName){
+      return res.json(movies);
+    }
+    return res.json({message:"Incorrect MovieName"});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
