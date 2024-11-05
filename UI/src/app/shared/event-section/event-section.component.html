@@ -1,6 +1,7 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
-<div class="movie-detail-container">
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="!loading" class="movie-detail-container">
     <div class="header">
       <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="poster" />
       <div class="details">
@@ -10,7 +11,7 @@
         <div class="formats">2D</div>
         <div class="languages">{{ movie.language }}</div>
         <p class="duration">{{ movie.runtime }} | {{ movie.genre }} | {{ movie.released }}</p>
-        <button class="book-tickets"><a routerLink="/book-ticket">Book Tickets</a></button>
+        <button class="book-tickets"><a [routerLink]="['/buytickets',movie.title,currDate]">Book Tickets</a></button>
       </div>
     </div>
   

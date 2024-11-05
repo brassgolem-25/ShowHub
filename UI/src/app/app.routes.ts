@@ -8,6 +8,6 @@ export const routes: Routes = [
     {path:'explore/home',component:HomeComponent},
     {path:'explore/movies',component:MovieDetailComponent},
     {path:'movies/:name/:id',component:EventSectionComponent},
-    {path:'book-ticket',component:BookTicketComponent},
+    {path:'buytickets/:eventName/:date',component:BookTicketComponent},
     {path:'**',redirectTo:'explore/home',pathMatch:'full'}
 ];

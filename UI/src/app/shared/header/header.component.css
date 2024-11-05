@@ -13,6 +13,11 @@
   color: #e50914; /* Customize color */
 }
 
+a{
+  text-decoration: none;
+  color: #e50914;
+}
+
 .search-bar {
   width: 60%;
   height: 56px;

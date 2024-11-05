@@ -31,4 +31,8 @@ export class MovieService {
         })
     }))
   }
+
+  getMovieByID(movieName:string,imdbID:string):Observable<Movie[]>{
+    return this.http.get<Movie[]>(`http://localhost:3000/api/movies/movieDetails/${movieName}/${imdbID}`);
+  }
 }

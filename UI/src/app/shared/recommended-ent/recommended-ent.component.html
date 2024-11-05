@@ -7,7 +7,7 @@
         </div>
         <div class="recommendations-list">
             <mat-card class="movie-card" *ngFor="let movie of movies">
-                <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" />
+                <a [routerLink]="['/movies',movie.title,movie.imdbID]"><img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" /></a>
                 <div class="movie-info">
                     <div class="movie-stats">
                         <ng-container *ngIf="movie.imdbRating">

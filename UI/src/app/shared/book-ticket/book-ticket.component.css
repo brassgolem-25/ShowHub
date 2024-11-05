@@ -2,33 +2,37 @@
     text-align: start;
     margin-bottom: 10px;
     margin-left: 5%;
-  }
-  
-  .movie-header h2 {
+}
+
+.movie-header h2 {
     font-size: 1.8rem;
     color: #333;
-  }
-  
-  .genres span {
+}
+
+.genres span {
     font-size: 0.9rem;
     color: #666;
     padding: 0 5px;
-  }
-  
-  .divider-line {
+}
+
+.divider-line {
     width: 100%;
     margin: 10px auto;
     border: 0.5px solid #ddd;
-  }
+}
 
 
-  .date-filter-section {
+.date-filter-section {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Keep elements close together */
-    gap: 10px; /* Control spacing between elements */
-    padding: 10px 5%; /* Space around the entire section */
-    border-bottom: 1px solid #ddd; /* Subtle divider line */
+    justify-content: flex-start;
+    /* Keep elements close together */
+    gap: 10px;
+    /* Control spacing between elements */
+    padding: 10px 5%;
+    /* Space around the entire section */
+    border-bottom: 1px solid #ddd;
+    /* Subtle divider line */
 }
 
 .arrow-btn {
@@ -36,9 +40,12 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0; /* Remove extra spacing around arrows */
-    margin: 0 5px; /* Bring arrows closer to dates */
-    color: #aaa; /* Subtle color for the arrows */
+    padding: 0;
+    /* Remove extra spacing around arrows */
+    margin: 0 5px;
+    /* Bring arrows closer to dates */
+    color: #aaa;
+    /* Subtle color for the arrows */
 }
 
 .dates {
@@ -63,7 +70,8 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-left: auto; /* Push filters to the right */
+    margin-left: auto;
+    /* Push filters to the right */
 }
 
 .filters select {
@@ -74,8 +82,10 @@
     cursor: pointer;
 }
 
-.filters select:focus, .filters select:hover {
-    border-bottom: 2px solid #ff4081; /* Active underline color */
+.filters select:focus,
+.filters select:hover {
+    border-bottom: 2px solid #ff4081;
+    /* Active underline color */
 }
 
 .search-icon {
@@ -84,21 +94,29 @@
     cursor: pointer;
 }
 
+.search-icon img{
+    height: 10%;
+    width: 10%;
+}
 
-  .theater-list {
+
+.theater-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding: 10px; /* Padding around the entire list */
-  }
-  .theater-card {
+    padding: 10px;
+    /* Padding around the entire list */
+}
+
+.theater-card {
     display: flex;
     justify-content: space-between;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fafafa;
-    margin-bottom: 10px; /* Add spacing between cards */
+    margin-bottom: 10px;
+    /* Add spacing between cards */
 }
 
 .theater-info {
@@ -160,5 +178,3 @@
     background: #ffcccb;
     color: #d9534f;
 }
-
-  

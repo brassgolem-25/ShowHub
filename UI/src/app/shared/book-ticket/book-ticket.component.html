@@ -10,11 +10,11 @@
 <hr class="divider-line">
 
 <div class="date-filter-section">
-    <button class="arrow-btn">&#x276E;</button>
+    <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
     <div class="dates" *ngFor="let date of dates;let i = index ">
         <button [ngClass]="i==0 ? 'selected':''">{{date}}</button>
     </div>
-    <button class="arrow-btn">&#x276F;</button>
+    <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
     
     <div class="filters">
         <select>
@@ -34,7 +34,7 @@
             <option>Filter Show Timings</option>
             <!-- Other options -->
         </select>
-        <span class="search-icon">&#128269;</span> <!-- Search icon -->
+        <span class="search-icon"><fa-icon [icon]="faSearch"></fa-icon></span> <!-- Search icon -->
     </div>
 </div>
 
@@ -44,10 +44,10 @@
         <div class="theater-info">
             <div class="theater-name">
                 {{ theater.name }}
-                <span class="info-icon">ℹ️</span>
+                <span class="info-icon"><fa-icon [icon]="faInfo"></fa-icon></span>
             </div>
             <div class="features">
-                <span *ngFor="let feature of theater.features">{{ feature }}</span>
+                <span *ngFor="let feature of theater.features"><fa-icon [icon]="faMobile"></fa-icon> {{ feature }}</span>
             </div>
             <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
         </div>

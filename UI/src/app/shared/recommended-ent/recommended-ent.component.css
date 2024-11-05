@@ -26,7 +26,7 @@
     display: flex;
     overflow-x: auto;
     padding-top: 10px;
-    gap: 46px; 
+    gap: 35px; 
 }
 
 .movie-card, .event-card {
