@@ -6,15 +6,18 @@ import { TabsComponent } from '../tabs/tabs.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MovieService } from '../../core/movie.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event-section',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TabsComponent, RouterModule, LoadingSpinnerComponent],
+  imports: [CommonModule, HeaderComponent, TabsComponent, RouterModule, LoadingSpinnerComponent,FontAwesomeModule],
   templateUrl: './event-section.component.html',
   styleUrl: './event-section.component.css'
 })
 export class EventSectionComponent implements OnInit {
+  faStar = faStar;
   movie: any;
   currDate:string="";
   movieTitle: string = "";

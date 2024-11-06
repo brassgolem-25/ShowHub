@@ -2,18 +2,25 @@
 <app-tabs></app-tabs>
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <div *ngIf="!loading" class="movie-detail-container">
-    <div class="header">
-      <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="poster" />
-      <div class="details">
-        <h1>{{ movie.title }}</h1>
-        <p class="rating">{{ movie.imdbRating }} / 10</p>
-        <button class="rate-btn">Rate Now</button>
-        <div class="formats">2D</div>
-        <div class="languages">{{ movie.language }}</div>
-        <p class="duration">{{ movie.runtime }} | {{ movie.genre }} | {{ movie.released }}</p>
-        <button class="book-tickets"><a [routerLink]="['/buytickets',movie.title,currDate]">Book Tickets</a></button>
+  <div class="movie-container">
+    <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="movie-poster" />
+    <div class="movie-details">
+      <h1>{{ movie.title }}</h1>
+      <div class="rating-section">
+        <span class="rating"><fa-icon [icon]="faStar"></fa-icon>{{ movie.imdbRating }}/10</span>
+        <span class="votes">(900 Votes)</span>
+        <button class="rate-btn">Rate now</button>
       </div>
+      <div class="movie-info">
+        <div class="formats">2D, IMAX 2D</div>
+        <div class="language">{{ movie.language }}</div>
+        <div class="meta">{{ movie.runtime }} • {{ movie.genre }} • {{ movie.released }}</div>
+      </div>
+      <button class="book-tickets">
+        <a [routerLink]="['/buytickets', movie.title, currDate]">Book Tickets</a>
+      </button>
     </div>
+  </div>
   
     <section class="about">
       <h2>About the Movie</h2>
@@ -30,16 +37,7 @@
         </div>
       </div>
     </section>
-  
-    <section class="crew">
-      <h2>Crew</h2>
-      <div class="crew-grid">
-        <!-- <div *ngFor="let crewMember of movie.crew">
-          <img [src]="crewMember.image" alt="{{ crewMember.name }}" />
-          <p>{{ crewMember.name }}</p>
-        </div> -->
-      </div>
-    </section>
+
   
     <section class="reviews">
       <h2>Top Reviews</h2>

@@ -1,0 +1,30 @@
+<div class="dialog-container">
+    <div class="header">
+      <h2>Get Started</h2>
+      <fa-icon [icon]="faClose" (click)="closeDialog()" class="close-icon"></fa-icon>
+    </div>
+    
+    <button mat-button class="sign-in-button google">
+      <fa-icon [icon]="faGoogle" class="icon"></fa-icon> Continue with Google
+    </button>
+    
+    <button mat-button class="sign-in-button facebook">
+      <fa-icon [icon]="faFacebook" class="icon"></fa-icon> Continue with Facebook
+    </button>
+    
+    <button mat-button class="sign-in-button apple">
+      <fa-icon [icon]="faApple" class="icon"></fa-icon> Continue with Apple
+    </button>
+  
+    <p class="or-text">OR</p>
+  
+    <div class="phone-input-container">
+      <fa-icon [icon]="faMobileAlt" class="icon"></fa-icon>
+      <input type="tel" placeholder="+91 Mobile number" class="phone-input">
+    </div>
+  
+    <p class="terms-text">
+      I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
+    </p>
+  </div>
+  

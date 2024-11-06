@@ -5697,6 +5697,7 @@ export {
   RtlScrollAxisType,
   supportsScrollBehavior,
   getRtlScrollAxisType,
+  _getFocusedElementPierceShadowDom,
   _getEventTarget,
   _isTestEnvironment,
   ENTER,
@@ -5719,9 +5720,12 @@ export {
   removeAriaReferencedId,
   ActiveDescendantKeyManager,
   FocusKeyManager,
+  InteractivityChecker,
+  FocusTrapFactory,
   LiveAnnouncer,
   FocusMonitor,
   CdkMonitorFocus,
+  A11yModule,
   Directionality,
   BidiModule,
   VERSION2 as VERSION,
@@ -5770,4 +5774,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-YK73MAVZ.js.map
+//# sourceMappingURL=chunk-2JJUZVZW.js.map

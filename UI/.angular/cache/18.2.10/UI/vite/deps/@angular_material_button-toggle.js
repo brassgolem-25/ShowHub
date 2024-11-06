@@ -17,7 +17,7 @@ import {
   RIGHT_ARROW,
   SPACE,
   UP_ARROW
-} from "./chunk-YK73MAVZ.js";
+} from "./chunk-2JJUZVZW.js";
 import "./chunk-A77LJ3EL.js";
 import {
   Attribute,
