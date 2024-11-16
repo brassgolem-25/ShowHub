@@ -73,6 +73,7 @@ mat-card-subtitle {
     color: #777;
 }
 
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
     .recommendations-section {

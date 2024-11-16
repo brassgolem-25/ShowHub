@@ -1,10 +1,15 @@
 <div class="header-container">
-  <div class="logo"><a routerLink="/">MyShowHub</a></div> <!-- Replace "MyShowHub" with your app name -->
+  <div class="logo"><a [routerLink]="['/explore/home', currLocation]">MyShowHub</a></div> <!-- Replace "MyShowHub" with your app name -->
   <mat-form-field class="search-bar" appearance="outline">
     <mat-label>Search for Movies, Events, Plays...</mat-label>
     <input matInput type="text">
   </mat-form-field>
-  <button mat-button class="location">Mumbai <mat-icon>expand_more</mat-icon></button>
-  <button mat-raised-button color="primary" ><a routerLink="/signIn">Sign In</a></button>
-  <button mat-icon-button><mat-icon>menu</mat-icon></button>
+  <button mat-button class="location" (click)="openDialog()">{{currLocation}} <mat-icon>expand_more</mat-icon></button>
+  <div *ngIf="!isUserLoggedIn">
+  <button mat-raised-button color="primary"><a routerLink="/login">Sign In</a></button>
+  </div>
+  <div class="userProfile" *ngIf="isUserLoggedIn">
+    <img  src="assets/user.png"><span>Hi,Guest</span>
+  </div>
+  <button mat-icon-button ><mat-icon>menu</mat-icon></button>
 </div>

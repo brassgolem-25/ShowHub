@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTab, MatTabsModule } from '@angular/material/tabs';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -9,6 +9,13 @@ import { RouterModule } from '@angular/router';
   templateUrl: './tabs.component.html',
   styleUrl: './tabs.component.css'
 })
-export class TabsComponent {
+export class TabsComponent implements OnInit{
+  currLocation:string="";
+  constructor(private route:ActivatedRoute){}
 
+  ngOnInit(): void {
+      this.route.params.subscribe((params)=>{
+        this.currLocation = params['location'] ? params['location'] : "Mumbai";
+      })
+  }
 }

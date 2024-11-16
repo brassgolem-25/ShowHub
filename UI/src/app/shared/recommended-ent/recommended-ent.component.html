@@ -3,11 +3,11 @@
     <div class="recommendations-section">
         <div class="heading">
             <h3>Recommended Movies</h3>
-            <a routerLink="/explore/movies" class="see-all-link">See All ›</a>
+            <a routerLink="/explore/movies/{{currLocation}}" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
             <mat-card class="movie-card" *ngFor="let movie of movies">
-                <a [routerLink]="['/movies',movie.title,movie.imdbID]"><img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" /></a>
+                <a [routerLink]="['/movies',currLocation,movie.title,movie.imdbID]"><img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" /></a>
                 <div class="movie-info">
                     <div class="movie-stats">
                         <ng-container *ngIf="movie.imdbRating">
@@ -18,7 +18,7 @@
                     <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>
                 </div>
             </mat-card>
-        </div>
+        </div>     
     </div>
 
     <!-- Live Events Section -->

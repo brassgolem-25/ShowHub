@@ -21,7 +21,7 @@ export class MovieDetailComponent implements OnInit {
   selectedGenres: string[] = [];
   selectedFormats: string[] = [];
   filteredMovies: Movie[] = [];
-
+  currLocation:string="";
   constructor(private mS: MovieService, private route: ActivatedRoute, private router: Router) {
     mS.getAllMovies().subscribe((moviesArr: Movie[]) => {
       this.movies = moviesArr;
@@ -129,6 +129,9 @@ export class MovieDetailComponent implements OnInit {
 
 
   ngOnInit() {
+    this.route.params.subscribe(params=>{
+      this.currLocation = params['location'];
+    })
 
     // route handling for persistent changes even after refreshing the URL
     this.route.queryParamMap.subscribe(params => {

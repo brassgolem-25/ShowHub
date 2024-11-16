@@ -202,3 +202,10 @@
 .review-list p:last-child {
     color: #ff5555;
 }
+
+.review-actions {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #555;
+}

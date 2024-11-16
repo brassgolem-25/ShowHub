@@ -6,11 +6,11 @@ import { BookTicketComponent } from './shared/book-ticket/book-ticket.component'
 import { SignInComponent } from './shared/sign-in/sign-in.component';
 
 export const routes: Routes = [
-    {path:'explore/home',component:HomeComponent},
-    {path:'explore/movies',component:MovieDetailComponent},
-    {path:'movies/:name/:id',component:EventSectionComponent},
-    {path:'buytickets/:eventName/:date',component:BookTicketComponent},
+    {path:'explore/home/:location',component:HomeComponent},
+    {path:'explore/movies/:location',component:MovieDetailComponent},
+    {path:'movies/:location/:name/:id',component:EventSectionComponent},
+    {path:'buytickets/:location/:eventName/:date',component:BookTicketComponent},
     {path:'signIn',component:SignInComponent},
     {path:'login',component:SignInComponent},
-    {path:'**',redirectTo:'explore/home',pathMatch:'full'}
+    {path:'**',redirectTo:'explore/home/Mumbai',pathMatch:'full'}
 ];

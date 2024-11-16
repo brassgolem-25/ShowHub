@@ -1,34 +1,36 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
 <div class="sign-in-container">
-    <div class="header">
-      <h2>Get Started</h2>
-    </div>
-    
-    <button class="sign-in-button google">
-        <img width="30" height="30" src="https://img.icons8.com/fluency/50/google-logo.png" alt="google-logo"/>
-       Continue with Google
-    </button>
-    
-    <button class="sign-in-button facebook">
-        <img width="50" height="50" src="https://img.icons8.com/fluency/50/meta.png" alt="meta"/>
-      Continue with Meta
-    </button>
-    
-    <button class="sign-in-button apple">
-        <img width="50" height="50" src="https://img.icons8.com/ios-glyphs/50/mac-os.png" alt="apple-logo"/>
-      Continue with Apple
-    </button>
-  
-    <p class="or-text">OR</p>
-    
+  <div class="header">
+    <h2>Get Started</h2>
+  </div>
+
+  <button class="sign-in-button google" (click)="authenticateWithProvider('google')">
+    <img width="30" height="30" src="https://img.icons8.com/fluency/50/google-logo.png" alt="google-logo" />
+    Continue with Google
+  </button>
+
+  <button class="sign-in-button facebook" (click)="loginWithFacebook()">
+    <img width="50" height="50" src="https://img.icons8.com/fluency/50/meta.png" alt="meta" />
+    Continue with Meta
+  </button>
+
+  <button class="sign-in-button apple">
+    <img width="50" height="50" src="https://img.icons8.com/ios-glyphs/50/mac-os.png" alt="apple-logo" />
+    Continue with Apple
+  </button>
+
+  <p class="or-text">OR</p>
+
+  <form [formGroup]="loginForm">
     <div class="phone-input-container">
       <span class="isd-code">+91</span>
-      <input type="tel" placeholder="Mobile number" class="phone-input">
+      <input type="tel" placeholder="Mobile number" class="phone-input" >
     </div>
-    
-    <p class="terms-text">
-      I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
-    </p>
-  </div>
-  
+
+    <button type="submit" [disabled]="loginForm.invalid">Continue</button>
+  </form>
+  <p class="terms-text">
+    I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
+  </p>
+</div>

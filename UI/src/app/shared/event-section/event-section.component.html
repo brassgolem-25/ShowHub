@@ -9,7 +9,7 @@
       <div class="rating-section">
         <span class="rating"><fa-icon [icon]="faStar"></fa-icon>{{ movie.imdbRating }}/10</span>
         <span class="votes">(900 Votes)</span>
-        <button class="rate-btn">Rate now</button>
+        <button class="rate-btn" (click)="openReviewDialog()">Rate now</button>
       </div>
       <div class="movie-info">
         <div class="formats">2D, IMAX 2D</div>
@@ -42,16 +42,18 @@
     <section class="reviews">
       <h2>Top Reviews</h2>
       <div class="review-tags">
-        <!-- <button *ngFor="let tag of movie.reviewTags">{{ tag }}</button> -->
+        <button *ngFor="let tag of reviewTags" class="review-tag">{{ tag.name }} ({{ tag.count }})</button>
       </div>
       <div class="review-list">
-        <p>Tushar</p>
-        <!-- <div *ngFor="let review of reviews">
-          <p>{{ review.user }}</p>
-          <p>{{ review.comment }}</p>
-          <p>{{ review.rating }}</p>
-        </div> -->
+        <div *ngFor="let review of userReviews" class="review">
+          <p><strong>{{ review.user }}</strong> <span class="rating">{{ review.rating }}/10</span></p>
+          <p class="review-comment">{{ review.comment }}</p>
+          <div class="review-actions">
+            <span>{{ review.likes }} <fa-icon [icon]="faThumbsUp"></fa-icon></span>
+            <span>{{ review.dislikes }}<fa-icon [icon]="faThumbsDown"></fa-icon></span>
+          </div>
+        </div>
       </div>
-    </section>
+    </section>  
   </div>
   

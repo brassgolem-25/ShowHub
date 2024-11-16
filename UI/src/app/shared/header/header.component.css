@@ -26,3 +26,18 @@ a{
 .location {
   color: #333;
 }
+
+.userProfile{
+  display: flex;
+  gap:10px
+}
+
+.userProfile img{
+  height: 40px;
+  width: 40px;
+}
+
+.userProfile span{
+  margin-top: 10px;
+}
+

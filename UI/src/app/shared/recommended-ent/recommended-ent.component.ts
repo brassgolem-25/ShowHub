@@ -3,18 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
-import { RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-recommended-ent',
   standalone: true,
-  imports: [MatCardModule, CommonModule,RouterModule,RouterLink],
+  imports: [MatCardModule, CommonModule, RouterModule, RouterLink, MatIconModule],
   templateUrl: './recommended-ent.component.html',
   styleUrl: './recommended-ent.component.css'
 })
 export class RecommendedEntComponent implements OnInit {
+  currLocation:string = "";
   movies: Movie[] = [];
-  events: Movie [] = [
+  events: Movie[] = [
     {
       "_id": "671e7e8908b9101cd2203313",
       "title": "Spider-Man: No Way Home",
@@ -107,17 +109,15 @@ export class RecommendedEntComponent implements OnInit {
   funEvents = this.events;
 
 
-  constructor(private mS: MovieService) { }
+  constructor(private mS: MovieService,private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.mS.getRecommendedMovies().subscribe((moviesArr: Movie[]) => {
       this.movies = moviesArr;
     })
-
-
+    this.route.params.subscribe((params)=>{
+      this.currLocation = params['location'];
+    })
   }
-
-
-
 
 }

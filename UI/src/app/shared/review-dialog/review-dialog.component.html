@@ -1,0 +1,32 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h2>How was the movie?</h2>
+        <fa-icon [icon]="faXmark" (click)="closeDialog()"></fa-icon>
+    </div>
+
+    <div class="modal-body">
+        <p class="question">How would you rate the movie?</p>
+        <mat-slider min="0" max="10" step="1"  thumbLabel >
+            <input matSliderThumb [(ngModel)]="rating">
+        </mat-slider>
+        <div class="rating-display">
+            <span>{{ rating }}/10</span>
+        </div>
+        <p class="rating-note">
+            Your ratings matter! <br />
+            They help others decide what to watch next.
+        </p>
+    </div>
+
+    <div class="review-section" *ngIf="rating !== 0">
+        <p class="review-label">Write a review</p>
+        <textarea matInput placeholder="Share your thoughts about the movie" [(ngModel)]="reviewText" rows="3"
+            class="review-input"></textarea>
+    </div>
+
+    <div class="modal-footer">
+        <button mat-raised-button color="primary" [disabled]="rating === 0">
+            Submit Rating
+        </button>
+    </div>
+</div>

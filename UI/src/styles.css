@@ -1,3 +1,4 @@
-dialog { 
-    border: none !important;
-  }
+.mat-mdc-dialog-surface {
+    --mdc-dialog-container-shape: 0px;
+    border-radius: 0px !important; /* Optional fallback */
+}

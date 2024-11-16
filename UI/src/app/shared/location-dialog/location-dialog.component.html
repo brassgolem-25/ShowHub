@@ -1,0 +1,25 @@
+<div class="dialog-container">
+  <div class="search-bar">
+    <button class="search-icon">
+      <fa-icon [icon]="faSearch"></fa-icon>
+    </button>
+    <input type="text" class="city-search-input" placeholder="Search for your city" />
+  </div>
+  <hr class="divider-line">
+  <button mat-button class="detect-location-btn">
+    <fa-icon [icon]="faLocationCrosshairs"></fa-icon>
+    Detect my location
+  </button>
+
+  <h4 class="popular-cities-heading">Popular Cities</h4>
+  <div class="popular-cities">
+    <div class="city-card" *ngFor="let city of popularCities">
+      <img [src]="city.icon" alt="{{ city.name }}" (click)="selectedLocation(city.name)" />
+      <p>{{ city.name }}</p>
+    </div>
+  </div>
+
+  <div class="view-all">
+    <a mat-button color="warn">View All Cities</a>
+  </div>
+</div>

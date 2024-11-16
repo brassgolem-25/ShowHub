@@ -5691,6 +5691,8 @@ var _MatInternalFormField = class __MatInternalFormField {
 })();
 
 export {
+  Directionality,
+  BidiModule,
   Platform,
   getSupportedInputTypes,
   normalizePassiveListenerOptions,
@@ -5726,8 +5728,6 @@ export {
   FocusMonitor,
   CdkMonitorFocus,
   A11yModule,
-  Directionality,
-  BidiModule,
   VERSION2 as VERSION,
   AnimationCurves,
   AnimationDurations,
@@ -5774,4 +5774,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-2JJUZVZW.js.map
+//# sourceMappingURL=chunk-EC77TX2D.js.map
