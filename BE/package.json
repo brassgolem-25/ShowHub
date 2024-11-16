@@ -16,9 +16,12 @@
     "dotenv": "^16.4.5",
     "env": "^0.0.2",
     "express": "^4.21.1",
+    "google-auth-library": "^9.14.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.0",
     "nodemon": "^3.1.7",
-    "process-env": "^2.0.2"
+    "process-env": "^2.0.2",
+    "uuidv4": "^6.2.13"
   },
   "type": "module"
 }

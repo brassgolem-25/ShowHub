@@ -58,6 +58,16 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  customerReview: [
+    {
+      user: { type: String, required: true },
+      comment: { type: String, required: true },
+      rating: { type: Number, required: true },
+      likes: { type: Number, default: 0 },
+      dislikes: { type: Number, default: 0 },
+      dateAdded :{type:Date,default: Date.now}
+    },
+  ],
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

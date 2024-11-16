@@ -13,7 +13,7 @@ export const createMovie = async (req, res) => {
 // Get all movies
 export const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find({},{_id:0,__v:0});
+    const movies = await Movie.find({}, { _id: 0, __v: 0 });
     return res.json(movies);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -21,16 +21,16 @@ export const getAllMovies = async (req, res) => {
 };
 
 //get movie detail
-export const getMovieDetails = async(req,res) =>{
+export const getMovieDetails = async (req, res) => {
   try {
     const movieName = req.params.name;
     const imdbID = String(req.params.id);
-    const movies = await Movie.find({imdbID},{_id:0,__v:0});
-    if(movies.length == 0) return res.json({message:"No Movie Found with imdbID"});
-    if(movies[0].title===movieName){
+    const movies = await Movie.find({ imdbID }, { _id: 0, __v: 0 });
+    if (movies.length == 0) return res.json({ message: "No Movie Found with imdbID" });
+    if (movies[0].title === movieName) {
       return res.json(movies);
     }
-    return res.json({message:"Incorrect MovieName"});
+    return res.json({ message: "Incorrect MovieName" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -45,3 +45,21 @@ export const getFewMovies = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+//add customer review
+export const addCustomerReview = async (req, res) => {
+  try {
+    const { imdbID, customerReview } = req.body;
+    const movie = await Movie.findOne({ imdbID: imdbID });
+    let result;
+    if (movie) {
+      result = await Movie.updateOne({ imdbID: imdbID }, { $push: { customerReview: customerReview } });
+    }else {
+      result = {message:"Movie not found.Can't Update!"};
+    }
+
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
