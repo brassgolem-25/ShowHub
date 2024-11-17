@@ -8,8 +8,8 @@
   <div *ngIf="!isUserLoggedIn">
   <button mat-raised-button color="primary"><a routerLink="/login">Sign In</a></button>
   </div>
-  <div class="userProfile" *ngIf="isUserLoggedIn">
-    <img  src="assets/user.png"><span>Hi,Guest</span>
+  <div class="userProfile" *ngIf="isUserLoggedIn" (click)="redirectToUserPage()">
+   <img src="assets/user.png" ><span>Hi,Guest</span>
   </div>
   <button mat-icon-button ><mat-icon>menu</mat-icon></button>
 </div>

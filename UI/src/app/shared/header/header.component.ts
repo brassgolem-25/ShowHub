@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { CommonModule } from '@angular/common';
 import { DialogService } from '../../core/dailog.service';
@@ -20,7 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class HeaderComponent implements OnInit {
   currLocation:string = '';
   isUserLoggedIn:boolean = false;
-  constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute) { 
+  constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute,private router:Router) { 
   }
   
   ngOnInit() {
@@ -35,6 +35,10 @@ export class HeaderComponent implements OnInit {
 
   openDialog(){
     this.dialogSer.openDialog();
+  }
+
+  redirectToUserPage(){
+    this.router.navigate(['/user-profile'])
   }
 
 }

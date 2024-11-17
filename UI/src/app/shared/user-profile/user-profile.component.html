@@ -1,0 +1,51 @@
+<app-header></app-header>
+<app-tabs></app-tabs>
+<div class="user-profile-container">
+    <div class="profile-header">
+      <div class="avatar-container">
+        <img src="https://via.placeholder.com/150" alt="User Avatar" class="avatar" />
+      </div>
+      <div class="user-details">
+        <h1 class="user-name">{{userName}}</h1>
+      </div>
+    </div>
+  
+    <div class="details-section">
+      <h2>Contact Information</h2>
+      <div class="contact-info">
+        <div class="field-row">
+          <label for="phone">Mobile:</label>
+          <input id="phone" type="text" value="+91 9876543210" disabled />
+          <span class="edit-icon">✏️</span>
+        </div>
+        <div class="field-row">
+          <label for="email">Email:</label>
+          <input id="email" type="text" value="{{userEmail}}" disabled />
+          <span class="edit-icon" >✏️</span>
+        </div>
+      </div>
+  
+      <h2>Recent Activity</h2>
+      <div class="recent-activity">
+        <div class="ticket-card">
+          <img src="https://via.placeholder.com/100x150" alt="Movie Poster" class="movie-poster" />
+          <div class="ticket-details">
+            <p><strong>Movie:</strong> The Avengers</p>
+            <p><strong>Date:</strong> 15th Nov</p>
+            <p><strong>Time:</strong> 7:30 PM</p>
+            <p><strong>Theater:</strong> XYZ Cinemas</p>
+          </div>
+        </div>
+        <div class="ticket-card">
+          <img src="https://via.placeholder.com/100x150" alt="Movie Poster" class="movie-poster" />
+          <div class="ticket-details">
+            <p><strong>Movie:</strong> Interstellar</p>
+            <p><strong>Date:</strong> 10th Nov</p>
+            <p><strong>Time:</strong> 5:00 PM</p>
+            <p><strong>Theater:</strong> ABC Multiplex</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

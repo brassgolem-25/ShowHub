@@ -39,6 +39,7 @@ export class BookTicketComponent implements OnInit{
   faMobile=faMobile;
   currDate:string="";
   dates: string[] = [];
+  movieName:string='';
 
   constructor(private route:ActivatedRoute) {
     const currDateArr = Date().slice(0, 15).split(" "); //[Mon,04,Nov,2024]
@@ -48,7 +49,6 @@ export class BookTicketComponent implements OnInit{
       curDate = curDate + 1 ;
       this.dates.push(currDateArr[0]+ " " +curDate + " " + currDateArr[1]);
     }
-    console.log(this.dates)
   }
   movie = {
     title: 'Singham Again',
@@ -77,7 +77,7 @@ export class BookTicketComponent implements OnInit{
   }
 
   ngOnInit() {
-     const eventName = this.route.snapshot.params['eventName'];
+     this.movieName = this.route.snapshot.params['eventName'];
      this.currDate = this.route.snapshot.params['date'];
   }
 }

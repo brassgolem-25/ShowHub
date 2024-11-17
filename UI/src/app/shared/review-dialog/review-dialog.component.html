@@ -25,7 +25,7 @@
     </div>
 
     <div class="modal-footer">
-        <button mat-raised-button color="primary" [disabled]="rating === 0">
+        <button mat-raised-button color="primary" [disabled]="rating === 0" (click)="addRating()">
             Submit Rating
         </button>
     </div>

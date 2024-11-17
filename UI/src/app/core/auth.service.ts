@@ -6,9 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
+  serverURL = 'http://localhost:3000';
+  private userEmail:string='';
   constructor(private http : HttpClient) { }
-
+  
   authenticateGoogle():Observable<any>{
     return this.http.get<any>(`http://localhost:3000/auth/google?location=Mumbai`);
   }
@@ -21,5 +22,9 @@ export class AuthService {
     return this.http.post<any>('http://localhost:3000/auth/facebook-authentication',userData,{ withCredentials: true });
   }
 
-
+  getUserDetails(email:string):Observable<any>{
+    // console.log(`${this.serverURL}/auth/userData?email=${email}`);
+    return this.http.get(`${this.serverURL}/auth/userData?email=${email}`);
+  }
+  
 }

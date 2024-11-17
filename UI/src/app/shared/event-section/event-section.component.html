@@ -17,7 +17,7 @@
         <div class="meta">{{ movie.runtime }} • {{ movie.genre }} • {{ movie.released }}</div>
       </div>
       <button class="book-tickets">
-        <a [routerLink]="['/buytickets', movie.title, currDate]">Book Tickets</a>
+        <a [routerLink]="['/buytickets', currLocation,movie.title, currDate]">Book Tickets</a>
       </button>
     </div>
   </div>

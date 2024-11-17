@@ -4,12 +4,14 @@ import { MovieDetailComponent } from './shared/movie-detail/movie-detail.compone
 import { EventSectionComponent } from './shared/event-section/event-section.component';
 import { BookTicketComponent } from './shared/book-ticket/book-ticket.component';
 import { SignInComponent } from './shared/sign-in/sign-in.component';
+import { UserProfileComponent } from './shared/user-profile/user-profile.component';
 
 export const routes: Routes = [
     {path:'explore/home/:location',component:HomeComponent},
     {path:'explore/movies/:location',component:MovieDetailComponent},
     {path:'movies/:location/:name/:id',component:EventSectionComponent},
     {path:'buytickets/:location/:eventName/:date',component:BookTicketComponent},
+    {path:'user-profile',component:UserProfileComponent},
     {path:'signIn',component:SignInComponent},
     {path:'login',component:SignInComponent},
     {path:'**',redirectTo:'explore/home/Mumbai',pathMatch:'full'}

@@ -1,7 +1,7 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
 <div class="movie-header">
-    <h2>{{ movie.title }} - {{ movie.language }}</h2>
+    <h2>{{ movieName }} - {{ movie.language }}</h2>
     <div class="genres">
         <span *ngFor="let genre of movie.genres">{{ genre }}</span>
     </div>

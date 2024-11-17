@@ -24,6 +24,7 @@ export class MovieDetailComponent implements OnInit {
   currLocation:string="";
   constructor(private mS: MovieService, private route: ActivatedRoute, private router: Router) {
     mS.getAllMovies().subscribe((moviesArr: Movie[]) => {
+      console.log(moviesArr)
       this.movies = moviesArr;
       this.loading = false;
     })

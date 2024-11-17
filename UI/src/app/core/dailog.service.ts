@@ -16,9 +16,10 @@ export class DialogService {
     })
   }
 
-  openReviewDialog(){
+  openReviewDialog(movieData:{}){
     this.dialog.open(ReviewDialogComponent,{
-      width:'390px'
+      width:'390px',
+      data:movieData
     })
   }
 

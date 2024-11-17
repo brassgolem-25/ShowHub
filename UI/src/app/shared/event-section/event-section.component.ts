@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { userReview } from '../types/userReview';
 import { DialogService } from '../../core/dailog.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-event-section',
@@ -26,10 +27,13 @@ export class EventSectionComponent implements OnInit {
   currDate: string = "";
   movieTitle: string = "";
   movieCast: string = "";
+  imdbID:string="";
   loading = true;
   date = new Date();
   userReviews: userReview[] = [];
-  constructor(private route: ActivatedRoute, private mS: MovieService,private dS:DialogService) { }
+  userEmail:string='';
+  currLocation:string='';
+  constructor(private route: ActivatedRoute, private mS: MovieService,private dS:DialogService,private authSer:AuthService) { }
 
   movieCastImg(name: string) {
     return `assets/cast/${name.toLocaleLowerCase().replace(/[ ]/g, "-")}.jpg`;
@@ -39,8 +43,8 @@ export class EventSectionComponent implements OnInit {
   ngOnInit() {
     this.currDate = `${this.date.getFullYear()}${this.date.getMonth() + 1}${this.date.getDate()}`
     const movieName = this.route.snapshot.params['name'];
-    const imdbID = this.route.snapshot.params['id'];
-    this.mS.getMovieByID(movieName, imdbID).subscribe((movieObj: any) => {
+    this.imdbID = this.route.snapshot.params['id'];
+    this.mS.getMovieByID(movieName, this.imdbID).subscribe((movieObj: any) => {
       this.movie = movieObj[0];
       this.userReviews = movieObj[0]['customerReview'];
       console.log(this.userReviews)
@@ -48,6 +52,14 @@ export class EventSectionComponent implements OnInit {
       this.movieCast = this.movie.actors.split(", ");
       this.loading = false;
     })
+
+    this.authSer.checkAuthStatus().subscribe((res)=>{
+      this.userEmail = res['user']['data'] ;
+    })
+
+    this.route.params.subscribe((params)=>{
+      this.currLocation = params['location'] ? params['location'] : 'Mumbai';
+  })
   }
 
   reviewTags = [
@@ -77,6 +89,11 @@ export class EventSectionComponent implements OnInit {
     }
   ];
   openReviewDialog(){
-    this.dS.openReviewDialog();
+
+    const movieData = {
+      imdbID:this.imdbID,
+      userEmail:this.userEmail
+    }
+    this.dS.openReviewDialog(movieData);
   }
 }
