@@ -58,7 +58,7 @@ export const addCustomerReview = async (req, res) => {
       result = {message:"Movie not found.Can't Update!"};
     }
 
-    return res.json(result);
+    return res.json({success:true,message:"Review Added"});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

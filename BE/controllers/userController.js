@@ -17,6 +17,7 @@ export const createOrUpdateUser = async (name,email, oAuthID,provider,req,res) =
       email,
       [oAuthField]:oAuthID
     });
+    await user.save();
     return {message:"User Created",user};
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -32,3 +33,18 @@ export const getAllUsers = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+//get User with Email
+export const getUserWithEmail = async (req,res)=>{
+  try{
+    const email = req.query.email;
+    if(!email){
+      return res.json({message:"No Email Found"})
+    }
+    const user = await User.findOne({email},{name:1,email:1,_id:0});
+    if(!user) return res.json({message:"No User found!"});
+    return res.json(user);
+  }catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}

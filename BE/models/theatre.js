@@ -1,8 +1,5 @@
-import mongoose from "mongoose";
-
 const theaterSchema = new mongoose.Schema({
-    name: 
-    {
+    name: {
         type: String,
         required: true,
     },
@@ -11,16 +8,71 @@ const theaterSchema = new mongoose.Schema({
         city: String,
         state: String,
     },
-    theatreID : 
-    {
+    theatreID: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
-    screens: [String], // List of screen identifiers
-    amenities: [String], // e.g., ['M-Ticket', 'Food & Beverage']
+    language: {
+        type: String,
+        required: true,
+    },
+    screens: [String],
+    amenities: [String],
+    contactDetails: {
+        phone: String,
+        email: String,
+    },
+    ratings: {
+        average: Number,
+        totalReviews: Number,
+    },
+    pricing: {
+        basePrice: Number,
+        premiumPrice: Number,
+        currency: String,
+    },
+    seating: {
+        totalSeats: Number,
+        categories: [
+            {
+                type: String,
+                price: Number,
+            },
+        ],
+    },
+    operatingHours: {
+        openingTime: String,
+        closingTime: String,
+    },
+    currentMovies: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'movie',
+        },
+    ],
+    socialMedia: {
+        website: String,
+        facebook: String,
+        twitter: String,
+        instagram: String,
+    },
+    policies: {
+        cancellationPolicy: String,
+        refundPolicy: String,
+    },
+    promotions: [
+        {
+            description: String,
+            validUntil: Date,
+        },
+    ],
+    accessibilityFeatures: [String],
+    manager: {
+        name: String,
+        contact: String,
+    },
 });
-
 
 const Theater = mongoose.model('theater', theaterSchema);
 

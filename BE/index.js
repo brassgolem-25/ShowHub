@@ -12,9 +12,10 @@ import cors from 'cors';
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:4200', // Your Angular app's URL
+    origin:['http://localhost:4200','http://43.205.253.123'], // Your Angular app's URL
     credentials: true // Allows cookies to be sent
 }));
+// app.use(cors())
 app.use(cookieParser());
 
 let connection = await mongooseConnect();

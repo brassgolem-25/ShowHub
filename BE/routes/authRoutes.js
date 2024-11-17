@@ -3,12 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import { configDotenv } from 'dotenv';
-import { createOrUpdateUser,getAllUsers } from '../controllers/userController.js';
+import { createOrUpdateUser,getAllUsers,getUserWithEmail } from '../controllers/userController.js';
 
 configDotenv();
 const router = express.Router();
 router.use(express.json());
-
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, "http://localhost:3000/auth/google/callback");
 
@@ -81,5 +80,7 @@ router.post('/facebook-authentication',async(req,res)=>{
 router.post('/createUser',createOrUpdateUser);
 
 router.get('/getAllUser',getAllUsers);
+
+router.get('/userData',getUserWithEmail)
 
 export default router;
