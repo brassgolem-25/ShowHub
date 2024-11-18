@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from '../types/movie';
 import { HeaderComponent } from '../header/header.component';
 import { TabsComponent } from '../tabs/tabs.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieService } from '../../core/movie.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,7 +33,7 @@ export class EventSectionComponent implements OnInit {
   userReviews: userReview[] = [];
   userEmail:string='';
   currLocation:string='';
-  constructor(private route: ActivatedRoute, private mS: MovieService,private dS:DialogService,private authSer:AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router,private mS: MovieService,private dS:DialogService,private authSer:AuthService) { }
 
   movieCastImg(name: string) {
     return `assets/cast/${name.toLocaleLowerCase().replace(/[ ]/g, "-")}.jpg`;
@@ -47,14 +47,14 @@ export class EventSectionComponent implements OnInit {
     this.mS.getMovieByID(movieName, this.imdbID).subscribe((movieObj: any) => {
       this.movie = movieObj[0];
       this.userReviews = movieObj[0]['customerReview'];
-      console.log(this.userReviews)
       this.movieTitle = this.movie.title.replace(/[: ]+/g, "-");
       this.movieCast = this.movie.actors.split(", ");
       this.loading = false;
     })
 
     this.authSer.checkAuthStatus().subscribe((res)=>{
-      this.userEmail = res['user']['data'] ;
+      this.userEmail = res['loggedIn'] ? res['user']['data'] : '' ;
+      console.log(this.userEmail);
     })
 
     this.route.params.subscribe((params)=>{
@@ -95,5 +95,14 @@ export class EventSectionComponent implements OnInit {
       userEmail:this.userEmail
     }
     this.dS.openReviewDialog(movieData);
+  }
+
+  redirectToBooking(){
+    // [routerLink]="['/buytickets', currLocation,movie.title,imdbID]" 
+    this.router.navigate(['/buyTickets',this.currLocation,this.movie.title,this.imdbID],{
+      queryParams :{
+        date : this.currDate
+      }
+    })
   }
 }

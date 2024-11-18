@@ -1,61 +1,79 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
-<div class="movie-header">
-    <h2>{{ movieName }} - {{ movie.language }}</h2>
-    <div class="genres">
-        <span *ngFor="let genre of movie.genres">{{ genre }}</span>
-    </div>
-</div>
-
-<hr class="divider-line">
-
-<div class="date-filter-section">
-    <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
-    <div class="dates" *ngFor="let date of dates;let i = index ">
-        <button [ngClass]="i==0 ? 'selected':''">{{date}}</button>
-    </div>
-    <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
-    
-    <div class="filters">
-        <select>
-            <option>Hindi - 2D</option>
-            <option>Hindi - 3D</option>
-            <!-- Other options -->
-        </select>
-        <select>
-            <option>Filter Sub Regions</option>
-            <!-- Other options -->
-        </select>
-        <select>
-            <option>Filter Price Range</option>
-            <!-- Other options -->
-        </select>
-        <select>
-            <option>Filter Show Timings</option>
-            <!-- Other options -->
-        </select>
-        <span class="search-icon"><fa-icon [icon]="faSearch"></fa-icon></span> <!-- Search icon -->
-    </div>
-</div>
-
-
-<div class="theater-list">
-    <div class="theater-card" *ngFor="let theater of theaters">
-        <div class="theater-info">
-            <div class="theater-name">
-                {{ theater.name }}
-                <span class="info-icon"><fa-icon [icon]="faInfo"></fa-icon></span>
-            </div>
-            <div class="features">
-                <span *ngFor="let feature of theater.features"><fa-icon [icon]="faMobile"></fa-icon> {{ feature }}</span>
-            </div>
-            <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="!loading">
+    <div class="movie-header">
+        <h2>{{ movieName }} - {{ movie.language }}</h2>
+        <div class="genres">
+            <span *ngFor="let genre of movie.genre">{{ genre }}</span>
         </div>
-        <div class="showtimes">
-            <div *ngFor="let showtime of theater.showtimes" class="showtime-box"
-                [class.sold-out]="!showtime.seatsAvailable">
-                <span class="time">{{ showtime.time }}</span>
-                <span class="format">{{ showtime.format }}</span>
+    </div>
+
+    <hr class="divider-line">
+
+    <div class="date-filter-section">
+        <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+        <div class="dates" *ngFor="let date of dates; let i = index">
+            <button [ngClass]="selectedDate === formattedDate(date)  ? 'selected' : ''" (click)="selectDate(date)">{{
+                date }}</button>
+        </div>
+        <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
+
+        <div class="filters">
+            <select>
+                <option>English - 2D</option>
+            </select>
+            <select>
+                <option>Filter Sub Regions</option>
+                <!-- Populate dynamically if required -->
+            </select>
+            <select >
+                <option>Filter Price Range</option>
+                <option value="0-100">₹0 - ₹100</option>
+                <option value="101-200">₹101 - ₹200</option>
+                <option value="201-300">₹201 - ₹300</option>
+                <option value="301-500">₹301 - ₹500</option>
+            </select>
+            <select>
+                <option>Filter Show Timings</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+                <option value="night">Night</option>
+            </select>
+            <span class="search-icon"><fa-icon [icon]="faSearch"></fa-icon></span>
+        </div>
+    </div>
+
+    <div class="theater-list">
+        <div class="theater-card" *ngFor="let theater of theaters">
+            <div class="theater-info">
+                <div class="theater-name">
+                    {{ theater.name }}
+                    <span class="info-icon"><fa-icon [icon]="faInfo"></fa-icon></span>
+                </div>
+                <div class="location">
+                    <p>{{ theater.location.address }}, {{ theater.location.city }}, {{ theater.location.state }}</p>
+                </div>
+                <div class="features">
+                    <span *ngFor="let amenity of theater.amenities">
+                        <fa-icon [icon]="faMobile"></fa-icon> {{ amenity }}
+                    </span>
+                </div>
+                <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
+            </div>
+
+            <div class="showtimes">
+                <div *ngFor="let category of theater.seating.categories">
+                    <div class="showtime-category">
+                        <h4>{{ category.type }} (₹{{ category.price }})</h4>
+                    </div>
+                </div>
+                <div *ngFor="let showtime of theater.showtimes" class="showtime-box"
+                    [class.sold-out]="!showtime.seatsAvailable">
+                    <span class="time">{{ showtime.time }}</span>
+                    <span class="format">{{ showtime.format }}</span>
+                </div>
             </div>
         </div>
     </div>

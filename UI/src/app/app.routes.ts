@@ -10,7 +10,7 @@ export const routes: Routes = [
     {path:'explore/home/:location',component:HomeComponent},
     {path:'explore/movies/:location',component:MovieDetailComponent},
     {path:'movies/:location/:name/:id',component:EventSectionComponent},
-    {path:'buytickets/:location/:eventName/:date',component:BookTicketComponent},
+    {path:'buytickets/:location/:eventName/:id',component:BookTicketComponent},
     {path:'user-profile',component:UserProfileComponent},
     {path:'signIn',component:SignInComponent},
     {path:'login',component:SignInComponent},
