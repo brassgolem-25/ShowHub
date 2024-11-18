@@ -13,7 +13,7 @@ export const createMovie = async (req, res) => {
 // Get all movies
 export const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find({}, { _id: 0, __v: 0 });
+    const movies = await Movie.find({}, {  __v: 0 });
     return res.json(movies);
   } catch (error) {
     return res.status(500).json({ message: error.message });

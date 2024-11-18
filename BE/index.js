@@ -29,7 +29,7 @@ app.use('/api/login',loginRoute)
 app.use('/api/movies',movieRoute)
 
 //theater
-app.use('/api/theater',theaterRoute)
+app.use('/api/theatre',theaterRoute)
 
 //showTime
 app.use('/api/showTime',showTimeRoute)

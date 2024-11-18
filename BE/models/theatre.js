@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const theaterSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -34,12 +36,6 @@ const theaterSchema = new mongoose.Schema({
     },
     seating: {
         totalSeats: Number,
-        categories: [
-            {
-                type: String,
-                price: Number,
-            },
-        ],
     },
     operatingHours: {
         openingTime: String,
