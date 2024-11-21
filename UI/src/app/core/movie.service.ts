@@ -9,13 +9,18 @@ import { Observable,map } from 'rxjs';
 export class MovieService {
 
   movieObservable:any;
+  latestIMDBArr:{"imdbID":string}[]=[];
   constructor(private http:HttpClient) { 
     this.movieObservable = this.getAllMovies();
   }
 
 
-  getRecommendedMovies():Observable<Movie[]>{
-    return this.http.get<Movie[]>('http://localhost:3000/api/movies/few');
+  getRecommendedMovies(imdbArr:[]):Observable<Movie[]>{
+    return this.http.post<Movie[]>('http://localhost:3000/api/movies/few',imdbArr);
+  }
+
+  getTrendingIMDBID():Observable<any> {
+    return this.http.get<any>('http://localhost:3000/api/movies/getTrendingMoviesIDs');
   }
 
   getAllMovies():Observable<Movie[]> {
@@ -25,8 +30,10 @@ export class MovieService {
   getFilteredMovies(selectedLanguages:string[] | undefined,selectedGenres:string[] | undefined){
     return this.movieObservable.pipe(map((movieArr : Movie[])=>{
         return movieArr.filter((movie: Movie)=>{
-          const isLanguageSelected = selectedLanguages?.length === 0 || selectedLanguages?.includes(movie.language); 
-          const isGenreSelected = selectedGenres?.length === 0 || selectedGenres?.includes(movie.genre); 
+          const languageArr = movie.language.split(", ");
+          const genreArr = movie.genre.split(", ")
+          const isLanguageSelected = selectedLanguages?.length === 0 || selectedLanguages?.some((language)=>(languageArr.includes(language))); 
+          const isGenreSelected = selectedGenres?.length === 0 || selectedGenres?.some((genre)=>(genreArr.includes(genre))); 
           return isLanguageSelected && isGenreSelected;
         })
     }))
@@ -38,5 +45,9 @@ export class MovieService {
 
   updateCustomerRating(reviewData:{}):Observable<any>{
     return this.http.post('http://localhost:3000/api/movies/addCustomerReview',reviewData)
+  }
+
+  getDefaultSuggestion():Observable<any>{
+    return this.http.get<any>('http://localhost:3000/api/movies/getAutoSuggestion');
   }
 }

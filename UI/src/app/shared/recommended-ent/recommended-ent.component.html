@@ -1,4 +1,5 @@
-<div>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="!loading">
     <!-- movie section -->
     <div class="recommendations-section">
         <div class="heading">

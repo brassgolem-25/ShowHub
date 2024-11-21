@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { faSearch,faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogService } from '../../core/dailog.service';
 
 @Component({
   selector: 'app-location-dialog',
@@ -13,8 +15,11 @@ import { Router } from '@angular/router';
   templateUrl: './location-dialog.component.html',
   styleUrl: './location-dialog.component.css'
 })
-export class LocationDialogComponent {
-  constructor(private router:Router){}
+export class LocationDialogComponent implements OnInit {
+  currLocation:string='';
+  constructor(private router:Router,private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) public data:any,public dS:DialogService){
+    this.currLocation = data['location'];
+  }
   faSearch=faSearch;
   faLocationCrosshairs=faLocationCrosshairs;
   popularCities = [
@@ -31,6 +36,13 @@ export class LocationDialogComponent {
   ];
 
   selectedLocation(location:string){
-    this.router.navigate(['explore','home',location]);
+    let urlSegment = decodeURIComponent(this.router.url).split('/');
+    const index = urlSegment.indexOf(this.currLocation);
+    urlSegment[index] = location;
+    const newUrlSegment = urlSegment.splice(1);
+    this.router.navigate(newUrlSegment,{replaceUrl:true});
+    this.dS.closeDialog()
+  }
+  ngOnInit(): void {
   }
 }

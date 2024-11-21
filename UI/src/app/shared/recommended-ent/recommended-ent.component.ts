@@ -5,16 +5,18 @@ import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-recommended-ent',
   standalone: true,
-  imports: [MatCardModule, CommonModule, RouterModule, RouterLink, MatIconModule],
+  imports: [MatCardModule, CommonModule, RouterModule, RouterLink, MatIconModule,LoadingSpinnerComponent],
   templateUrl: './recommended-ent.component.html',
   styleUrl: './recommended-ent.component.css'
 })
 export class RecommendedEntComponent implements OnInit {
-  currLocation:string = "";
+  currLocation: string = "";
+  loading:boolean = true;
   movies: Movie[] = [];
   events: Movie[] = [
     {
@@ -109,13 +111,17 @@ export class RecommendedEntComponent implements OnInit {
   funEvents = this.events;
 
 
-  constructor(private mS: MovieService,private route:ActivatedRoute) { }
+  constructor(private mS: MovieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.mS.getRecommendedMovies().subscribe((moviesArr: Movie[]) => {
-      this.movies = moviesArr;
+    this.mS.getTrendingIMDBID().subscribe((imdbArr: []) => {
+      this.mS.getRecommendedMovies(imdbArr).subscribe((moviesArr: Movie[]) => {
+        this.movies = moviesArr;
+        this.loading=false;
+      })
     })
-    this.route.params.subscribe((params)=>{
+
+    this.route.params.subscribe((params) => {
       this.currLocation = params['location'];
     })
   }

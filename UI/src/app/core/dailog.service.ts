@@ -10,9 +10,10 @@ export class DialogService {
 
   constructor(private dialog:MatDialog) { }
 
-  openDialog(){
+  openDialog(locationData:{}){
     this.dialog.open(LocationDialogComponent,{
       width:'800px',
+      data:locationData
     })
   }
 

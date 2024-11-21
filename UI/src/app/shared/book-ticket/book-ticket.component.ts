@@ -10,33 +10,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSearch, faChevronLeft, faChevronRight, faInfo, faMobile ,faStar} from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faChevronLeft, faChevronRight, faInfo, faMobile, faStar } from '@fortawesome/free-solid-svg-icons'
 import { ActivatedRoute, Router } from '@angular/router';
 import { TheatreService } from '../../core/theater.service';
 import { MovieService } from '../../core/movie.service';
-import { Movie } from '../types/movie';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-
-interface Showtime {
-  time: string;
-  format: string;
-  availability: number;
-}
-
-interface Theater {
-  name: string;
-  showtimes: Showtime[];
-}
+import { ShowTimeService } from '../../core/showTime.service';
+import { ShowTime } from '../types/showTime';
 
 @Component({
   selector: 'app-book-ticket',
   standalone: true,
-  imports: [HeaderComponent, TabsComponent, CommonModule, MatButtonModule, MatIconModule, MatButtonToggleModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule, FontAwesomeModule,LoadingSpinnerComponent],
+  imports: [HeaderComponent, TabsComponent, CommonModule, MatButtonModule, MatIconModule, MatButtonToggleModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule, FontAwesomeModule, LoadingSpinnerComponent],
   templateUrl: './book-ticket.component.html',
   styleUrls: ['./book-ticket.component.css']
 })
 export class BookTicketComponent implements OnInit {
-  faStar=faStar;
+  faStar = faStar;
   faSearch = faSearch;
   faChevronLeft = faChevronLeft
   faChevronRight = faChevronRight;
@@ -44,14 +34,17 @@ export class BookTicketComponent implements OnInit {
   faMobile = faMobile;
   currDate: string = "";
   dates: string[] = [];
+  movieGenre:String[]=[];
   movieName: string = '';
-  movieLanguage:string='';
+  movieLanguage: string = '';
   imdbID: string = '';
   currLocation: string = '';
-  selectedDate: string='';
-  movie:any;
-  loading:boolean = true;
-  constructor(private route: ActivatedRoute, private theatreSer: TheatreService,private mS : MovieService ,private router: Router) {
+  selectedDate: string = '';
+  movie: any;
+  loading: boolean = true;
+  showTimeArr:any;
+
+  constructor(private route: ActivatedRoute, private theatreSer: TheatreService, private mS: MovieService, private showTimeSer: ShowTimeService, private router: Router) {
     const currDateArr = Date().slice(0, 15).split(" "); //[Mon,04,Nov,2024]
     let curDate = Number(currDateArr[2]);
     this.dates.push(currDateArr[0] + " " + curDate + " " + currDateArr[1]);
@@ -68,12 +61,17 @@ export class BookTicketComponent implements OnInit {
   // Method to change selected date
   selectDate(date: any) {
     this.selectedDate = this.formattedDate(date);
-    this.router.navigate([], {relativeTo: this.route, queryParams: { date: this.selectedDate } })
+    this.router.navigate([], { relativeTo: this.route, queryParams: { date: this.selectedDate } })
+    const data = {
+      "imdbID": this.imdbID,
+      "location": this.currLocation
+    }
+    this.getTheaterShowTimeDetails(data);
   }
 
-  formattedDate(date:string){
+  formattedDate(date: string) {
     const currYear = (new Date()).getFullYear();
-    const dateObj = new Date(date+currYear);
+    const dateObj = new Date(date + currYear);
     return `${dateObj.getFullYear()}${dateObj.getMonth() + 1}${dateObj.getDate()}`;
   }
 
@@ -89,20 +87,35 @@ export class BookTicketComponent implements OnInit {
       "imdbID": this.imdbID,
       "location": this.currLocation
     }
-    this.theatreSer.getTheatreDetails(data).subscribe((res) => {
-      this.theaters = res;
-      this.mS.getMovieByID(this.movieName,this.imdbID).subscribe((data:any)=>{
-        this.movie = data;
-        this.movieLanguage=this.movie['language']
-        this.loading=false;
-      })
-    })
-
-    this.route.queryParams.subscribe((data)=>{
+    this.getTheaterShowTimeDetails(data);
+    this.route.queryParams.subscribe((data) => {
       this.selectedDate = data['date'];
     })
 
 
+  }
+
+  getTheaterShowTimeDetails(data: { imdbID: string; location: string }){
+    this.theatreSer.getTheatreDetails(data).subscribe((theaters) => {
+      this.theaters = theaters;
+      this.mS.getMovieByID(this.movieName, this.imdbID).subscribe((movieData: any) => {
+        this.movie = movieData;
+        this.movieGenre = movieData['genre'].split(",");
+        this.movieLanguage=movieData['language']
+        this.theaters.forEach((theater:any,index:number)=>{
+          const req = {
+            "imdbID": this.imdbID,
+            "theatreID": theater['theatreID'],
+            "date": this.selectedDate
+          }
+          this.showTimeSer.getShowTimeDetails(req).subscribe((showTimeRes:ShowTime)=>{
+            this.showTimeArr=showTimeRes;
+            this.theaters[index].showTimes = this.showTimeArr[0]['showtimes'];
+          })
+        })
+        this.loading = false;
+      })
+    })
   }
 
 }

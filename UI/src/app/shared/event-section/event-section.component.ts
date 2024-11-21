@@ -45,8 +45,8 @@ export class EventSectionComponent implements OnInit {
     const movieName = this.route.snapshot.params['name'];
     this.imdbID = this.route.snapshot.params['id'];
     this.mS.getMovieByID(movieName, this.imdbID).subscribe((movieObj: any) => {
-      this.movie = movieObj[0];
-      this.userReviews = movieObj[0]['customerReview'];
+      this.movie = movieObj;
+      this.userReviews = movieObj['customerReview'];
       this.movieTitle = this.movie.title.replace(/[: ]+/g, "-");
       this.movieCast = this.movie.actors.split(", ");
       this.loading = false;

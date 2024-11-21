@@ -5,7 +5,7 @@
     <div class="movie-header">
         <h2>{{ movieName }} - {{ movie.language }}</h2>
         <div class="genres">
-            <span *ngFor="let genre of movie.genre">{{ genre }}</span>
+            <span *ngFor="let genre of movieGenre">{{ genre }}</span>
         </div>
     </div>
 
@@ -20,8 +20,8 @@
         <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
 
         <div class="filters">
-            <select>
-                <option>English - 2D</option>
+            <select >
+                <option value="{{movie.language}}-2D">{{movie.language}} - 2D</option>
             </select>
             <select>
                 <option>Filter Sub Regions</option>
@@ -69,8 +69,8 @@
                         <h4>{{ category.type }} (₹{{ category.price }})</h4>
                     </div>
                 </div>
-                <div *ngFor="let showtime of theater.showtimes" class="showtime-box"
-                    [class.sold-out]="!showtime.seatsAvailable">
+                <div *ngFor="let showtime of theater.showTimes" class="showtime-box"
+                    [class.sold-out]="showtime.availability===0">
                     <span class="time">{{ showtime.time }}</span>
                     <span class="format">{{ showtime.format }}</span>
                 </div>

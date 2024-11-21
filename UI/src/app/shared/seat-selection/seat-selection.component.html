@@ -1,0 +1,60 @@
+<!-- Movie Details -->
+<div class="movie-details">
+    <h1>Bhool Bhulaiyaa 3 UA</h1>
+    <p>INOX: Raghuleela Mall, Vashi | Today, 20 Nov</p>
+  </div>
+  
+  <!-- Showtimes -->
+  <div class="showtimes">
+    <button
+      mat-flat-button
+      *ngFor="let time of showtimes"
+      (click)="selectTime(time)"
+      class="showtime-btn"
+    >
+      {{ time }}
+    </button>
+  </div>
+  
+  <!-- Seating Layout -->
+  <div class="seating-section" *ngFor="let section of seatingSections">
+    <h3 class="seating-section-title">
+      {{ section.name }} - Rs. {{ section.price }}
+    </h3>
+    <div class="seating-grid">
+      <!-- Row Labels -->
+      <div class="row-label" *ngFor="let row of seatRows">{{ row }}</div>
+      <!-- Seat Buttons -->
+      <div class="seats-row" *ngFor="let rowSeats of section.seats">
+        <button
+          mat-stroked-button
+          *ngFor="let seat of rowSeats"
+          [ngClass]="getSeatClass(seat)"
+          (click)="selectSeat(seat)"
+          [disabled]="seat.status === 'sold'"
+        >
+          {{ seat.number }}
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Screen -->
+  <div class="screen">All eyes this way, please!</div>
+  
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color legend-available"></div> Available
+    </div>
+    <div class="legend-item">
+      <div class="legend-color legend-bestseller"></div> Bestseller
+    </div>
+    <div class="legend-item">
+      <div class="legend-color legend-selected"></div> Selected
+    </div>
+    <div class="legend-item">
+      <div class="legend-color legend-sold"></div> Sold
+    </div>
+  </div>
+  
