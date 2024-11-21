@@ -2,6 +2,7 @@ import express from 'express';
 import testRoute from './api/test.js'
 import loginRoute from './api/login.js'
 import mongooseConnect from './config/db.js'
+import {connectRedis} from './config/redis.js'
 import movieRoute from './routes/movieRoutes.js'
 import theaterRoute from './routes/theaterRoutes.js'
 import showTimeRoute from './routes/showTimeRoutes.js'
@@ -20,6 +21,8 @@ app.use(cookieParser());
 
 let connection = await mongooseConnect();
 console.log(connection);
+
+await connectRedis();
 //test 
 app.use('/api/test',testRoute)
 //login

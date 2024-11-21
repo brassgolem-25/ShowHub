@@ -21,6 +21,7 @@
     "mongoose": "^8.8.0",
     "nodemon": "^3.1.7",
     "process-env": "^2.0.2",
+    "redis": "^4.7.0",
     "uuidv4": "^6.2.13"
   },
   "type": "module"
