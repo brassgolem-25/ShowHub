@@ -3,13 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import { configDotenv } from 'dotenv';
-import { createOrUpdateUser,getAllUsers,getUserWithEmail } from '../controllers/userController.js';
+import { createOrUpdateUser,getAllUsers,getUserWithEmail,getCurrentlyLoggedInUser } from '../controllers/userController.js';
+import { postgreClient } from '../config/postgre.js';
+import {authenticate,authorize} from '../middleware/authMiddleware.js';
+
 
 configDotenv();
 const router = express.Router();
 router.use(express.json());
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, "http://localhost:3000/auth/google/callback");
+const secret = process.env.JWTSecret;
 
 router.get('/google', (req, res) => {
 
@@ -40,7 +44,7 @@ router.get('/google/callback', async (req, res) => {
 
         let userResponse = await createOrUpdateUser(name,email,googleId,"google");
 
-        const secret = process.env.JWTSecret;
+        
         const token = jwt.sign({ data: email }, secret, { expiresIn: '12h' });
         res.cookie('JWT',token);
 
@@ -56,7 +60,7 @@ router.get('/check-session',async (req,res)=>{
         if(JWT_TOKEN===undefined){
             return res.json({loggedIn:false});
         }
-        const secret = process.env.JWTSecret;
+        
         const parseJWT = jwt.verify(JWT_TOKEN,secret);
         return res.json({ loggedIn: true, user: parseJWT });
     }catch (error) {
@@ -67,7 +71,7 @@ router.get('/check-session',async (req,res)=>{
 router.post('/facebook-authentication',async(req,res)=>{
     try{
         const {id,email} = req.body;
-        const secret = process.env.JWTSecret;
+        
         const token = jwt.sign({ data: email }, secret, { expiresIn: '12h' });
         res.cookie('JWT',token);
         return res.json({success:true,message:"Cookie Created"})
@@ -76,11 +80,28 @@ router.post('/facebook-authentication',async(req,res)=>{
     }
 })
 
+router.get('/generate-token',async(req,res)=>{
+    try{
+        const {email}  = req.query;
+        const result = (await postgreClient.query(`select count(*)  from user_role where email_id = $1`,[email])).rows[0].count;
+        if(result>0){
+        const token = jwt.sign({ email: email ,role:'admin'}, secret, { expiresIn: '12h' });
+        return res.send(token);
+        }
+        return res.status(400).send('Invalid credentials');
+    }catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+})
 //
 router.post('/createUser',createOrUpdateUser);
 
-router.get('/getAllUser',getAllUsers);
+router.get('/getAllUsers',authenticate,authorize('admin'),getAllUsers);
 
-router.get('/userData',getUserWithEmail)
+router.get('/userData',getUserWithEmail);
+
+router.get('/getCurrentlyLoggedInUser',getCurrentlyLoggedInUser);
+
+
 
 export default router;

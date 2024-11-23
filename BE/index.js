@@ -3,10 +3,13 @@ import testRoute from './api/test.js'
 import loginRoute from './api/login.js'
 import mongooseConnect from './config/db.js'
 import {connectRedis} from './config/redis.js'
+import { connectPostgre } from './config/postgre.js';
 import movieRoute from './routes/movieRoutes.js'
 import theaterRoute from './routes/theaterRoutes.js'
 import showTimeRoute from './routes/showTimeRoutes.js'
 import authRoute from './routes/authRoutes.js'
+import cityRoute from './routes/cityRoute.js'  
+import liveEventRoute from './routes/liveEventRoute.js' 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -22,7 +25,12 @@ app.use(cookieParser());
 let connection = await mongooseConnect();
 console.log(connection);
 
+//connect to redis
 await connectRedis();
+
+//connect to postgre
+await connectPostgre();
+
 //test 
 app.use('/api/test',testRoute)
 //login
@@ -37,8 +45,14 @@ app.use('/api/theatre',theaterRoute)
 //showTime
 app.use('/api/showTime',showTimeRoute)
 
+//city
+app.use('/api/city',cityRoute)
+
+//live events
+app.use('/api/liveEvents',liveEventRoute)
+
 //Authentication
-app.use('/auth',authRoute)
+app.use('/api/auth',authRoute)
 
 app.listen(3000 || process.env.port , (req,res)=>{
     console.log("Listening on port 3000");

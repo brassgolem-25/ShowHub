@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import {postgreClient} from '../config/postgre.js';
 
 // Create a new User entry
 export const createOrUpdateUser = async (name,email, oAuthID,provider,req,res) => {
@@ -44,6 +45,17 @@ export const getUserWithEmail = async (req,res)=>{
     const user = await User.findOne({email},{name:1,email:1,_id:0});
     if(!user) return res.json({message:"No User found!"});
     return res.json(user);
+  }catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+//
+export const getCurrentlyLoggedInUser = async(req,res)=>{
+  try{
+    const result = await postgreClient.query(`select count(id)  from sessions where is_active='true'`);
+    const rowCount = result.rows[0];
+    res.json(rowCount)
   }catch (error) {
     return res.status(500).json({ message: error.message });
   }
