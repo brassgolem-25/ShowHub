@@ -1,59 +1,62 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div *ngIf="!loading" class="movie-detail-container">
-  <div class="movie-container">
-    <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="movie-poster" />
-    <div class="movie-details">
-      <h1>{{ movie.title }}</h1>
-      <div class="rating-section">
-        <span class="rating"><fa-icon [icon]="faStar"></fa-icon>{{ movie.imdbRating }}/10</span>
-        <span class="votes">(900 Votes)</span>
-        <button class="rate-btn" (click)="openReviewDialog()">Rate now</button>
-      </div>
-      <div class="movie-info">
-        <div class="formats">2D, IMAX 2D</div>
-        <div class="language">{{ movie.language }}</div>
-        <div class="meta">{{ movie.runtime }} • {{ movie.genre }} • {{ movie.released }}</div>
-      </div>
-      <button class="book-tickets">
-        <a [routerLink]="['/buytickets', currLocation,movie.title,imdbID]" [queryParams]="{date:currDate}" >Book Tickets</a>
-      </button>
+<div *ngIf="!loading" class="event-container">
+  <!-- Event Banner -->
+  <div class="event-banner">
+    <img src="assets/event-banner.jpg" alt="Event Banner" />
+  </div>
+
+  <!-- Event Details -->
+  <div class="event-details">
+    <div class="event-info">
+      <h1 class="event-title">{{eventData.title}}</h1>
+      <p class="event-meta">Indie, Pop | Hindi | 18yrs + | 7hrs 30mins</p>
+      <p class="event-time-location">
+        <span>{{eventData.event_date}}</span> |
+        <span>{{eventData.venue_name}} : {{eventData.city}}</span> |
+        <span>₹1,799 onwards</span>
+      </p>
+      <button class="book-button">Book</button>
     </div>
   </div>
-  
-    <section class="about">
-      <h2>About the Movie</h2>
-      <p>{{ movie.plot }}</p>
-    </section>
-  
-    <section class="cast">
-      <h2>Cast</h2>
-      <div class="cast-grid">
-        <div *ngFor="let castMember of movieCast">
-          <img [src]="movieCastImg(castMember)" alt="{{ castMember }}" />
-          <p>{{ castMember }}</p>
-          <p>Actor</p>
-        </div>
-      </div>
-    </section>
 
-  
-    <section class="reviews">
-      <h2>Top Reviews</h2>
-      <div class="review-tags">
-        <button *ngFor="let tag of reviewTags" class="review-tag">{{ tag.name }} ({{ tag.count }})</button>
-      </div>
-      <div class="review-list">
-        <div *ngFor="let review of userReviews" class="review">
-          <p><strong>{{ review.user }}</strong> <span class="rating">{{ review.rating }}/10</span></p>
-          <p class="review-comment">{{ review.comment }}</p>
-          <div class="review-actions">
-            <span>{{ review.likes }} <fa-icon [icon]="faThumbsUp"></fa-icon></span>
-            <span>{{ review.dislikes }}<fa-icon [icon]="faThumbsDown"></fa-icon></span>
-          </div>
-        </div>
-      </div>
-    </section>  
+  <!-- Interested Section -->
+  <div class="interested-section">
+    <p>Click on Interested to stay updated about this event.</p>
+    <button class="interested-button">Interested?</button>
+    <p class="interest-count">💖 3926 people have shown interest recently</p>
   </div>
-  
+
+  <!-- Performers Section -->
+  <div class="performers-section">
+    <div class="performer">
+      <img src="assets/dj-chetas.jpg" alt="DJ Chetas" />
+      <p>DJ Chetas</p>
+    </div>
+    <div class="performer">
+      <img src="assets/anuv-jain.jpg" alt="Anuv Jain" />
+      <p>Anuv Jain</p>
+    </div>
+    <div class="performer">
+      <img src="assets/lucky-ali.jpg" alt="Lucky Ali" />
+      <p>Lucky Ali</p>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-section">
+    <h2>About</h2>
+    <p>
+      {{eventData.description}}
+    </p>
+  </div>
+
+  <!-- Map Section -->
+  <div class="map-section">
+    <h3>{{eventData.city}}</h3>
+    <p>{{eventData.venue_name}}: {{eventData.city}}, {{eventData.state}}, India</p>
+    <iframe [src]="mapURL" width="100%" height="300" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
+

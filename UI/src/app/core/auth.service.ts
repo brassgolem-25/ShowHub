@@ -11,15 +11,15 @@ export class AuthService {
   constructor(private http : HttpClient) { }
   
   authenticateGoogle():Observable<any>{
-    return this.http.get<any>(`http://localhost:3000/auth/google?location=Mumbai`);
+    return this.http.get<any>(`http://localhost:3000/api/auth/google?location=Mumbai`);
   }
 
   checkAuthStatus():Observable<any>{
-    return this.http.get('http://localhost:3000/auth/check-session', { withCredentials: true })
+    return this.http.get('http://localhost:3000/api/auth/check-session', { withCredentials: true })
   }
 
   authenticateFacebook(userData:{}):Observable<any>{
-    return this.http.post<any>('http://localhost:3000/auth/facebook-authentication',userData,{ withCredentials: true });
+    return this.http.post<any>('http://localhost:3000/api/auth/facebook-authentication',userData,{ withCredentials: true });
   }
 
   getUserDetails(email:string):Observable<any>{

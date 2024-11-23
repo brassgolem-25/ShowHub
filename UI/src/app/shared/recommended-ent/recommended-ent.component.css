@@ -29,32 +29,43 @@
     gap: 35px; 
 }
 
-.movie-card, .event-card {
+.event-card {
     width: 230px;
     flex-shrink: 0;
     position: relative;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 2px; 
-    /* Consistent border radius for cards */
+    border-radius: 5px; /* Slightly rounded corners for better aesthetics */
+    overflow: hidden; /* Prevents any overflowing content */
 }
 
-.movie-card img, .event-card img {
+.event-card img {
     height: 250px;
     width: 230px;
     object-fit: cover;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0; 
+    cursor: pointer;
+    /* Smooth corners for the top of the image */
 }
 
-.movie-info, .event-info {
-    padding: 10px;
-}
-
-.movie-stats {
+.event-info {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: #555;
+    justify-content: left; /* Center-align the rating */
+    background-color: #0f0f0f; 
+    padding: 5px 10px; /* Add some padding around the rating */
+    font-size: 14px;
+    font-weight: light;
+    color: white; /* Darker text for readability */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Optional: Thin separator below the rating */
+}
+
+.event-card span{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+mat-card {
+    background-color: transparent !important; /* Remove the background color */
+    box-shadow: none !important; /* Remove the shadow */
+    border: none; /* Optional: Remove any borders if present */
 }
 
 .like-icon,
@@ -63,14 +74,15 @@
 }
 
 mat-card-title {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 550;
     margin-top: 5px;
 }
 
 mat-card-subtitle {
-    font-size: 12px;
-    color: #777;
+    font-size: 16px;
+    font-weight: lighter;
+    color: #656464;
 }
 
 

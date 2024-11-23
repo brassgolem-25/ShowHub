@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
-import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { LiveEventService } from '../../core/live-events.service';
+import { LiveEvents } from '../types/liveEvent';
 
 @Component({
   selector: 'app-recommended-ent',
@@ -14,6 +16,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
   templateUrl: './recommended-ent.component.html',
   styleUrl: './recommended-ent.component.css'
 })
+
 export class RecommendedEntComponent implements OnInit {
   currLocation: string = "";
   loading:boolean = true;
@@ -106,12 +109,12 @@ export class RecommendedEntComponent implements OnInit {
     }
 
   ]
-
+  liveEvents:LiveEvents[]=[];
   gameEvents = this.events;
   funEvents = this.events;
 
 
-  constructor(private mS: MovieService, private route: ActivatedRoute) { }
+  constructor(private mS: MovieService, private liveEventSer:LiveEventService ,private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit() {
     this.mS.getTrendingIMDBID().subscribe((imdbArr: []) => {
@@ -124,6 +127,25 @@ export class RecommendedEntComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.currLocation = params['location'];
     })
+    const data = {
+      "city":this.currLocation
+    }
+    this.liveEventSer.getBasicLiveEventsByLocation(data).subscribe((events:LiveEvents[])=>{
+      this.liveEvents=events;
+    })
   }
 
+  redirectToMoviePage(title:string,imdbID:string){  
+    this.router.navigate(['/movies',this.currLocation,title,imdbID])
+  }
+
+  parsedDate(date:string){
+    const dateString = new Date(date);
+    return dateString.toDateString();
+  }
+
+  redirectToEventPage(event:LiveEvents){
+    const name = (event.title).toLowerCase().split(" ").join("-");
+    this.router.navigate(['/events',this.currLocation,name,event.event_code])
+  }
 }

@@ -7,19 +7,18 @@
             <a routerLink="/explore/movies/{{currLocation}}" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <mat-card class="movie-card" *ngFor="let movie of movies">
-                <a [routerLink]="['/movies',currLocation,movie.title,movie.imdbID]"><img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" /></a>
-                <div class="movie-info">
-                    <div class="movie-stats">
-                        <ng-container *ngIf="movie.imdbRating">
-                            <span class="star-icon">⭐</span> {{ movie.imdbRating }} / 10
-                        </ng-container>
-                    </div>
-                    <mat-card-title>{{ movie.title }}</mat-card-title>
-                    <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>
+            <mat-card class="event-card" *ngFor="let movie of movies">
+                <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}"
+                    (click)="redirectToMoviePage(movie.title,movie.imdbID)" />
+                <div class="event-info">
+                    <ng-container *ngIf="movie.imdbRating">
+                        <span class="star-icon">⭐</span> {{ movie.imdbRating }} / 10
+                    </ng-container>
                 </div>
+                <mat-card-title>{{ movie.title }}</mat-card-title>
+                <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>
             </mat-card>
-        </div>     
+        </div>
     </div>
 
     <!-- Live Events Section -->
@@ -29,15 +28,12 @@
             <a href="#" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <!-- Event Cards -->
-            <mat-card *ngFor="let event of events">
-                <div class="event-card">
-                    <img mat-card-image [src]="event.poster" [alt]="event.title">
-                    <div class="event-info">
-                        <mat-card-title>{{ event.title }}</mat-card-title>
-                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
-                    </div>
+            <mat-card class="event-card" *ngFor="let event of liveEvents">
+                <img mat-card-image [src]="event.image_url" [alt]="event.title" (click)="redirectToEventPage(event)">
+                <div class="event-info">
+                    <span>{{ parsedDate(event.start_date) }}</span>
                 </div>
+                <mat-card-title>{{ event.title }}</mat-card-title>
             </mat-card>
         </div>
     </div>
@@ -49,13 +45,11 @@
             <a href="#" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <mat-card *ngFor="let game of gameEvents">
-                <div class="event-card">
-                    <img mat-card-image [src]="game.poster" [alt]="game.title">
-                    <div class="event-info">
-                        <mat-card-title>{{ game.title }}</mat-card-title>
-                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
-                    </div>
+            <mat-card class="event-card" *ngFor="let game of gameEvents">
+                <img mat-card-image [src]="game.poster" [alt]="game.title">
+                <div class="event-info">
+                    <mat-card-title>{{ game.title }}</mat-card-title>
+                    <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
                 </div>
             </mat-card>
         </div>
@@ -68,13 +62,11 @@
             <a href="#" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <mat-card *ngFor="let e of funEvents">
-                <div class="event-card">
-                    <img mat-card-image [src]="e.poster" [alt]="e.title">
-                    <div class="event-info">
-                        <mat-card-title>{{ e.title }}</mat-card-title>
-                        <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
-                    </div>
+            <mat-card class="event-card" *ngFor="let e of funEvents">
+                <img mat-card-image [src]="e.poster" [alt]="e.title">
+                <div class="event-info">
+                    <mat-card-title>{{ e.title }}</mat-card-title>
+                    <mat-card-subtitle>10-Oct 24</mat-card-subtitle>
                 </div>
             </mat-card>
         </div>

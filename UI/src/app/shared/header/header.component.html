@@ -7,7 +7,7 @@
           <mat-option *ngFor="let option of filteredOptions" [value]="option" (click)="redirectToEventPage(option)">{{option.title}}</mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  <button mat-button class="location" (click)="openDialog()">{{currLocation}} <mat-icon>expand_more</mat-icon></button>
+  <button mat-button class="location" (click)="openDialog()">{{parsedLocation(currLocation)}} <mat-icon>expand_more</mat-icon></button>
   <div *ngIf="!isUserLoggedIn">
     <button mat-raised-button color="primary"><a routerLink="/login">Sign In</a></button>
   </div>

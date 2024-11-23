@@ -3,11 +3,14 @@
     <button class="search-icon">
       <fa-icon [icon]="faSearch"></fa-icon>
     </button>
-    <input type="text" class="city-search-input" placeholder="Search for your city" />
+    <input type="text" matInput class="city-search-input" [formControl]="cityControl" [matAutocomplete]="auto" placeholder="Search for your city" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions" [value]="option" (click)="selectedLocation(option)">{{option}}</mat-option>
+    </mat-autocomplete>
   </div>
   <hr class="divider-line">
-  <button mat-button class="detect-location-btn">
-    <fa-icon [icon]="faLocationCrosshairs"></fa-icon>
+  <button mat-button class="detect-location-btn" (click)="detectUserLocation()">
+    <fa-icon [icon]="faLocationCrosshairs" ></fa-icon>
     Detect my location
   </button>
 

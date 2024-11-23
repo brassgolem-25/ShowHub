@@ -65,4 +65,9 @@ export class HeaderComponent implements OnInit {
     const imdbID = option.imdbID;
     this.router.navigate(['/movies',this.currLocation,title,imdbID])
   }
+
+  parsedLocation(location:string){
+    const decodedLocation = (location.split("-").map((char:string) => char.charAt(0).toUpperCase() + char.slice(1))).join(" ");
+    return decodedLocation;
+  }
 }
