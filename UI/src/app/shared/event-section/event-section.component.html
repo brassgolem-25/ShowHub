@@ -11,7 +11,7 @@
   <div class="event-details">
     <div class="event-info">
       <h1 class="event-title">{{eventData.title}}</h1>
-      <p class="event-meta">Indie, Pop | Hindi | 18yrs + | 7hrs 30mins</p>
+      <p class="event-meta">{{eventData.genre}} | {{eventData.minimum_age}}yrs + | 7hrs 30mins</p>
       <p class="event-time-location">
         <span>{{eventData.event_date}}</span> |
         <span>{{eventData.venue_name}} : {{eventData.city}}</span> |
@@ -25,22 +25,14 @@
   <div class="interested-section">
     <p>Click on Interested to stay updated about this event.</p>
     <button class="interested-button">Interested?</button>
-    <p class="interest-count">💖 3926 people have shown interest recently</p>
+    <p class="interest-count">💖 {{eventData.like_count}} people have shown interest recently</p>
   </div>
 
   <!-- Performers Section -->
   <div class="performers-section">
     <div class="performer">
-      <img src="assets/dj-chetas.jpg" alt="DJ Chetas" />
-      <p>DJ Chetas</p>
-    </div>
-    <div class="performer">
-      <img src="assets/anuv-jain.jpg" alt="Anuv Jain" />
-      <p>Anuv Jain</p>
-    </div>
-    <div class="performer">
-      <img src="assets/lucky-ali.jpg" alt="Lucky Ali" />
-      <p>Lucky Ali</p>
+      <img src="https://via.placeholder.com/100" alt="placeholder" />
+      <p>Performer Name</p>
     </div>
   </div>
 
@@ -58,5 +50,20 @@
     <p>{{eventData.venue_name}}: {{eventData.city}}, {{eventData.state}}, India</p>
     <iframe [src]="mapURL" width="100%" height="300" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
+
+  <div class="disclaimer-section">
+    <h2>Event Terms & Conditions</h2>
+    <p *ngFor="let condition of termsAndConditions"><fa-icon [icon]="faCheck"></fa-icon> {{condition}}</p>
+  </div>
+
+  <!-- Disclaimer Section -->
+<!-- Disclaimer Section -->
+<div class="disclaimer-section">
+  <h2>Event Disclaimer</h2>
+  <p *ngFor="let disclaimer of eventDisclaimer">
+  <fa-icon [icon]="faCheck"></fa-icon> {{disclaimer}}
+  </p>
+</div>
+
 </div>
 

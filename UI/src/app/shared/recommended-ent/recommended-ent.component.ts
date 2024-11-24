@@ -8,18 +8,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { LiveEventService } from '../../core/live-events.service';
 import { LiveEvents } from '../types/liveEvent';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-recommended-ent',
   standalone: true,
-  imports: [MatCardModule, CommonModule, RouterModule, RouterLink, MatIconModule,LoadingSpinnerComponent],
+  imports: [MatCardModule, CommonModule, RouterModule, RouterLink, MatIconModule, LoadingSpinnerComponent,FontAwesomeModule],
   templateUrl: './recommended-ent.component.html',
   styleUrl: './recommended-ent.component.css'
 })
 
 export class RecommendedEntComponent implements OnInit {
+  faArrowAltCircleLeft=faArrowAltCircleLeft;
   currLocation: string = "";
-  loading:boolean = true;
+  loading: boolean = true;
+  currentPage = 0;
+  itemsPerPage = 5;
   movies: Movie[] = [];
   events: Movie[] = [
     {
@@ -109,18 +113,18 @@ export class RecommendedEntComponent implements OnInit {
     }
 
   ]
-  liveEvents:LiveEvents[]=[];
+  liveEvents: LiveEvents[] = [];
   gameEvents = this.events;
   funEvents = this.events;
 
 
-  constructor(private mS: MovieService, private liveEventSer:LiveEventService ,private route: ActivatedRoute,private router:Router) { }
+  constructor(private mS: MovieService, private liveEventSer: LiveEventService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.mS.getTrendingIMDBID().subscribe((imdbArr: []) => {
       this.mS.getRecommendedMovies(imdbArr).subscribe((moviesArr: Movie[]) => {
         this.movies = moviesArr;
-        this.loading=false;
+        this.loading = false;
       })
     })
 
@@ -128,24 +132,49 @@ export class RecommendedEntComponent implements OnInit {
       this.currLocation = params['location'];
     })
     const data = {
-      "city":this.currLocation
+      "city": this.currLocation
     }
-    this.liveEventSer.getBasicLiveEventsByLocation(data).subscribe((events:LiveEvents[])=>{
-      this.liveEvents=events;
+    this.liveEventSer.getBasicLiveEventsByLocation(data).subscribe((events: LiveEvents[]) => {
+      this.liveEvents = events;
     })
   }
 
-  redirectToMoviePage(title:string,imdbID:string){  
-    this.router.navigate(['/movies',this.currLocation,title,imdbID])
+  redirectToMoviePage(title: string, imdbID: string) {
+    this.router.navigate(['/movies', this.currLocation, title, imdbID])
   }
 
-  parsedDate(date:string){
-    const dateString = new Date(date);
-    return dateString.toDateString();
+  parsedDate(date: string) {
+    let dateString = (new Date(date)).toDateString();
+    if (dateString === 'Invalid Date') {
+      const dateParts = date.split("-"); 
+       dateString =(new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`)).toDateString();
+    }
+    return dateString;
   }
 
-  redirectToEventPage(event:LiveEvents){
+  redirectToEventPage(event: LiveEvents) {
     const name = (event.title).toLowerCase().split(" ").join("-");
-    this.router.navigate(['/events',this.currLocation,name,event.event_code])
+    console.log(this.currLocation,name,event.event_code)
+    this.router.navigate(['/events', this.currLocation, name, event.event_code])
+  }
+
+  get paginatedEvents(){
+    const startIndex = this.currentPage * this.itemsPerPage;
+    return this.liveEvents.slice(startIndex,this.itemsPerPage + startIndex);
+  }
+  nextPage() {
+    if (this.hasNextPage()) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+    }
+  }
+
+  hasNextPage() {
+    return (this.currentPage + 1) * this.itemsPerPage < this.liveEvents.length;
   }
 }

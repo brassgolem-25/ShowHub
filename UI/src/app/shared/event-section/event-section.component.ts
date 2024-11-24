@@ -8,7 +8,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieService } from '../../core/movie.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faStar, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { userReview } from '../types/userReview';
 import { DialogService } from '../../core/dailog.service';
 import { AuthService } from '../../core/auth.service';
@@ -23,7 +23,25 @@ import { LiveEventService } from '../../core/live-events.service';
 })
 export class EventSectionComponent implements OnInit {
   currLocation:string='';
+  faCheck=faCheck;
   mapURL:SafeResourceUrl = '';
+  eventDisclaimer = [
+    "Show Hub Tickets is an online event and ticketing agency. Premier Tickets will NOT be responsible for any changes related to the event schedule, artist, venue, or cancellation and refunds related to the tickets.",
+    "Event Organizer has all the rights to alter and/or modify and/or add seating arrangements based on the demand and availability of the space.",
+    "In case of any misbehavior/misconduct by any person at the venue, the Event Organizer has all the rights to evict that person from the auditorium and no refund will be given.",
+    "Ticket availability and prices declared/quoted are subject to change at the discretion of the event organizer without any notice."
+  ]
+  termsAndConditions = [
+    "Ticket can be scanned over phone, but phone screen should be properly visible, else you have to bring printed ticket confirmation for scanning purposes.",
+    "Tickets are non-refundable – Once confirmed, ticket sales are final. No refunds, exchanges or cancellations are available.",
+    "If an event is canceled/postponed, we will refund only the face value of the ticket and NOT the booking fee. Refunds will only be initiated by the event organizer. We are not liable for any refunds.",
+    "Booking fee per ticket may be levied. Please check the total amount before payment.",
+    "The Event Organizer reserves the right to remove any individual from the venue due to misconduct or misbehavior, and no refunds will be provided.",
+    "Organizers and their agents are not liable for any injuries, damages, thefts, losses, or costs during the event.",
+    "By presenting this ticket, you authorize the organizers to utilize recordings of your appearance across all media platforms for advertising, publicity, and promotional purposes, globally and indefinitely.",
+    "These terms and conditions are subject to change from time to time at the discretion of the organiser."
+  ];
+  
   constructor(private router:Router,private route:ActivatedRoute,private liveEventSer:LiveEventService,private sanitizer: DomSanitizer){
 
   }

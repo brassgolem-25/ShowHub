@@ -28,15 +28,18 @@
             <a href="#" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <mat-card class="event-card" *ngFor="let event of liveEvents">
+            <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon>
+            <mat-card class="event-card" *ngFor="let event of paginatedEvents">
                 <img mat-card-image [src]="event.image_url" [alt]="event.title" (click)="redirectToEventPage(event)">
                 <div class="event-info">
                     <span>{{ parsedDate(event.start_date) }}</span>
                 </div>
                 <mat-card-title>{{ event.title }}</mat-card-title>
             </mat-card>
+            <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon>
         </div>
     </div>
+    
 
     <!-- Games Section -->
     <div class="recommendations-section">
