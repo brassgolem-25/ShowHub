@@ -46,16 +46,18 @@ export class LocationDialogComponent implements OnInit {
     const index = urlSegment.indexOf(this.currLocation);
     urlSegment[index] = ((location).split(" ").join("-")).toLowerCase();
     const newUrlSegment = urlSegment.splice(1);
-    this.router.navigate(newUrlSegment, { replaceUrl: true });
-    this.dS.closeDialog()
+    this.dS.closeDialog();
+    this.router.navigate(newUrlSegment, { replaceUrl: true }).then(()=>{
+      window.location.reload();
+    });
   }
 
   detectUserLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=>{
+      navigator.geolocation.getCurrentPosition((position) => {
         console.log(position)
       })
-    }else {
+    } else {
       console.log("Geolocation not enabled")
     }
   }

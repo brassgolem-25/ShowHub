@@ -22,9 +22,9 @@ import { LiveEventService } from '../../core/live-events.service';
   styleUrl: './event-section.component.css'
 })
 export class EventSectionComponent implements OnInit {
-  currLocation:string='';
-  faCheck=faCheck;
-  mapURL:SafeResourceUrl = '';
+  currLocation: string = '';
+  faCheck = faCheck;
+  mapURL: SafeResourceUrl = '';
   eventDisclaimer = [
     "Show Hub Tickets is an online event and ticketing agency. Premier Tickets will NOT be responsible for any changes related to the event schedule, artist, venue, or cancellation and refunds related to the tickets.",
     "Event Organizer has all the rights to alter and/or modify and/or add seating arrangements based on the demand and availability of the space.",
@@ -41,25 +41,24 @@ export class EventSectionComponent implements OnInit {
     "By presenting this ticket, you authorize the organizers to utilize recordings of your appearance across all media platforms for advertising, publicity, and promotional purposes, globally and indefinitely.",
     "These terms and conditions are subject to change from time to time at the discretion of the organiser."
   ];
-  
-  constructor(private router:Router,private route:ActivatedRoute,private liveEventSer:LiveEventService,private sanitizer: DomSanitizer){
+
+  constructor(private router: Router, private route: ActivatedRoute, private liveEventSer: LiveEventService, private sanitizer: DomSanitizer) {
 
   }
-  loading=true;
-  eventData :any
+  loading = true;
+  eventData: any
 
   ngOnInit() {
-      this.currLocation=this.route.snapshot.params['location'];
-      const eventCode = this.route.snapshot.params['eventCode'];
-      console.log(eventCode)
-      const data = {
-        "event_code":eventCode
-      }
-      this.liveEventSer.getLiveEventsByEventCode(data).subscribe((event:any)=>{
-        this.eventData = event
-        this.mapURL=this.sanitizer.bypassSecurityTrustResourceUrl(event.google_map_link)
-        console.log(event)
-          this.loading=false;
-      })
+    this.currLocation = this.route.snapshot.params['location'];
+    const eventCode = this.route.snapshot.params['eventCode'];
+    console.log(eventCode)
+    const data = {
+      "event_code": eventCode
+    }
+    this.liveEventSer.getLiveEventsByEventCode(data).subscribe((event: any) => {
+      this.eventData = event
+      this.mapURL = this.sanitizer.bypassSecurityTrustResourceUrl(event.google_map_link);
+      this.loading = false;
+    })
   }
 }

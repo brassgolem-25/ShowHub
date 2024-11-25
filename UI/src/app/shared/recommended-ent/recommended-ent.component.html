@@ -27,8 +27,9 @@
             <h3>Live Events</h3>
             <a href="#" class="see-all-link">See All ›</a>
         </div>
+
         <div class="recommendations-list">
-            <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon>
+            <img class="arrow-btn-left" src="assets/arrow-left.png" alt="">
             <mat-card class="event-card" *ngFor="let event of paginatedEvents">
                 <img mat-card-image [src]="event.image_url" [alt]="event.title" (click)="redirectToEventPage(event)">
                 <div class="event-info">
@@ -36,10 +37,10 @@
                 </div>
                 <mat-card-title>{{ event.title }}</mat-card-title>
             </mat-card>
-            <fa-icon [icon]="faArrowAltCircleLeft"></fa-icon>
+            <img class="arrow-btn" src="assets/arrow-rt.png" alt="">
         </div>
     </div>
-    
+
 
     <!-- Games Section -->
     <div class="recommendations-section">

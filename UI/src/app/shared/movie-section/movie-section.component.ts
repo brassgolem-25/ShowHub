@@ -70,24 +70,6 @@ export class MovieSectionComponent implements OnInit {
     { name: '#Inspiring', count: 782 }
   ];
 
-  reviews = [
-    {
-      user: 'User1',
-      comment: 'हर हिन्दू को देखनी चाहिए - कांग्रेस और वामपंथी और मुल्ले किस तरह साजिश करते हैं',
-      rating: 10,
-      likes: 324,
-      dislikes: 10,
-      timeAgo: '20 hours ago'
-    },
-    {
-      user: 'San',
-      comment: "Vikrant has done his best work but the story doesn't tell the truth. It's a modified story to make the wrong people a hero. Manipulated story.",
-      rating: 1,
-      likes: 163,
-      dislikes: 20,
-      timeAgo: '20 hours ago'
-    }
-  ];
   openReviewDialog(){
 
     const movieData = {

@@ -27,6 +27,7 @@
     overflow-x: auto;
     padding-top: 10px;
     gap: 35px; 
+    position: relative;
 }
 
 .event-card {
@@ -101,6 +102,26 @@ mat-card-subtitle {
     font-size: 20px;
 }
 
+.arrow-btn{
+    position: absolute; 
+    top: 40%; 
+    transform: translateY(-50%); 
+    right: 50px; 
+    height: 40px; 
+    width: 40px;
+    cursor: pointer; 
+}
+
+.arrow-btn-left{
+    top: 40%; 
+    transform: translateY(-50%); 
+    left: -10px; 
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+}
 /* Responsive adjustments */
 @media (max-width: 1200px) {
     .recommendations-section {
