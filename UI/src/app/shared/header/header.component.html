@@ -1,5 +1,5 @@
 <div class="header-container">
-  <div class="logo"><a [routerLink]="['/explore/home', currLocation]">MyShowHub</a></div>
+  <div class="logo"><a [routerLink]="['/explore/home', currLocation]">ShowHub</a></div>
     <mat-form-field class="search-bar" appearance="outline">
       <mat-label>Search for Movies, Events, Plays...</mat-label>
       <input matInput type="text" [formControl]="myControl" [matAutocomplete]="auto">
@@ -9,9 +9,9 @@
     </mat-form-field>
   <button mat-button class="location" (click)="openDialog()">{{parsedLocation(currLocation)}} <mat-icon>expand_more</mat-icon></button>
   <div *ngIf="!isUserLoggedIn">
-    <button mat-raised-button color="primary"><a routerLink="/login">Sign In</a></button>
+    <button mat-raised-button color="primary" (click)="redirectToLogin()">Sign In</button>
   </div>
-  <div class="userProfile" *ngIf="isUserLoggedIn" (click)="redirectToUserPage()">
+  <div class="userProfile" *ngIf="isUserLoggedIn" (click)="redirect()">
     <img src="assets/user.png"><span>Hi,Guest</span>
   </div>
   <button *ngIf="!showSideNav" mat-icon-button (click)="toggleSideNav('open')"><mat-icon>menu</mat-icon></button>

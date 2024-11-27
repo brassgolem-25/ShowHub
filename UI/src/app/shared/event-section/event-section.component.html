@@ -22,11 +22,12 @@
   </div>
 
   <!-- Interested Section -->
-  <div class="interested-section">
-    <p>Click on Interested to stay updated about this event.</p>
-    <button class="interested-button">Interested?</button>
+  <div class="interested-section" >
+    <p>{{showInterestedCaptions().detail}}</p>
+    <button class="interested-button" (click)="updateInterestedCount()">{{showInterestedCaptions().btnText}}</button>
     <p class="interest-count">💖 {{eventData.like_count}} people have shown interest recently</p>
   </div>
+
 
   <!-- Performers Section -->
   <div class="performers-section">

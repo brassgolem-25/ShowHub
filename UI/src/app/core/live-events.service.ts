@@ -16,4 +16,8 @@ export class LiveEventService {
   getBasicLiveEventsByLocation(data:{"city":string}):Observable<any>{
     return this.http.post<any>('http://localhost:3000/api/liveEvents/getBasicLiveEventsByLocation',data);
   }
+
+  updateEventLikeCount(data:{email:string,event_code:string}):Observable<any>{
+    return this.http.post<any>('http://localhost:3000/api/liveEvents/updateLikeCount',data);
+  }
 }

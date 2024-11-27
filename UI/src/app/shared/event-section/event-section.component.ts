@@ -8,7 +8,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieService } from '../../core/movie.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faL } from '@fortawesome/free-solid-svg-icons';
 import { userReview } from '../types/userReview';
 import { DialogService } from '../../core/dailog.service';
 import { AuthService } from '../../core/auth.service';
@@ -41,8 +41,14 @@ export class EventSectionComponent implements OnInit {
     "By presenting this ticket, you authorize the organizers to utilize recordings of your appearance across all media platforms for advertising, publicity, and promotional purposes, globally and indefinitely.",
     "These terms and conditions are subject to change from time to time at the discretion of the organiser."
   ];
+  isUserLoggedIn: boolean = false;
+  userEmail: string = '';
+  eventCode: string = '';
+  isInterestedClicked: boolean = false;
+  interesetedDetails:{}={
 
-  constructor(private router: Router, private route: ActivatedRoute, private liveEventSer: LiveEventService, private sanitizer: DomSanitizer) {
+  }
+  constructor(private authSer: AuthService, private router: Router, private route: ActivatedRoute, private liveEventSer: LiveEventService, private sanitizer: DomSanitizer) {
 
   }
   loading = true;
@@ -50,15 +56,48 @@ export class EventSectionComponent implements OnInit {
 
   ngOnInit() {
     this.currLocation = this.route.snapshot.params['location'];
-    const eventCode = this.route.snapshot.params['eventCode'];
-    console.log(eventCode)
+    this.eventCode = this.route.snapshot.params['eventCode'];
     const data = {
-      "event_code": eventCode
+      "event_code": this.eventCode
     }
     this.liveEventSer.getLiveEventsByEventCode(data).subscribe((event: any) => {
-      this.eventData = event
+      this.eventData = event;
       this.mapURL = this.sanitizer.bypassSecurityTrustResourceUrl(event.google_map_link);
       this.loading = false;
     })
+    this.authSer.checkAuthStatus().subscribe((response: { loggedIn: boolean, user: { data: string, iat: number, exp: string } }) => {
+      this.isUserLoggedIn = response.loggedIn;
+      this.userEmail = response.user.data;
+    })
+
+  }
+
+  updateInterestedCount() {
+    if (this.isUserLoggedIn) {
+      if (!this.eventData.interested_users.includes(this.userEmail)) {
+        const data = {
+          "email": this.userEmail,
+          "event_code": this.eventCode
+        }
+        this.liveEventSer.updateEventLikeCount(data).subscribe((res) => {
+          console.log(res);
+        })
+      }else {
+        this.eventData.like_count--;
+        this.eventData.interested_users=this.eventData.interested_users;
+      }
+      this.showInterestedCaptions();
+    }
+  }
+
+  revokeInterestedCount() {
+
+  }
+
+  showInterestedCaptions(){
+    if(!this.eventData.interested_users.includes(this.userEmail)){
+      return {detail:'Click on Interested to stay updated about this event.',btnText:"Intereseted?"}
+    }
+    return {detail:'Great! You will now be updated with all the happenings of this event.',btnText:"Intereseted"}
   }
 }

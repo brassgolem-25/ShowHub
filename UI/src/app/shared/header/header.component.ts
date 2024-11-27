@@ -18,6 +18,7 @@ import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import {  map } from 'rxjs';
 import { SideNavComponent } from '../side-nav/side-nav.component';
+import { RedirectService } from '../../core/redirect.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,7 @@ export class HeaderComponent implements OnInit {
   currLocation:string = '';
   isUserLoggedIn:boolean = false;
 
-  constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute,private router:Router,private movieSer:MovieService) { 
+  constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute,private router:Router,private movieSer:MovieService,private redirectSer:RedirectService) { 
   }
   
   ngOnInit() {
@@ -42,15 +43,16 @@ export class HeaderComponent implements OnInit {
       this.isUserLoggedIn = response.loggedIn;
     })
     this.route.params.subscribe((params)=>{
-        this.currLocation = params['location'] ? params['location'] : 'Mumbai';
+
+        this.currLocation = params['location'] ? params['location'] : 'mumbai';
     })
     this.movieSer.getDefaultSuggestion().subscribe((movieArr:Movie[])=>{
       this.defaultOptions = movieArr
-      this.filteredOptions = movieArr
+      this.filteredOptions = movieArr.slice(0,5)
     })
      this.myControl.valueChanges.pipe(map( (value:any) => {
       const filterValue = value.toLowerCase()
-      this.filteredOptions =  this.defaultOptions.filter(movie =>movie['title'].toLowerCase().includes(filterValue));
+      this.filteredOptions =  this.defaultOptions.filter(movie =>movie['title'].toLowerCase().includes(filterValue)).slice(0,5);
     })).subscribe()
   }
 
@@ -62,8 +64,8 @@ export class HeaderComponent implements OnInit {
     this.dialogSer.openDialog(data);
   }
 
-  redirectToUserPage(){
-    this.router.navigate(['/user-profile'])
+  redirect(){
+      this.redirectSer.redirectToUserPage();
   }
   redirectToEventPage(option:Movie){
     const title = option.title;
@@ -78,5 +80,10 @@ export class HeaderComponent implements OnInit {
 
   toggleSideNav(event:string){
     this.showSideNav= (event=='close') ? false:true;
+  }
+
+  redirectToLogin(){
+    const curUrl = this.router.url;
+    this.router.navigate(['/login'],{queryParams:{'redirect_url':curUrl}})
   }
 }

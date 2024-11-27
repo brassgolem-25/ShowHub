@@ -29,7 +29,8 @@ a{
 
 .userProfile{
   display: flex;
-  gap:10px
+  gap:10px;
+  cursor: pointer;
 }
 
 .userProfile img{

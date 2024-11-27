@@ -6,24 +6,26 @@ import { AuthService } from '../../core/auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-declare var FB: any;  
+declare var FB: any;
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ HeaderComponent, TabsComponent,RouterModule,FormsModule,ReactiveFormsModule],
+  imports: [HeaderComponent, TabsComponent, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent implements OnInit {
   loginForm = new FormGroup({
-      phoneNumber: new FormControl('',[Validators.required])
+    phoneNumber: new FormControl('', [Validators.required])
   })
-  constructor(public authSer : AuthService,public router:Router,private route:ActivatedRoute){
+  redirectUrl:string='';
+  constructor(public authSer: AuthService, public router: Router, private route: ActivatedRoute) {
   }
 
-  authenticateWithProvider(type:string){
-    this.authSer.authenticateGoogle().subscribe((response:any)=>{
+
+  authenticateWithProvider(type: string) {
+    this.authSer.authenticateGoogle(this.redirectUrl).subscribe((response: any) => {
       const URL = response['redirectURL'];
       console.log(URL)
       window.location.href = URL;
@@ -60,17 +62,21 @@ export class SignInComponent implements OnInit {
         id: response.id,
         name: response.name,
         email: response.email,
+        redirect_uri:this.redirectUrl
       };
 
-      this.authSer.authenticateFacebook(userData).subscribe((response:any)=>{
-        if(response['success']){
-          window.location.reload();
-        }
+      this.authSer.authenticateFacebook(userData).subscribe((response: any) => {
+          if(response['success']){
+            this.router.navigate([response['redirect_uri']]);
+          }
       })
     });
   }
 
   ngOnInit(): void {
-      this.loadFacebookSDK();
+    this.route.queryParams.subscribe((params) => {
+      this.redirectUrl=params['redirect_url']
+    })
+    this.loadFacebookSDK();
   }
 }
