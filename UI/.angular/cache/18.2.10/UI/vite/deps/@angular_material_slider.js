@@ -9,7 +9,7 @@ import {
   MatRippleModule,
   Platform,
   RippleState
-} from "./chunk-DRK6CTBX.js";
+} from "./chunk-PL3R34AA.js";
 import "./chunk-A77LJ3EL.js";
 import {
   ANIMATION_MODULE_TYPE,

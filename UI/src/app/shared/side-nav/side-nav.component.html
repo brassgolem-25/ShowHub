@@ -1,0 +1,22 @@
+<div class="sidenav">
+  <h3>Hey! </h3>
+  <button *ngIf="!isUserLoggedIn" class="login-register">
+    <fa-icon [icon]="faUser"></fa-icon>
+    Login / Register
+  </button>
+  <ul class="nav-list">
+    <li [ngClass]="{'disabled-item':menuItem.disabled}" *ngFor="let menuItem of menuOptions">
+      <button mat-button>
+        <span class="menu-item">
+          <img class="icon" [src]="menuItem.src" alt="{{ menuItem.label }}">
+          <div class="menu-text">
+            <p class="label">{{ menuItem.label }}</p>
+            <p class="description">{{ menuItem.description }}</p>
+          </div>
+        </span>
+      </button>
+      <img class="right-arrow" [src]="menuItem.disabled ? 'assets/lock.png': 'assets/right-arrow.png' "
+        alt="Right Arrow">
+    </li>
+  </ul>
+</div>

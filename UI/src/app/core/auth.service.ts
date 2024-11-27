@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http : HttpClient) { }
   
   authenticateGoogle():Observable<any>{
-    return this.http.get<any>(`http://localhost:3000/api/auth/google?location=Mumbai`);
+    return this.http.get<any>(`http://localhost:3000/api/auth/google`);
   }
 
   checkAuthStatus():Observable<any>{

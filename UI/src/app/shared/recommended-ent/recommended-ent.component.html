@@ -7,7 +7,8 @@
             <a routerLink="/explore/movies/{{currLocation}}" class="see-all-link">See All ›</a>
         </div>
         <div class="recommendations-list">
-            <mat-card class="event-card" *ngFor="let movie of movies">
+            <img class="arrow-btn-left" src="assets/arrow-left.png" alt="" [hidden]="currentPage['movie']==0" (click)="prevPage('movie')">
+            <mat-card class="event-card" *ngFor="let movie of paginatedMovies">
                 <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}"
                     (click)="redirectToMoviePage(movie.title,movie.imdbID)" />
                 <div class="event-info">
@@ -18,10 +19,10 @@
                 <mat-card-title>{{ movie.title }}</mat-card-title>
                 <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>
             </mat-card>
+            <img class="arrow-btn" src="assets/arrow-right.png" alt="" [hidden]="currentPage['movie']==1" (click)="nextPage('movie')">
         </div>
     </div>
 
-    <!-- Live Events Section -->
     <div class="recommendations-section">
         <div class="heading">
             <h3>Live Events</h3>
@@ -29,7 +30,8 @@
         </div>
 
         <div class="recommendations-list">
-            <img class="arrow-btn-left" src="assets/arrow-left.png" alt="">
+            <img class="arrow-btn-left" src="assets/arrow-left.png" alt="" [hidden]="currentPage['liveEvent']==0"
+                (click)="prevPage('liveEvent')">
             <mat-card class="event-card" *ngFor="let event of paginatedEvents">
                 <img mat-card-image [src]="event.image_url" [alt]="event.title" (click)="redirectToEventPage(event)">
                 <div class="event-info">
@@ -37,7 +39,7 @@
                 </div>
                 <mat-card-title>{{ event.title }}</mat-card-title>
             </mat-card>
-            <img class="arrow-btn" src="assets/arrow-rt.png" alt="">
+            <img class="arrow-btn" src="assets/arrow-right.png" alt="" [hidden]="currentPage['liveEvent']==1" (click)="nextPage('liveEvent')">
         </div>
     </div>
 

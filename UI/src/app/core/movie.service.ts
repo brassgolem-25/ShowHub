@@ -15,16 +15,13 @@ export class MovieService {
   }
 
 
-  getRecommendedMovies(imdbArr:[]):Observable<Movie[]>{
-    return this.http.post<Movie[]>('http://localhost:3000/api/movies/few',imdbArr);
+  getRecommendedMovies():Observable<Movie[]>{
+    return this.http.get<Movie[]>('http://localhost:3000/api/movies/few');
   }
 
-  getTrendingIMDBID():Observable<any> {
-    return this.http.get<any>('http://localhost:3000/api/movies/getTrendingMoviesIDs');
-  }
 
   getAllMovies():Observable<Movie[]> {
-    return this.http.get<Movie[]>('http://localhost:3000/api/movies/all');
+    return this.http.get<Movie[]>('http://localhost:3000/api/movies');
   }
 
   getFilteredMovies(selectedLanguages:string[] | undefined,selectedGenres:string[] | undefined){

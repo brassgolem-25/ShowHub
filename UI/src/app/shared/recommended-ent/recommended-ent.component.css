@@ -1,12 +1,14 @@
 .recommendations-section {
     margin-left: 60px;
-    padding: 20px;
+    padding: 10px;
+    scroll-behavior: smooth;
 }
 
 .heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: 20px;
 }
 
 .heading h3 {
@@ -19,7 +21,7 @@
     color: #e50914;
     text-decoration: none;
     font-size: 14px;
-    margin-right: 90px;
+    margin-right: 70px;
 }
 
 .recommendations-list {
@@ -28,6 +30,7 @@
     padding-top: 10px;
     gap: 35px; 
     position: relative;
+    padding-left: 20px;
 }
 
 .event-card {
@@ -35,7 +38,8 @@
     flex-shrink: 0;
     position: relative;
     border-radius: 5px; /* Slightly rounded corners for better aesthetics */
-    overflow: hidden; /* Prevents any overflowing content */
+    overflow: hidden; 
+    scroll-snap-align: start;
 }
 
 .event-card img {
@@ -44,7 +48,6 @@
     object-fit: cover;
     border-radius: 5px 5px 0 0; 
     cursor: pointer;
-    /* Smooth corners for the top of the image */
 }
 
 .event-info {
@@ -115,12 +118,12 @@ mat-card-subtitle {
 .arrow-btn-left{
     top: 40%; 
     transform: translateY(-50%); 
-    left: -10px; 
     height: 40px;
     width: 40px;
     cursor: pointer;
     position: absolute;
     z-index: 2;
+    left: 0px;
 }
 /* Responsive adjustments */
 @media (max-width: 1200px) {

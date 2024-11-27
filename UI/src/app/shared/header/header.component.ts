@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
@@ -14,20 +17,23 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import {  map } from 'rxjs';
+import { SideNavComponent } from '../side-nav/side-nav.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, RouterModule,CommonModule,FontAwesomeModule,MatAutocompleteModule,FormsModule,ReactiveFormsModule,CommonModule],
+  imports: [MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, RouterModule,CommonModule,FontAwesomeModule,MatAutocompleteModule,FormsModule,ReactiveFormsModule,CommonModule,MatSidenavModule,MatDividerModule,MatListModule,SideNavComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+  showSideNav = false;
   myControl = new FormControl('');
   defaultOptions:Movie[]=[];
   filteredOptions:Movie[]=[];
   currLocation:string = '';
   isUserLoggedIn:boolean = false;
+
   constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute,private router:Router,private movieSer:MovieService) { 
   }
   
@@ -46,7 +52,6 @@ export class HeaderComponent implements OnInit {
       const filterValue = value.toLowerCase()
       this.filteredOptions =  this.defaultOptions.filter(movie =>movie['title'].toLowerCase().includes(filterValue));
     })).subscribe()
-
   }
 
 
@@ -69,5 +74,9 @@ export class HeaderComponent implements OnInit {
   parsedLocation(location:string){
     const decodedLocation = (location.split("-").map((char:string) => char.charAt(0).toUpperCase() + char.slice(1))).join(" ");
     return decodedLocation;
+  }
+
+  toggleSideNav(event:string){
+    this.showSideNav= (event=='close') ? false:true;
   }
 }

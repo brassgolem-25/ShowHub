@@ -1,0 +1,143 @@
+/* Side Navigation Container */
+.sidenav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 310px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  /* Title */
+  .sidenav h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333333;
+    text-align: left;
+    display: flex;
+    justify-content: space-between; 
+  }
+
+  .sidenav h3 fa-icon {
+    cursor: pointer; /* Indicates the icon is clickable */
+    font-size: 20px; /* Adjust icon size */
+    transition: color 0.3s; /* Smooth hover effect */
+    margin-right: 20px;
+  }
+  
+  
+  /* Login / Register Button */
+  .login-register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #f14750;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 30px;
+  }
+  
+  .login-register:hover {
+    background-color: #d63b3e;
+  }
+  
+  /* Navigation List */
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .nav-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-list li:hover:not(.disabled-item) {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  }
+  
+
+  .disabled-item {
+    background-color: rgb(213, 210, 210);
+    cursor:default;
+  }
+  
+
+  /* Button Styling */
+  .nav-list button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  /* Menu Item Styling */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+  }
+  
+  .menu-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label Styling */
+  .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0;
+  }
+  
+  /* Description Styling */
+  .description {
+    font-size: 10px;
+    color: #888888;
+    margin: 2px 0 0;
+  }
+  
+  /* Icon Styling */
+  .icon {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+  }
+  
+  /* Right Arrow Styling */
+  .right-arrow {
+    height: 15px;
+    width: 15px;
+    margin-left: auto;
+    object-fit: contain;
+  }
+  

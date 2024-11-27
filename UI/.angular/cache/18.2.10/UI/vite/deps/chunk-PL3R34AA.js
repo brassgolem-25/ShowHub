@@ -5707,6 +5707,11 @@ var _MatInternalFormField = class __MatInternalFormField {
 })();
 
 export {
+  coerceBooleanProperty,
+  coerceNumberProperty,
+  coerceArray,
+  coerceCssPixelValue,
+  coerceElement,
   Platform,
   getSupportedInputTypes,
   normalizePassiveListenerOptions,
@@ -5726,11 +5731,6 @@ export {
   DOWN_ARROW,
   A,
   hasModifierKey,
-  coerceBooleanProperty,
-  coerceNumberProperty,
-  coerceArray,
-  coerceCssPixelValue,
-  coerceElement,
   CdkObserveContent,
   ObserversModule,
   BreakpointObserver,
@@ -5793,4 +5793,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-DRK6CTBX.js.map
+//# sourceMappingURL=chunk-PL3R34AA.js.map

@@ -25,6 +25,7 @@ export class SignInComponent implements OnInit {
   authenticateWithProvider(type:string){
     this.authSer.authenticateGoogle().subscribe((response:any)=>{
       const URL = response['redirectURL'];
+      console.log(URL)
       window.location.href = URL;
     });
   }
