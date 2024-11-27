@@ -17,12 +17,11 @@ const secret = process.env.JWTSecret;
 
 router.get('/google', (req, res) => {
 
-    const { state } = req.query;
     const url = client.generateAuthUrl({
         access_type: 'offline',
         scope: ['profile', 'email'],
-        state: state,
     });
+    console.log(url)
     return res.json({redirectURL:url});
 });
 
@@ -48,7 +47,7 @@ router.get('/google/callback', async (req, res) => {
         const token = jwt.sign({ data: email }, secret, { expiresIn: '12h' });
         res.cookie('JWT',token);
 
-        res.redirect(`http://localhost:4200/explore/home/${location}`)
+        res.redirect(`http://localhost:4200/explore/home/mumbai`)
     } catch (error) {
         console.error('Error during Google OAuth callback:', error);
     }

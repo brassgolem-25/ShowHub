@@ -65,13 +65,14 @@ export const getMovieDetails = async (req, res) => {
 //get few movies
 export const getFewMovies = async (req, res) => {
   try {
-    const imdbIDArr = req.body;
     let movieArr = [];
-    for (let obj of imdbIDArr) {
+    if (imdbArr.length === 0) {
+      imdbArr = await Movie.find({}, { imdbID: 1, _id: 0 }).sort({ year: -1, released: -1 }).limit(10);
+    }
+    for (let obj of imdbArr) {
       const imdbID = obj['imdbID'];
       const redisResponse = await redisClient.hGet(imdbID, 'movieData');
       if (redisResponse) {
-        console.log("From Redis")
         movieArr.push(JSON.parse(redisResponse));
       }
       else {
@@ -79,7 +80,6 @@ export const getFewMovies = async (req, res) => {
         movieArr.push(movie);
         const redisRes = await redisClient.hSet(imdbID, 'movieData', JSON.stringify(movie));
         if (redisRes === 1) {
-          console.log("Inserted in HashSet of Redis")
         }
       }
     }
@@ -108,18 +108,6 @@ export const addCustomerReview = async (req, res) => {
   }
 }
 
-//get latest IMDB IDs
-export const getTrendingMoviesIDs = async (req, res) => {
-  try {
-    if (imdbArr.length === 0) {
-      console.log("DB call")
-      imdbArr = await Movie.find({}, { imdbID: 1, _id: 0 }).sort({ year: -1, released: -1 }).limit(5);
-    }
-    return res.json(imdbArr);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
 
 //get suggestion movie 
 export const getAutoSuggestion = async (req, res) => {
