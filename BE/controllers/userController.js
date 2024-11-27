@@ -13,13 +13,22 @@ export const createOrUpdateUser = async (name,email, oAuthID,provider,req,res) =
     if (!oAuthField) {
       throw new Error('Invalid OAuth provider.');
     }
+    const userExists = await User.findOne({[oAuthField]:oAuthID},{_id:0,__v:0})
+    const userEmailExists = await User.findOne({email:email},{_id:0,__v:0})
+    if(userExists){
+      return {message:"User already Exists"}
+    }else  if(userEmailExists){
+      const userUpdate =  await User.updateOne({email:email},{$set:{[oAuthField]:oAuthID}})
+      console.log(userUpdate);
+      return {message :"User updated"}
+    }
     const user = new User({
       name,
       email,
       [oAuthField]:oAuthID
     });
     await user.save();
-    return {message:"User Created",user};
+    return {message:"User Created"}
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

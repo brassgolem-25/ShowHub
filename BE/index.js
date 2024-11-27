@@ -52,7 +52,7 @@ app.use('/api/city',cityRoute)
 app.use('/api/liveEvents',liveEventRoute)
 
 //Authentication
-app.use('/api/auth',authRoute)
+app.use('/auth',authRoute)
 
 app.listen(3000 || process.env.port , (req,res)=>{
     console.log("Listening on port 3000");

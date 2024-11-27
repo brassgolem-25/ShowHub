@@ -16,18 +16,18 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE
 const secret = process.env.JWTSecret;
 
 router.get('/google', (req, res) => {
-
+    const uri = req.query['uri'];
     const url = client.generateAuthUrl({
         access_type: 'offline',
         scope: ['profile', 'email'],
+        state:encodeURIComponent(uri),
     });
-    console.log(url)
     return res.json({redirectURL:url});
 });
 
 router.get('/google/callback', async (req, res) => {
     try {
-        const { code, location } = req.query;
+        const { code, state } = req.query;
         const { tokens } = await client.getToken(code);
         client.setCredentials(tokens);
 
@@ -41,13 +41,14 @@ router.get('/google/callback', async (req, res) => {
         const email = payload['email'];
         const name = payload['name'];
 
-        let userResponse = await createOrUpdateUser(name,email,googleId,"google");
-
+        let userResponse = await createOrUpdateUser(name,email,googleId,"google",req,res);
+        const redirectURL = decodeURIComponent(state);
         
         const token = jwt.sign({ data: email }, secret, { expiresIn: '12h' });
         res.cookie('JWT',token);
-
-        res.redirect(`http://localhost:4200/explore/home/mumbai`)
+        console.log(userResponse);
+    
+        return res.redirect(`http://localhost:4200${redirectURL}`)
     } catch (error) {
         console.error('Error during Google OAuth callback:', error);
     }
@@ -69,11 +70,12 @@ router.get('/check-session',async (req,res)=>{
 
 router.post('/facebook-authentication',async(req,res)=>{
     try{
-        const {id,email} = req.body;
-        
+        const {id,name,email,redirect_uri} = req.body;
+        const redirectURL = decodeURIComponent(redirect_uri); 
+        let userResponse = await createOrUpdateUser(name,email,id,"facebook",req,res);
         const token = jwt.sign({ data: email }, secret, { expiresIn: '12h' });
         res.cookie('JWT',token);
-        return res.json({success:true,message:"Cookie Created"})
+        return res.json({success:true,redirect_uri:redirectURL})
     }catch(error){
         return res.json({success:false,message:error})
     }

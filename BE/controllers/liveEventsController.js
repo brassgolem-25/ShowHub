@@ -165,10 +165,26 @@ export const generateJSONData = async (req, res) => {
 
     } catch (error) {
         console.error("Error inserting data:", error);
-        return res.status(500).json({ message: error.message });
+        return res.status(error.status).json({ message: error.response.data });
+    }
+};
+
+export const updateLikeCount = async (req, res) => {
+    try {
+        const { email, JWT, event_code } = req.body;
+        let usersList = (await postgreClient.query('SELECT interested_users FROM liveevents WHERE event_code =$1', [event_code])).rows[0].interested_users;
+        if (!usersList.includes(email)) {
+            usersList = usersList + ',' + email;
+            const updateUserList = (await postgreClient.query(`UPDATE liveevents SET  interested_users =$1 where event_code = $2`, [usersList, event_code]));
+            const updateLike = (await postgreClient.query(`UPDATE liveevents set like_count = like_count + 1 `));
+        }
+        return  res.json({ status: "ok" })
+
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 };
 
 const parseDate = (date) => {
     return date.toLocaleDateString().split('/').join('-')
-}
+};
