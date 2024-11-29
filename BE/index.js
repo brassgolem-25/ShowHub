@@ -4,6 +4,7 @@ import loginRoute from './api/login.js'
 import mongooseConnect from './config/db.js'
 import {connectRedis} from './config/redis.js'
 import { connectPostgre } from './config/postgre.js';
+import { checkClusterHealth } from './config/opensearch.js';
 import movieRoute from './routes/movieRoutes.js'
 import theaterRoute from './routes/theaterRoutes.js'
 import showTimeRoute from './routes/showTimeRoutes.js'
@@ -30,6 +31,9 @@ await connectRedis();
 
 //connect to postgre
 await connectPostgre();
+
+//check cluster health of opensearch
+await checkClusterHealth();
 
 //test 
 app.use('/api/test',testRoute)

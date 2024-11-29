@@ -2,6 +2,7 @@ import Movie from "../models/movie.js";
 import { redisClient } from "../config/redis.js";
 import axios from "axios";
 import { configDotenv } from 'dotenv';
+import { client } from '../config/opensearch.js';
 
 configDotenv();
 //
@@ -21,7 +22,7 @@ export const createMovie = async (req, res) => {
 // Get all movies
 export const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find({},{_id:0,__v:0}).sort({year:-1,released:-1});
+    const movies = await Movie.find({}, { _id: 0, __v: 0 }).sort({ year: -1, released: -1 });
     return res.json(movies);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -136,14 +137,14 @@ export const getSearchSuggestion = async (req, res) => {
   }
 }
 
-export const fetchLatestMovies = async(req,res) =>{
-  try{
+export const fetchLatestMovies = async (req, res) => {
+  try {
     const apiKey = process.env.OMDB_API_KEY;
     const page = req.query['page'];
     const year = req.query['year']
-    const url =  `http://www.omdbapi.com/?s=movie&y=${year}&type=movie&page=${page}&apikey=${apiKey}`;
+    const url = `http://www.omdbapi.com/?s=movie&y=${year}&type=movie&page=${page}&apikey=${apiKey}`;
     const response = (await axios.get(url));
-    if(response.data && response.data.Search){
+    if (response.data && response.data.Search) {
       const imdbIDArr = response.data.Search.map(movie => movie.imdbID);
       for (let imdbID of imdbIDArr) {
         const url = `http://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`
@@ -151,7 +152,7 @@ export const fetchLatestMovies = async(req,res) =>{
         const movieData = {
           title: movieRes.Title,
           year: movieRes.Year,
-          released: movieRes.Released, 
+          released: movieRes.Released,
           runtime: movieRes.Runtime,
           genre: movieRes.Genre,
           director: movieRes.Director,
@@ -163,21 +164,55 @@ export const fetchLatestMovies = async(req,res) =>{
           imdbRating: movieRes.imdbRating,
           imdbID: movieRes.imdbID,
           boxOffice: movieRes.BoxOffice,
-          customerReview: [] 
+          customerReview: []
         };
-  
+
         const existingMovie = await Movie.findOne({ imdbID: movieRes.imdbID })
         if (!existingMovie) {
           const newMovie = new Movie(movieData);
           await newMovie.save();
-        }else {
+        } else {
           console.log(`Movie with IMDb ID ${movieRes.imdbID} already exists.`);
         }
       }
     }
-    res.json({"status":"ok"})
+    res.json({ "status": "ok" })
     // console.log(movieRes)
-  }catch (error) {
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const searchMovies = async (req, res) => {
+  try {
+    const { searchText } = req.body;
+    const movieResponse = await client.search({
+      index: "movies",
+      body: {
+        query: {
+          prefix: {
+            title: searchText
+          }
+        }
+      }
+    })
+
+    return res.json(movieResponse);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const indexOpenSearch = async (req, res) => {
+  try {
+    const moviesArr = await Movie.find({}, { title: 1, year: 1, director: 1, language: 1, imdbID: 1, _id: 0 }).sort({ year: -1, released: -1 });
+    const bulkOpertaions = moviesArr.flatMap(movie => [
+      { index: { _index: "movies" } },
+      movie
+    ])
+    const response = await client.bulk({ refresh: true, body: bulkOpertaions });
+    return res.json(response);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
