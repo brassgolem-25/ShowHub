@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 export class RedirectService {
 
   constructor(private router:Router) {
-    console.log(router)
    }
 
   redirectToUserPage(){

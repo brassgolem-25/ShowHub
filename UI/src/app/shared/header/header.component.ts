@@ -16,7 +16,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
-import {  map } from 'rxjs';
+import {  map,timer } from 'rxjs';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { RedirectService } from '../../core/redirect.service';
 
@@ -47,13 +47,21 @@ export class HeaderComponent implements OnInit {
         this.currLocation = params['location'] ? params['location'] : 'mumbai';
     })
     this.movieSer.getDefaultSuggestion().subscribe((movieArr:Movie[])=>{
-      this.defaultOptions = movieArr
       this.filteredOptions = movieArr.slice(0,5)
     })
      this.myControl.valueChanges.pipe(map( (value:any) => {
-      const filterValue = value.toLowerCase()
-      this.filteredOptions =  this.defaultOptions.filter(movie =>movie['title'].toLowerCase().includes(filterValue)).slice(0,5);
+      // this.filteredOptions =  this.defaultOptions.filter(movie =>movie['title'].toLowerCase().includes(filterValue)).slice(0,5);
+      timer(500).subscribe(()=>{
+        const searchData = {
+          "searchText":value
+        }
+        this.movieSer.getSearchSuggestion(searchData).subscribe((searchList:any)=>{
+          this.filteredOptions=searchList.slice(0,5);
+        })
+      })
     })).subscribe()
+
+
   }
 
 

@@ -47,4 +47,8 @@ export class MovieService {
   getDefaultSuggestion():Observable<any>{
     return this.http.get<any>('http://localhost:3000/api/movies/getAutoSuggestion');
   }
+
+  getSearchSuggestion(data:any):Observable<any>{
+    return this.http.post<any>('http://localhost:3000/api/movies/searchMovies',data);
+  }
 }
