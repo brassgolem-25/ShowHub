@@ -183,26 +183,39 @@ export const fetchLatestMovies = async (req, res) => {
   }
 }
 
+//opensearh search query
 export const searchMovies = async (req, res) => {
   try {
+    let searchArr = [];
     const { searchText } = req.body;
+    const searchQuery = searchText.toLowerCase() + '*';
     const movieResponse = await client.search({
       index: "movies",
       body: {
         query: {
-          prefix: {
-            title: searchText
+          wildcard : {
+            title :{
+              value: searchQuery
+            }
           }
         }
       }
     })
-
-    return res.json(movieResponse);
+    const movieArr = movieResponse.body.hits.hits
+    for(let movie of movieArr ){
+      const searchData = {
+        imdbID : movie._source.imdbID,
+        title : movie._source.title
+      }
+      searchArr.push(searchData);
+    }
+    return res.json(searchArr);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
 
+//opensearh insert index
 export const indexOpenSearch = async (req, res) => {
   try {
     const moviesArr = await Movie.find({}, { title: 1, year: 1, director: 1, language: 1, imdbID: 1, _id: 0 }).sort({ year: -1, released: -1 });
