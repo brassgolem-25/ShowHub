@@ -130,7 +130,8 @@ export class RecommendedEntComponent implements OnInit {
       })
 
     this.route.params.subscribe((params) => {
-      this.currLocation = params['location']
+      this.currLocation = params['location'];
+      console.log(this.currLocation)
       if (this.currLocation.includes('delhi')) {
         this.currLocation = 'Delhi'
       }

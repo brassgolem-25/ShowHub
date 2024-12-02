@@ -34,16 +34,15 @@ export class HeaderComponent implements OnInit {
   filteredOptions:Movie[]=[];
   currLocation:string = '';
   isUserLoggedIn:boolean = false;
-
   constructor(private authSer: AuthService,private dialogSer: DialogService,private route:ActivatedRoute,private router:Router,private movieSer:MovieService,private redirectSer:RedirectService) { 
   }
   
   ngOnInit() {
+
     this.authSer.checkAuthStatus().subscribe((response:any)=>{
       this.isUserLoggedIn = response.loggedIn;
     })
     this.route.params.subscribe((params)=>{
-
         this.currLocation = params['location'] ? params['location'] : 'mumbai';
     })
     this.movieSer.getDefaultSuggestion().subscribe((movieArr:Movie[])=>{

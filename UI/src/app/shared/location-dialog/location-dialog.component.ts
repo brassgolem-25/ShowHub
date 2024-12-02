@@ -47,7 +47,7 @@ export class LocationDialogComponent implements OnInit {
     urlSegment[index] = ((location).split(" ").join("-")).toLowerCase();
     const newUrlSegment = urlSegment.splice(1);
     this.dS.closeDialog();
-    this.router.navigate(newUrlSegment, { replaceUrl: true }).then(()=>{
+    this.router.navigate(newUrlSegment, { replaceUrl: true }).then(() => {
       window.location.reload();
     });
   }
@@ -63,17 +63,12 @@ export class LocationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.filteredOptions = this.defaultOptions.slice(0,5);
-    this.dS.getCitiesList().subscribe((data: { name: string }[]) => {
-      for (let obj of data) {
-        this.defaultOptions.push(obj.name);
-      }
+    this.dS.getCitiesList().subscribe((data: []) => {
+      this.defaultOptions = data;
       this.filteredOptions = this.defaultOptions.slice(0, 5);
     })
     this.cityControl.valueChanges.pipe(map((value: any) => {
-      // console.log(value)
       const filterValue = value.toLowerCase();
-      console.log(filterValue)
       this.filteredOptions = (this.defaultOptions.filter((name) => name.toLowerCase().includes(filterValue))).slice(0, 5);
     })).subscribe();
   }
