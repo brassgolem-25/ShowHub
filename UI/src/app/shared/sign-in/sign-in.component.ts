@@ -6,18 +6,19 @@ import { AuthService } from '../../core/auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { CommonModule } from '@angular/common';
 declare var FB: any;
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [HeaderComponent, TabsComponent, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [HeaderComponent,CommonModule, TabsComponent, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent implements OnInit {
   loginForm = new FormGroup({
-    phoneNumber: new FormControl('', [Validators.required])
+    phoneNumber: new FormControl('', [Validators.required,Validators.pattern('[0-9]{10}')])
   })
   redirectUrl:string='';
   constructor(public authSer: AuthService, public router: Router, private route: ActivatedRoute) {

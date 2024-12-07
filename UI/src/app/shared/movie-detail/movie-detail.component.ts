@@ -149,5 +149,8 @@ export class MovieDetailComponent implements OnInit {
 
     })
 
+    this.route.paramMap.subscribe((d)=>{
+      console.log(d)
+    })
   }
 }

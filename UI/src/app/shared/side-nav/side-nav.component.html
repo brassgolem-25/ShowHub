@@ -1,6 +1,6 @@
 <div class="sidenav">
-  <h3>Hey! </h3>
-  <button *ngIf="!isUserLoggedIn" class="login-register">
+  <h3>Hey!</h3>
+  <button *ngIf="!isUserLoggedIn" (click)="login()" class="login-register">
     <fa-icon [icon]="faUser"></fa-icon>
     Login / Register
   </button>
@@ -19,4 +19,5 @@
         alt="Right Arrow">
     </li>
   </ul>
+  <button *ngIf="isUserLoggedIn" class="logout-button" (click)="logout()">Logout</button>
 </div>

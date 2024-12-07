@@ -19,21 +19,23 @@ import { AuthService } from '../../core/auth.service';
   templateUrl: './movie-section.component.html',
   styleUrl: './movie-section.component.css'
 })
+
 export class MovieSectionComponent implements OnInit {
   faStar = faStar;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
   movie: any;
+  movieName:string="";
   currDate: string = "";
   movieTitle: string = "";
   movieCast: string = "";
-  imdbID:string="";
+  imdbID: string = "";
   loading = true;
   date = new Date();
   userReviews: userReview[] = [];
-  userEmail:string='';
-  currLocation:string='';
-  constructor(private route: ActivatedRoute, private router: Router,private mS: MovieService,private dS:DialogService,private authSer:AuthService) { }
+  userEmail: string = '';
+  currLocation: string = '';
+  constructor(private route: ActivatedRoute, private router: Router, private mS: MovieService, private dS: DialogService, private authSer: AuthService) { }
 
   movieCastImg(name: string) {
     return `assets/cast/${name.toLocaleLowerCase().replace(/[ ]/g, "-")}.jpg`;
@@ -42,24 +44,17 @@ export class MovieSectionComponent implements OnInit {
 
   ngOnInit() {
     this.currDate = `${this.date.getFullYear()}${this.date.getMonth() + 1}${this.date.getDate()}`
-    const movieName = this.route.snapshot.params['name'];
-    this.imdbID = this.route.snapshot.params['id'];
-    this.mS.getMovieByID(movieName, this.imdbID).subscribe((movieObj: any) => {
-      this.movie = movieObj;
-      this.userReviews = movieObj['customerReview'];
-      this.movieTitle = this.movie.title.replace(/[: ]+/g, "-");
-      this.movieCast = this.movie.actors.split(", ");
-      this.loading = false;
+
+    this.authSer.checkAuthStatus().subscribe((res) => {
+      this.userEmail = res['loggedIn'] ? res['user']['data'] : '';
     })
 
-    this.authSer.checkAuthStatus().subscribe((res)=>{
-      this.userEmail = res['loggedIn'] ? res['user']['data'] : '' ;
-      console.log(this.userEmail);
+    this.route.paramMap.subscribe((params: any) => {
+      this.movieName = params.get('name');
+      this.currLocation = params.get('location') ? params.get('location') : 'Mumbai';
+      this.imdbID = params.get('id');
+      this.loadMovieObj();
     })
-
-    this.route.params.subscribe((params)=>{
-      this.currLocation = params['location'] ? params['location'] : 'Mumbai';
-  })
   }
 
   reviewTags = [
@@ -70,21 +65,31 @@ export class MovieSectionComponent implements OnInit {
     { name: '#Inspiring', count: 782 }
   ];
 
-  openReviewDialog(){
+  openReviewDialog() {
 
     const movieData = {
-      imdbID:this.imdbID,
-      userEmail:this.userEmail
+      imdbID: this.imdbID,
+      userEmail: this.userEmail
     }
     this.dS.openReviewDialog(movieData);
   }
 
-  redirectToBooking(){
+  redirectToBooking() {
     // [routerLink]="['/buytickets', currLocation,movie.title,imdbID]" 
-    this.router.navigate(['/buyTickets',this.currLocation,this.movie.title,this.imdbID],{
-      queryParams :{
-        date : this.currDate
+    this.router.navigate(['/buyTickets', this.currLocation, this.movie.title, this.imdbID], {
+      queryParams: {
+        date: this.currDate
       }
+    })
+  }
+
+  loadMovieObj() {
+    this.mS.getMovieByID(this.movieName, this.imdbID).subscribe((movieObj: any) => {
+      this.movie = movieObj;
+      this.userReviews = movieObj['customerReview'];
+      this.movieTitle = this.movie.title.replace(/[: ]+/g, "-");
+      this.movieCast = this.movie.actors.split(", ");
+      this.loading = false;
     })
   }
 }

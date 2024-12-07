@@ -25,12 +25,13 @@
   <form [formGroup]="loginForm">
     <div class="phone-input-container">
       <span class="isd-code">+91</span>
-      <input type="tel" placeholder="Mobile number" class="phone-input" >
+      <input type="tel" placeholder="Mobile number" formControlName="phoneNumber" class="phone-input" >
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Continue</button>
+    <button *ngIf="!loginForm.invalid" type="submit">Continue</button>
+    <p *ngIf="loginForm.invalid" class="terms-text">
+      I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
+    </p>
   </form>
-  <p class="terms-text">
-    I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
-  </p>
+
 </div>

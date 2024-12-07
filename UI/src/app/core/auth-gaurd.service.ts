@@ -14,7 +14,7 @@ export class AuthGaurd implements CanActivate {
 
   canActivate(): Observable<boolean> {
    return this.authSer.checkAuthStatus().pipe(map((response:any)=>{
-    if(!response.loggedIn){
+    if(response.loggedIn){
       this.router.navigate(['explore/home/mumbai'])
       return false;
     }

@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser, faArrowRight ,faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 import { RedirectService } from '../../core/redirect.service';
+import { AuthService } from '../../core/auth.service';
+import { window } from 'rxjs';
 
 @Component({
   selector: 'app-side-nav',
@@ -19,7 +21,7 @@ export class SideNavComponent implements OnInit {
   faUser = faUser;
   faCircleXmark=faCircleXmark;
   menuOptions:{"label":string,"description":string,"src":string,"disabled":boolean,"eventFunction":Function}[]=[];
-  constructor(private  renderer: Renderer2 ,private redirectSer:RedirectService){
+  constructor(private  renderer: Renderer2 ,private redirectSer:RedirectService,private authSer:AuthService){
     renderer.listen('window','click',(e:any)=>{
       const sideNavElement = document.querySelector('.sidenav');
       if(!sideNavElement?.contains(e.target)){
@@ -50,5 +52,19 @@ export class SideNavComponent implements OnInit {
       this.redirectSer.redirectToUserPage();
       this.toggleSideNav.emit('close');
     }
+  }
+
+  logout(){
+    console.log('Logging out!!!');
+    this.authSer.logoutUser().subscribe((data:{status:string})=>{
+      if(data.status == "ok"){
+        this.redirectSer.redirectToHome()
+      }
+    })
+  }
+
+  login(){
+    this.redirectSer.redirectoLogin();
+    this.toggleSideNav.emit('close');
   }
 }

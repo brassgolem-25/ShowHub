@@ -12,4 +12,13 @@ export class RedirectService {
   redirectToUserPage(){
     this.router.navigate(['/user-profile'])
   }
+
+  redirectToHome(){
+    this.router.navigate(['explore/home/mumbai']);
+    window.location.reload();
+  }
+
+  redirectoLogin(){
+    this.router.navigate(['login'])
+  }
 }
