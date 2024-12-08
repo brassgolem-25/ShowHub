@@ -57,6 +57,7 @@ export class SideNavComponent implements OnInit {
   logout(){
     console.log('Logging out!!!');
     this.authSer.logoutUser().subscribe((data:{status:string})=>{
+      console.log(data);
       if(data.status == "ok"){
         this.redirectSer.redirectToHome()
       }

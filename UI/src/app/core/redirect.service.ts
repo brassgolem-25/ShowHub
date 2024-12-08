@@ -15,7 +15,6 @@ export class RedirectService {
 
   redirectToHome(){
     this.router.navigate(['explore/home/mumbai']);
-    window.location.reload();
   }
 
   redirectoLogin(){

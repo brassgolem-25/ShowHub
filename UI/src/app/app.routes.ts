@@ -16,7 +16,7 @@ export const routes: Routes = [
     {path:'movies/:location/:name/:id',component:MovieSectionComponent,canActivate:[LocationGuard]},
     {path:'events/:location/:name/:eventCode',component:EventSectionComponent,canActivate:[LocationGuard]},
     {path:'buytickets/:location/:eventName/:id',component:BookTicketComponent,canActivate:[LocationGuard]},
-    {path:'user-profile',component:UserProfileComponent},
+    {path:'user-profile',component:UserProfileComponent,canActivate:[AuthGaurd]},
     {path:'seat',component:SeatSelectionComponent},
     {path:'signIn',component:SignInComponent,canActivate:[AuthGaurd]},
     {path:'login',component:SignInComponent,canActivate:[AuthGaurd]},
