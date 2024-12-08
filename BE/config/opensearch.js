@@ -21,7 +21,7 @@ const client = new Client({
 const checkClusterHealth = async () => {
     try {
         const health = await client.cluster.health();
-        console.log('Cluster Health:', health.body);
+        console.log('Cluster Health: '+ health.body.cluster_name + ' ' + health.body.status);
     } catch (error) {
         console.error('Error checking cluster health:', error);
     }

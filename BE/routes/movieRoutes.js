@@ -1,26 +1,26 @@
 import express from 'express';
-import {getAllMovies,getFewMovies,fetchLatestMovies,createMovie, addCustomerReview,getMovieDetails,getAutoSuggestion,getSearchSuggestion,indexOpenSearch,searchMovies} from '../controllers/movieController.js';
+import {MovieController} from '../controllers/movieController.js';
 const router = express.Router();
 router.use(express.json());
 
-router.post('/addMovie',createMovie);
+router.post('/addMovie',MovieController.createMovie);
 
-router.get('/',getAllMovies);
+router.get('/',MovieController.getAllMovies);
 
-router.get('/few',getFewMovies);
+router.get('/few',MovieController.getFewMovies);
 
-router.get('/movieDetails/:name/:id',getMovieDetails);
+router.get('/movieDetails/:name/:id',MovieController.getMovieDetails);
 
-router.get('/getAutoSuggestion',getAutoSuggestion)
+router.get('/getAutoSuggestion',MovieController.getAutoSuggestion)
 
-router.get('/fetchLatestMovies',fetchLatestMovies);
+router.get('/fetchLatestMovies',MovieController.fetchLatestMovies);
 
-router.get('/indexOpenSearch',indexOpenSearch);
+router.get('/indexOpenSearch',MovieController.indexOpenSearch);
 
-router.post('/addCustomerReview',addCustomerReview);
+router.post('/addCustomerReview',MovieController.addCustomerReview);
 
-router.post('/search',getSearchSuggestion)
+router.post('/search',MovieController.getSearchSuggestion)
 
-router.post('/searchMovies',searchMovies);
+router.post('/searchMovies',MovieController.searchMovies);
 
 export default router;

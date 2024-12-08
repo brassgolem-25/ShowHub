@@ -1,7 +1,7 @@
 import express from 'express';
 import testRoute from './api/test.js'
 import loginRoute from './api/login.js'
-import mongooseConnect from './config/db.js'
+import mongooseConnect from './config/mongo.js'
 import {connectRedis} from './config/redis.js'
 import { connectPostgre } from './config/postgre.js';
 import { checkClusterHealth } from './config/opensearch.js';
@@ -11,6 +11,7 @@ import showTimeRoute from './routes/showTimeRoutes.js'
 import authRoute from './routes/authRoutes.js'
 import cityRoute from './routes/cityRoute.js'  
 import liveEventRoute from './routes/liveEventRoute.js' 
+import etlRoute from './routes/etlRoutes.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -57,6 +58,9 @@ app.use('/api/liveEvents',liveEventRoute)
 
 //Authentication
 app.use('/auth',authRoute)
+
+//ETL ,inserting data
+app.use('/etl',etlRoute)
 
 app.listen(3000 || process.env.port , (req,res)=>{
     console.log("Listening on port 3000");

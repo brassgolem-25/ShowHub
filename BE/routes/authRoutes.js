@@ -27,7 +27,7 @@ router.post('/facebook-authentication', userControlMethod.facebookAuthentication
 
 router.get('/generate-token', userControlMethod.generateAuthToken)
 
-router.post('/createUser', userControlMethod.createOrUpdateUser);
+router.post('/createUser', userControlMethod.createOrUpdateOAuthUser);
 
 router.get('/getAllUsers', authenticate, authorize('admin'), userControlMethod.getAllUsers);
 

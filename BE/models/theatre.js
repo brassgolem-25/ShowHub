@@ -6,68 +6,25 @@ const theaterSchema = new mongoose.Schema({
         required: true,
     },
     location: {
-        address: String,
-        city: String,
-        state: String,
+        city: { type: String, required: true },
+        state: { type: String },
     },
-    theatreID: {
+    theaterID: {
         type: String,
         required: true,
         unique: true,
     },
-    language: {
-        type: String,
-        required: true,
-    },
-    screens: [String],
-    amenities: [String],
-    contactDetails: {
-        phone: String,
-        email: String,
-    },
-    ratings: {
-        average: Number,
-        totalReviews: Number,
-    },
-    pricing: {
-        basePrice: Number,
-        premiumPrice: Number,
-        currency: String,
-    },
-    seating: {
-        totalSeats: Number,
-    },
-    operatingHours: {
-        openingTime: String,
-        closingTime: String,
-    },
-    currentMovies: [
+    currentMoviesData: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'movie',
+            title: String,
+            year: Number,
+            runtime: String,
+            genre: String,
+            language: String,
+            imdbID: String,
+            imdbRating: String,
         },
     ],
-    socialMedia: {
-        website: String,
-        facebook: String,
-        twitter: String,
-        instagram: String,
-    },
-    policies: {
-        cancellationPolicy: String,
-        refundPolicy: String,
-    },
-    promotions: [
-        {
-            description: String,
-            validUntil: Date,
-        },
-    ],
-    accessibilityFeatures: [String],
-    manager: {
-        name: String,
-        contact: String,
-    },
 });
 
 const Theater = mongoose.model('theater', theaterSchema);
