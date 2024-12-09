@@ -10,6 +10,7 @@ import { LiveEventService } from '../../core/live-events.service';
 import { LiveEvents } from '../types/liveEvent';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { TheatreService } from '../../core/theater.service';
 @Component({
   selector: 'app-recommended-ent',
   standalone: true,
@@ -121,14 +122,9 @@ export class RecommendedEntComponent implements OnInit {
   funEvents = this.events;
   contentType='liveEvents';
 
-  constructor(private mS: MovieService, private liveEventSer: LiveEventService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private mS: MovieService,private theaterSer: TheatreService,private liveEventSer: LiveEventService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-      this.mS.getRecommendedMovies().subscribe((moviesArr: Movie[]) => {
-        this.movies = moviesArr;
-        this.loading = false;
-      })
-
     this.route.params.subscribe((params) => {
       this.currLocation = params['location'];
       console.log(this.currLocation)
@@ -137,10 +133,15 @@ export class RecommendedEntComponent implements OnInit {
       }
     })
     const data = {
-      "city": this.currLocation
+      "city": this.currLocation,
     }
     this.liveEventSer.getBasicLiveEventsByLocation(data).subscribe((events: LiveEvents[]) => {
       this.liveEvents = events;
+    })
+
+    this.theaterSer.getCurrentlyRunningMovie({"city":this.currLocation,"limit":10}).subscribe((moviesArr:any)=>{
+      this.movies = moviesArr;
+      this.loading = false;
     })
   }
 

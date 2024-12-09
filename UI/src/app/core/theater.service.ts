@@ -12,5 +12,10 @@ export class TheatreService {
   getTheatreDetails(data:{}):Observable<any>{
     return this.http.post(`${this.serverURL}/api/theatre/theatreDetails`,data);
   }
+
+  getCurrentlyRunningMovie(data:{city:string,limit:number|null}) : Observable<any>{
+    const {city,limit} = data;
+    return this.http.get(`${this.serverURL}/api/theatre/getCurrentlyRunningMovieByLocation?city=${city}&limit=${limit}`);
+  }
   
 }

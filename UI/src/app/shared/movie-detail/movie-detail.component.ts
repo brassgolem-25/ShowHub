@@ -5,6 +5,7 @@ import { MovieService } from '../../core/movie.service';
 import { Movie } from '../types/movie';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { TheatreService } from '../../core/theater.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -22,12 +23,12 @@ export class MovieDetailComponent implements OnInit {
   selectedFormats: string[] = [];
   filteredMovies: Movie[] = [];
   currLocation:string="";
-  constructor(private mS: MovieService, private route: ActivatedRoute, private router: Router) {
-    mS.getAllMovies().subscribe((moviesArr: Movie[]) => {
-      console.log(moviesArr)
-      this.movies = moviesArr;
-      this.loading = false;
-    })
+  constructor(private mS: MovieService,private theaterSer: TheatreService, private route: ActivatedRoute, private router: Router) {
+    // mS.getAllMovies().subscribe((moviesArr: Movie[]) => {
+    //   console.log(moviesArr)
+    //   this.movies = moviesArr;
+    //   this.loading = false;
+    // })
   }
 
   languages: string[] = [
@@ -130,6 +131,7 @@ export class MovieDetailComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.route.params.subscribe(params=>{
       this.currLocation = params['location'];
     })
@@ -148,9 +150,11 @@ export class MovieDetailComponent implements OnInit {
       this.selectedGenres = genreQuery ? genreQuery : [];
 
     })
-
-    this.route.paramMap.subscribe((d)=>{
-      console.log(d)
+    
+    this.theaterSer.getCurrentlyRunningMovie({"city":this.currLocation,"limit":null}).subscribe((moviesArr:any)=>{
+      this.movies = moviesArr;
+        this.loading = false;
     })
+
   }
 }
