@@ -60,7 +60,7 @@ app.use('/api/liveEvents',liveEventRoute)
 app.use('/auth',authRoute)
 
 //ETL ,inserting data
-app.use('/etl',etlRoute)
+app.use('/api/etl',etlRoute)
 
 app.listen(3000 || process.env.port , (req,res)=>{
     console.log("Listening on port 3000");

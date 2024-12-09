@@ -1,5 +1,5 @@
 import Theater from "../models/theatre.js";
-import Movie from "../models/movie.js";
+import ShowTime from "../models/showTimes.js"
 
 export class TheaterController {
   // Get all Theaters
@@ -12,42 +12,15 @@ export class TheaterController {
     }
   };
 
-  // Get Theaters for a specific movie in a specific location
-  static getTheatreForMovie = async (req, res) => {
-    try {
-      const { imdbID, location } = req.body;
-
-      // Validate IMDb ID and find the associated movie
-      const movie = await Movie.findOne({ imdbID }, { _id: 1 });
-      if (!movie) {
-        return res.status(400).json({ message: "Invalid IMDb ID" });
-      }
-
-      const movieObjId = movie['_id'];
-
-      // Fetch theaters showing the movie in the given location
-      const theaters = await Theater.find(
-        { 
-          currentMovies: movieObjId, 
-          'location.city': location 
-        }, 
-        { _id: 0, __v: 0 }
-      );
-
-      if (theaters.length === 0) {
-        return res.status(404).json({ message: "No theaters found for this movie in the specified location" });
-      }
-
-      return res.json(theaters);
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
-  };
-
   static getCurrentlyRunningMovieByLocation = async(req,res) =>{
     try {
-      const {city} = req.body;
-      const runningMoviesByLocation = await Theater.find({'location.city':city});
+      const {city} = req.query;
+      const limit = parseInt(req.query.limit,10) || 0;
+
+      const result =(await Theater.findOne({'location.city':city},{_id:0})).currentMoviesData;
+
+      const runningMoviesByLocation  = limit ? result.slice(0,limit) : result;
+
       res.json(runningMoviesByLocation);
     } catch (error) {
       return res.status(500).json({ message: error.message });

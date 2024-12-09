@@ -23,8 +23,9 @@ const theaterSchema = new mongoose.Schema({
             language: String,
             imdbID: String,
             imdbRating: String,
+            poster:String
         },
-    ],
+    ]
 });
 
 const Theater = mongoose.model('theater', theaterSchema);

@@ -6,6 +6,9 @@ router.use(express.json());
 
 const etlProcess = new ETLProcessController();
 
-router.get('/',etlProcess.loadTheater);
+router.get('/loadTheater',etlProcess.loadTheater);
+
+router.get('/loadShowtimes',etlProcess.loadShowtimes);
+
 
 export default router;

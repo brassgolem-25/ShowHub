@@ -1,38 +1,16 @@
 import mongoose from "mongoose";
 
 const showtimeSchema = new mongoose.Schema({
-    imdbID: { 
-      type: String, 
-      required: true 
-    },  
-    theatreID: { 
-      type: String, 
-      required: true 
-    },
-    date: { 
-      type: String, 
-      required: true 
-    },  
-    showtimes: [
-      {
-        time: { 
-          type: String, 
-          required: true 
-        },  
-        format: { 
-          type: String, 
-          required: true 
-        }, 
-        availability: { 
-          type: Number, 
-          required : true
-        }  
-      }
-    ]
-  });
-  
-  // Ensure a unique constraint on imdbID, theatreID, and date combined
+  theaterID: { type: String, required: true },
+  imdbID: { type: String, required: true },
+  date: { type: Date, required: true },
+  time: { type: String, required: true }, 
+  format: { type: String, required: true }, 
+  language: { type: String, required: true },
+  price: { type: Number, required: true },
+  availableSeats: { type: Number, required: true },
+  bookedSeats: { type: [String], default: [] }, 
+});
 
 const Showtime = mongoose.model('Showtime', showtimeSchema);
-
 export default Showtime;
