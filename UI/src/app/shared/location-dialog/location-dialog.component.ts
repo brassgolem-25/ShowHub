@@ -31,7 +31,7 @@ export class LocationDialogComponent implements OnInit {
   popularCities = [
     { name: 'Mumbai', icon: 'assets/landmark/mumbai.png' },
     { name: 'Delhi-NCR', icon: 'assets/landmark/delhi.png' },
-    { name: 'Bengaluru', icon: 'assets/landmark/bengaluru.png' },
+    { name: 'Bangalore', icon: 'assets/landmark/bengaluru.png' },
     { name: 'Hyderabad', icon: 'assets/landmark/hyderabad.png' },
     { name: 'Ahmedabad', icon: 'assets/landmark/ahmedabad.png' },
     { name: 'Chandigarh', icon: 'assets/landmark/chandigarh.png' },

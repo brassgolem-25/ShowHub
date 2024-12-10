@@ -9,8 +9,8 @@ export class ShowTimeService {
   serverURL = 'http://localhost:3000';
   constructor(private http : HttpClient) { }
   
-  getShowTimeDetails(data:{}):Observable<any>{
-    return this.http.post(`${this.serverURL}/api/showTime/showTimeDetails`,data);
+  getShowTimeDetails(data:{imdbID:string,city:string}):Observable<any>{
+    return this.http.get(`${this.serverURL}/api/showTime/showTimeDetails?imdbID=${data.imdbID}&city=${data.city}`);
   }
   
 }

@@ -21,18 +21,12 @@
     border: 0.5px solid #ddd;
 }
 
-
 .date-filter-section {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    /* Keep elements close together */
     gap: 10px;
-    /* Control spacing between elements */
     padding: 10px 5%;
-    /* Space around the entire section */
     border-bottom: 1px solid #ddd;
-    /* Subtle divider line */
 }
 
 .arrow-btn {
@@ -40,12 +34,7 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0;
-    /* Remove extra spacing around arrows */
-    margin: 0 5px;
-    /* Bring arrows closer to dates */
     color: #aaa;
-    /* Subtle color for the arrows */
 }
 
 .dates {
@@ -71,7 +60,6 @@
     align-items: center;
     gap: 15px;
     margin-left: auto;
-    /* Push filters to the right */
 }
 
 .filters select {
@@ -85,7 +73,6 @@
 .filters select:focus,
 .filters select:hover {
     border-bottom: 2px solid #ff4081;
-    /* Active underline color */
 }
 
 .search-icon {
@@ -94,18 +81,11 @@
     cursor: pointer;
 }
 
-.search-icon img{
-    height: 10%;
-    width: 10%;
-}
-
-
 .theater-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 10px;
-    /* Padding around the entire list */
 }
 
 .theater-card {
@@ -115,8 +95,6 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fafafa;
-    margin-bottom: 10px;
-    /* Add spacing between cards */
 }
 
 .theater-info {
@@ -160,12 +138,11 @@
     border-radius: 5px;
     text-align: center;
     font-size: 0.85rem;
-    width: 60px;
+    width: 80px;
 }
 
 .showtime-box .time {
     font-weight: bold;
-    display: block;
     font-size: 0.9rem;
 }
 

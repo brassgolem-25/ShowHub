@@ -40,9 +40,8 @@ export class BookTicketComponent implements OnInit {
   imdbID: string = '';
   currLocation: string = '';
   selectedDate: string = '';
-  movie: any;
   loading: boolean = true;
-  showTimeArr:any;
+  theater_showtime_movie_detail:any;
 
   constructor(private route: ActivatedRoute, private theatreSer: TheatreService, private mS: MovieService, private showTimeSer: ShowTimeService, private router: Router) {
     const currDateArr = Date().slice(0, 15).split(" "); //[Mon,04,Nov,2024]
@@ -56,7 +55,6 @@ export class BookTicketComponent implements OnInit {
 
 
 
-  theaters: any;
 
   // Method to change selected date
   selectDate(date: any) {
@@ -64,7 +62,7 @@ export class BookTicketComponent implements OnInit {
     this.router.navigate([], { relativeTo: this.route, queryParams: { date: this.selectedDate } })
     const data = {
       "imdbID": this.imdbID,
-      "location": this.currLocation
+      "city": this.currLocation
     }
     this.getTheaterShowTimeDetails(data);
   }
@@ -83,38 +81,29 @@ export class BookTicketComponent implements OnInit {
     this.route.params.subscribe((data) => {
       this.currLocation = data['location'];
     })
-    const data = {
-      "imdbID": this.imdbID,
-      "location": this.currLocation
-    }
-    this.getTheaterShowTimeDetails(data);
     this.route.queryParams.subscribe((data) => {
       this.selectedDate = data['date'];
     })
 
+    const data = {
+      "imdbID": this.imdbID,
+      "city": this.currLocation
+    }
+    this.getTheaterShowTimeDetails(data);
+
 
   }
 
-  getTheaterShowTimeDetails(data: { imdbID: string; location: string }){
-    this.theatreSer.getTheatreDetails(data).subscribe((theaters) => {
-      this.theaters = theaters;
-      this.mS.getMovieByID(this.movieName, this.imdbID).subscribe((movieData: any) => {
-        this.movie = movieData;
-        this.movieGenre = movieData['genre'].split(",");
-        this.movieLanguage=movieData['language']
-        this.theaters.forEach((theater:any,index:number)=>{
-          const req = {
-            "imdbID": this.imdbID,
-            "theatreID": theater['theatreID'],
-            "date": this.selectedDate
-          }
-          this.showTimeSer.getShowTimeDetails(req).subscribe((showTimeRes:ShowTime)=>{
-            this.showTimeArr=showTimeRes;
-            this.theaters[index].showTimes = this.showTimeArr[0]['showtimes'];
-          })
-        })
-        this.loading = false;
-      })
+  getTheaterShowTimeDetails(data: { imdbID: string; city: string}){
+
+    this.showTimeSer.getShowTimeDetails(data).subscribe((theater_showTime:any)=>{
+      console.log(this.selectedDate)
+      console.log(theater_showTime);
+      this.theater_showtime_movie_detail = theater_showTime;
+      this.movieName = theater_showTime[0].movie_name;
+      this.movieGenre = theater_showTime[0].movie_genre.split(", ");
+      this.movieLanguage = theater_showTime[0].language;
+      this.loading = false;
     })
   }
 
