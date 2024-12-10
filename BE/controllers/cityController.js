@@ -26,7 +26,6 @@ export const insertCities = async (req, res) => {
 export const getCitiesList = async (req, res) => {
     try {
         const redisResponse = await redisClient.sMembers('citiesList');
-        console.log(redisResponse.length)
         if (redisResponse.length > 0) {
             return res.json(redisResponse);
         }

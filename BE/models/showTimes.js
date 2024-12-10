@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const showtimeSchema = new mongoose.Schema({
   theaterID: { type: String, required: true },
   imdbID: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: String, required: true },
   time: { type: String, required: true }, 
   format: { type: String, required: true }, 
   language: { type: String, required: true },
