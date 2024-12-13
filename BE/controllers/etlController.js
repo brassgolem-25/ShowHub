@@ -55,6 +55,8 @@ export class ETLProcessController {
                 showDate.setDate(today.getDate() + day);
                 const formattedDate = showDate.toISOString().split('T')[0];
                 const dailyShowtimes = Math.floor(Math.random() * 3 + 3);
+                const languageList = movieLanguage.split(', ');
+                for(let language of languageList){
                 for (let i = 0; i < dailyShowtimes; i++) {
                   showtimesData.push({
                     theaterID,
@@ -62,12 +64,13 @@ export class ETLProcessController {
                     date: formattedDate,
                     time: generateRandomTime(),
                     format: formats[Math.floor(Math.random() * formats.length)],
-                    language: movieLanguage ,
+                    language: language ,
                     price: generateRandomPrice(),
                     availableSeats: 50, // Fixed seat count for simplicity
                     bookedSeats: [],
                   });
                 }
+              }
               }
             }
           }

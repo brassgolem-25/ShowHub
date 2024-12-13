@@ -1,8 +1,7 @@
 import Theater from "../models/theatre.js";
 import Showtime from "../models/showTimes.js";
 import Movie from "../models/movie.js"
-import { startOfWeek, endOfWeek, format } from 'date-fns';
-
+import { upperCaseFirst } from "upper-case-first";
 
 
 export class ShowTimeController {
@@ -17,9 +16,10 @@ export class ShowTimeController {
       const theaterDetails = (await Theater.find({ 'location.city': city }, { location: 1, name: 1, theaterID: 1, _id: 0 }));
       const movieDetails = (await Movie.findOne({ imdbID }, { _id: 0, title: 1, genre: 1, language: 1 }))
       let showTime_Theater_Details = [];
+      let showTime_Lang_Format = [];
       for (let theater of theaterDetails) {
         const showTimeSearchQuery = { theaterID: theater.theaterID, imdbID, date: formattedDate };
-        const showTime = await Showtime.find(showTimeSearchQuery, { format:1,time:1,price:1,availableSeats:1, _id: 0});
+        const showTime = await Showtime.find(showTimeSearchQuery, { format: 1, time: 1, price: 1, availableSeats: 1, language:1, _id: 0 }).sort({ time: -1 });
         const showTimeForTheater = {
           showTime,
           theater_name: theater.name,
@@ -27,12 +27,17 @@ export class ShowTimeController {
           theater_amenities: "M-Ticket,Food & Beverages",
           cancellationAvailable: true
         }
-
+        for (let shows of showTime) {
+          const lang_format = shows.language +" - "+ shows.format ;
+          if(!showTime_Lang_Format.includes(lang_format)){
+            showTime_Lang_Format.push(lang_format)
+          }
+        }
         showTime_Theater_Details.push(showTimeForTheater)
       }
 
 
-      return res.status(200).json({ status: "success", result: { movieDetails: movieDetails, theater_showtime: showTime_Theater_Details } });
+      return res.status(200).json({ status: "success", result: { movieDetails: movieDetails, theater_showtime: showTime_Theater_Details, showTime_Lang_Format: showTime_Lang_Format } });
       // return res.status(200).json({status:"ok"})
     } catch (error) {
       console.log(error);
@@ -40,16 +45,4 @@ export class ShowTimeController {
     }
   }
 
-  static getFormattedDate() {
-    const currentDate = new Date();
-
-    const startOfWeekDate = startOfWeek(currentDate, { weekStartsOn: 1 });
-    const endOfWeekDate = endOfWeek(currentDate, { weekStartsOn: 1 });
-
-    // Format dates as YYYYMMDD
-    const startDate = format(startOfWeekDate, 'yyyy-MM-dd');
-    const endDate = format(endOfWeekDate, 'yyyy-MM-dd');
-
-    return { startDate, endDate }
-  }
 }
