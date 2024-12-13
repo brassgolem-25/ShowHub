@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.x",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.x",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

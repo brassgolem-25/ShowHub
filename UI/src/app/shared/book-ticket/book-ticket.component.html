@@ -1,75 +1,73 @@
 <app-header></app-header>
 <app-tabs></app-tabs>
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div *ngIf="!loading">
-    <div class="movie-header">
-        <h2>{{ movieName }} - {{ movieLanguage }}</h2>
-        <div class="genres">
-            <span *ngFor="let genre of movieGenre">{{ genre }}</span>
-        </div>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div *ngIf="!isLoading">
+  <div class="movie-header">
+    <h2>{{ movieTitle }} - {{ movieLanguage }}</h2>
+    <div class="genres">
+      <span *ngFor="let genre of movieGenres">{{ genre }}</span>
     </div>
+  </div>
 
-    <hr class="divider-line">
+  <hr class="divider-line">
 
-    <div class="date-filter-section">
-        <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
-        <div class="dates">
-            <button *ngFor="let date of dates" [ngClass]="selectedDate === formattedDate(date) ? 'selected' : ''"
-                (click)="selectDate(date)">
-                {{ date }}
-            </button>
-        </div>
-        <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
-
-        <div class="filters">
-            <select>
-                <option value="{{ movieLanguage }}-2D">{{ movieLanguage }} - 2D</option>
-            </select>
-            <select>
-                <option>Filter Sub Regions</option>
-            </select>
-            <select>
-                <option>Filter Price Range</option>
-                <option value="0-100">₹0 - ₹100</option>
-                <option value="101-200">₹101 - ₹200</option>
-                <option value="201-300">₹201 - ₹300</option>
-                <option value="301-500">₹301 - ₹500</option>
-            </select>
-            <select>
-                <option>Filter Show Timings</option>
-                <option value="morning">Morning</option>
-                <option value="afternoon">Afternoon</option>
-                <option value="evening">Evening</option>
-                <option value="night">Night</option>
-            </select>
-            <span class="search-icon"><fa-icon [icon]="faSearch"></fa-icon></span>
-        </div>
+  <div class="date-filter-section">
+    <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+    <div class="dates">
+      <button *ngFor="let date of dateList" (click)="onDateSelect(date)">
+        {{ date }}
+      </button>
     </div>
+    <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>
 
-    <div class="theater-list">
-        <div class="theater-card" *ngFor="let theater of theater_showtime_movie_detail">
-          <div class="theater-info">
-            <div class="theater-name">
-              {{ theater.theater_name }}
-              <span class="info-icon"><fa-icon [icon]="faInfo"></fa-icon></span>
-            </div>
-            <div class="location">
-              <p>{{ theater.theater_location.city }}, {{ theater.theater_location.state }}</p>
-            </div>
-            <div class="features">
-              <span *ngFor="let amenity of theater.theater_amenities.split(',')">
-                <fa-icon [icon]="faMobile"></fa-icon> {{ amenity }}
-              </span>
-            </div>
-            <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
-          </div>
-          <div class="showtimes">
-            <div *ngFor="let showtime of theater.showTime" class="showtime-box">
-              <span class="time">{{ showtime.time }}</span>
-              <span class="format">{{ showtime.format }}</span>
-            </div>
-          </div>
+    <form class="filters" [formGroup]="filterForm">
+      <select formControlName="formatFilter">
+        <option [value]="format" *ngFor="let format of showTimeDetails">{{format}}</option>
+      </select>
+      <select>
+        <option>Filter Sub Regions</option>
+      </select>
+      <select formControlName="priceFilter">
+        <option value="0-100">₹0 - ₹100</option>
+        <option value="101-200">₹101 - ₹200</option>
+        <option value="201-300">₹201 - ₹300</option>
+        <option value="301-500">₹301 - ₹500</option>
+        <option value="501-1000">₹501 - ₹1000</option>
+      </select>
+      <select>
+        <option>Filter Show Timings</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+        <option value="night">Night</option>
+      </select>
+      <span class="search-icon"><fa-icon [icon]="faSearch"></fa-icon></span>
+    </form>
+  </div>
+
+  <div class="theater-list">
+    <div class="theater-card" *ngFor="let theater of filteredTheaterShowDetails">
+      <div class="theater-info">
+        <div class="theater-name">
+          {{ theater.theater_name }}
+        </div>
+        <div class="location">
+          <p>{{ theater.theater_location.city }}, {{ theater.theater_location.state }}</p>
+        </div>
+        <div class="features">
+          <span *ngFor="let amenity of theater.theater_amenities.split(',')">
+            <fa-icon [icon]="getAmenityIcon(amenity)"></fa-icon> {{amenity}}
+          </span>
+        </div>
+        <span *ngIf="theater.cancellationAvailable" class="cancellation">Cancellation Available</span>
+      </div>
+      <div class="showtimes">
+        <div *ngFor="let showtime of theater.showTime" class="showtime-box">
+          <span class="time">{{ showtime.time }}</span>
+          <span class="format">{{ showtime.format }}</span>
         </div>
       </div>
-      
+    </div>
+  </div>
+
 </div>
