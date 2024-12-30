@@ -185,6 +185,16 @@ export const updateLikeCount = async (req, res) => {
     }
 };
 
+export const getAllEventsByLocation = async (req, res) => {
+    try {
+        const { city } = req.body;
+        const result = (await postgreClient.query(`select * from liveEventVenueDetails where lower(city) = lower($1)`, [city])).rows;
+        res.json(result);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 const parseDate = (date) => {
     return date.toLocaleDateString().split('/').join('-')
 };

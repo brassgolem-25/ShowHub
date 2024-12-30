@@ -11,6 +11,9 @@ const postgreClient = new Client({
 	host: 'localhost',
 	port: '5432',
 	database: 'ShowHub',
+    // ssl: {
+    //     rejectUnauthorized: false,
+    //   },
 })
 
 const connectPostgre = async() =>{

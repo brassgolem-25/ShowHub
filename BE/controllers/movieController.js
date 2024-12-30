@@ -108,6 +108,9 @@ export class MovieController {
   static getAutoSuggestion = async (req, res) => {
     try {
       let movieArr = [];
+      if (this.imdbArr.length === 0) {
+        this.imdbArr = await Movie.find({}, { imdbID: 1, _id: 0 }).sort({ year: -1, released: -1 }).limit(10);  
+      }
       for (let obj of this.imdbArr) {
         const imdbID = obj['imdbID'];
         const redisResponse = await redisClient.hGet(imdbID, 'movieData');

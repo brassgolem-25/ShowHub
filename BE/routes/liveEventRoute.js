@@ -1,4 +1,4 @@
-import { insertLiveEventsDetails,insertTicketDetails,insertVenueDetails ,getBasicLiveEventsByLocation,getLiveEventsByEventCode,generateJSONData,updateLikeCount} from "../controllers/liveEventsController.js";
+import { insertLiveEventsDetails,insertTicketDetails,insertVenueDetails ,getBasicLiveEventsByLocation,getLiveEventsByEventCode,generateJSONData,updateLikeCount,getAllEventsByLocation} from "../controllers/liveEventsController.js";
 import {authenticate,authorize} from '../middleware/authMiddleware.js';
 import express from 'express';
 const router = express.Router();
@@ -17,6 +17,8 @@ router.post('/getLiveEventsByEventCode',getLiveEventsByEventCode);
 router.post('/generateJSONData',generateJSONData);
 
 router.post('/updateLikeCount',updateLikeCount);
+
+router.post('/getAllEventsByLocation',getAllEventsByLocation);
 
 
 export default router;
