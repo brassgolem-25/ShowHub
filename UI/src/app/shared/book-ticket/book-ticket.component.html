@@ -14,8 +14,8 @@
   <div class="date-filter-section">
     <button class="arrow-btn"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
     <div class="dates">
-      <button *ngFor="let date of dateList" (click)="onDateSelect(date)">
-        {{ date }}
+      <button *ngFor="let date of dateList" [ngClass]="date.raw===selectedDate ? 'selected':''" (click)="onDateSelect(date)">
+        {{ date.display }}
       </button>
     </div>
     <button class="arrow-btn"><fa-icon [icon]="faChevronRight"></fa-icon></button>

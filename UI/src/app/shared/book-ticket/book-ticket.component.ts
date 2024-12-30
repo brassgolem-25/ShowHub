@@ -50,7 +50,7 @@ export class BookTicketComponent implements OnInit {
 
   // Component State
   currentDate: string = "";
-  dateList: string[] = [];
+  dateList: { display: string, raw: string }[] = [];
   movieGenres: string[] = [];
   movieTitle: string = '';
   movieLanguage: string = '';
@@ -98,27 +98,31 @@ export class BookTicketComponent implements OnInit {
     const today = new Date();
     for (let i = 0; i < 7; i++) {
       const date = new Date(today);
+      this.currentDate = this.formatToYYYYMMDD(date);
       date.setDate(today.getDate() + i);
-      this.dateList.push(this.formatDisplayDate(date));
+      this.dateList.push({
+        display: this.formatDisplayDate(date), // For UI display
+        raw: this.formatToYYYYMMDD(date), // For comparisons
+      });
     }
   }
   // Format Date Helper
-  private formatDisplayDate(date: Date): string {
-    const day = date.toLocaleString('en-us', { weekday: 'short' });
-    const month = date.toLocaleString('en-us', { month: 'short' });
-    return `${day} ${date.getDate()} ${month} ${date.getFullYear()}`;
+  private formatDisplayDate(inpDate: Date): string {
+    const day = inpDate.toLocaleString('en-us', { weekday: 'short' });
+    const month = inpDate.toLocaleString('en-us', { month: 'short' });
+    return `${day} ${inpDate.getDate()} ${month}`;
   }
 
-  private formatUrlDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
+  private formatToYYYYMMDD(dateObj: Date): string {
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const day = dateObj.getDate().toString().padStart(2, '0');
     return `${year}${month}${day}`;
   }
-  
+
   // Handle Date Selection
-  onDateSelect(date: string): void {
-    this.selectedDate = date;
+  onDateSelect(dateObj:{ display: string, raw: string }): void {
+    this.selectedDate = dateObj.raw;
     this.updateRoute();
     this.requestData.date = this.selectedDate;
     this.isLoading = true;
@@ -144,6 +148,15 @@ export class BookTicketComponent implements OnInit {
     });
   }
 
+  private validateDate(inpDate:string):boolean{
+    const inpDay = inpDate.slice(6,8);
+    const currDay = this.currentDate.slice(6,8);
+    if(inpDay<currDay){
+      return false;
+    }
+    return true;
+  }
+
   // Initialize Route Configuration
   private initializeRouteConfig(): void {
     const params = this.route.snapshot.params;
@@ -151,6 +164,10 @@ export class BookTicketComponent implements OnInit {
     this.movieTitle = params['eventName'];
     this.currentCity = params['location'];
     this.selectedDate = params['date'];
+    if(!this.validateDate(this.selectedDate)){
+      this.selectedDate=this.currentDate
+      this.updateRoute();
+    }
     this.requestData = {
       imdbID: this.imdbId,
       city: this.currentCity,
@@ -186,20 +203,20 @@ export class BookTicketComponent implements OnInit {
 
   // Navigate to Previous Date
   onPreviousDate(): void {
-    const currentIndex = this.dateList.indexOf(this.selectedDate);
-    if (currentIndex > 0) {
-      this.selectedDate = this.dateList[currentIndex - 1];
-      this.onDateSelect(this.selectedDate);
-    }
+    // const currentIndex = this.dateList.indexOf(this.selectedDate);
+    // if (currentIndex > 0) {
+    //   this.selectedDate = this.dateList[currentIndex - 1];
+    //   this.onDateSelect(this.selectedDate);
+    // }
   }
 
   // Navigate to Next Date
   onNextDate(): void {
-    const currentIndex = this.dateList.indexOf(this.selectedDate);
-    if (currentIndex < this.dateList.length - 1) {
-      this.selectedDate = this.dateList[currentIndex + 1];
-      this.onDateSelect(this.selectedDate);
-    }
+    // const currentIndex = this.dateList.indexOf(this.selectedDate);
+    // if (currentIndex < this.dateList.length - 1) {
+    //   this.selectedDate = this.dateList[currentIndex + 1];
+    //   this.onDateSelect(this.selectedDate);
+    // }
   }
 
   // Get Icon for Amenities

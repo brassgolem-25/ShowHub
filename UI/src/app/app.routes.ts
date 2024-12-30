@@ -9,6 +9,8 @@ import { SeatSelectionComponent } from './shared/seat-selection/seat-selection.c
 import { MovieSectionComponent } from './shared/movie-section/movie-section.component';
 import { AuthGaurd } from './core/auth-gaurd.service';
 import { LocationGuard } from './core/location-guard.service';
+import { GraphComponent } from './shared/graph/graph.component';
+import { EventsListComponent } from './shared/events-list/events-list.component';
 
 export const routes: Routes = [
     {path:'explore/home/:location',component:HomeComponent,canActivate:[LocationGuard]},
@@ -20,5 +22,6 @@ export const routes: Routes = [
     {path:'seat',component:SeatSelectionComponent},
     {path:'signIn',component:SignInComponent,canActivate:[AuthGaurd]},
     {path:'login',component:SignInComponent,canActivate:[AuthGaurd]},
+    {path:'event-list',component:EventsListComponent},
     {path:'**',redirectTo:'explore/home/mumbai',pathMatch:'full'}
 ];

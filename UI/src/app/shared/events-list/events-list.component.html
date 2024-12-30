@@ -1,0 +1,50 @@
+<app-generic-header></app-generic-header>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div *ngIf="!loading" class="movie-container">
+  <!-- Filter Section -->
+  <div class="filters">
+    <div class="filter-group">
+      <h3>Date</h3>
+      <div class="filter-options">
+        <button [ngStyle]="{'background-color': selectedDates.includes(date) ? '#f14c4c' : '#fff'}" *ngFor="let date of dates" (click)="toggleDate(date)">{{ date }}</button>
+      </div>
+      <button class="clear" (click)="clearFilter('date')">Clear</button>
+    </div>
+
+    <div class="filter-group">
+      <h3>Categories</h3>
+      <div class="filter-options">
+        <button [ngStyle]="{'background-color': selectedCategories.includes(category) ? '#f14c4c' : '#fff'}" *ngFor="let category of categories" (click)="toggleCategory(category)">{{ category }}</button>
+      </div>
+      <button class="clear" (click)="clearFilter('category')">Clear</button>
+    </div>
+
+    <div class="filter-group">
+      <h3>Price</h3>
+      <div class="filter-options">
+        <button [ngStyle]="{'background-color': selectedPrices.includes(price) ? '#f14c4c' : '#fff'}" *ngFor="let price of prices" (click)="togglePrice(price)">{{ price }}</button>
+      </div>
+      <button class="clear" (click)="clearFilter('price')">Clear</button>
+    </div>
+  </div>
+
+  <!-- Events Section -->
+  <div class="movies">
+    <h2>Events in Mumbai</h2>
+    <div class="event-filters">
+      <button [ngStyle]="{'background-color': selectedDates.includes(date) ? '#f14c4c' : '#fff'}" *ngFor="let date of dates" (click)="toggleDate(date)">{{ date }}</button>
+    </div>
+
+    <!-- Event Cards -->
+    <div class="movie-grid">
+      <div *ngFor="let event of events" class="movie-card">
+        <a ><img [src]="event.poster" alt="Event Poster" /></a>
+        <div class="movie-details">
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.category }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
