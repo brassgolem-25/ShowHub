@@ -11,9 +11,7 @@ export class ETLProcessController {
         try {
             const indianCities = (await postgreClient.query(`select name,state from indianCities`)).rows;
             const moviesArr = await Movie.find({}, { title: 1, year: 1, runtime: 1, genre: 1, language: 1, imdbID: 1, imdbRating: 1,poster:1 ,_id:0}).sort({ year: -1, released: -1 });
-
             const theaterNames = ["PVR Cinemas", "INOX", "Cinepolis", "Carnival Cinemas", "Miraj Cinemas", "Nexus Cinemas", "Galaxy Multiplex", "Regal Theater", "Empire Multiplex", "Silver Screen Theater"];
-
             const theaterData = indianCities.map(data => ({
                 name : theaterNames[Math.floor(Math.random()*10)],
                 location : {
