@@ -1,7 +1,3 @@
-Here's the updated README with OpenSearch included for movie search functionality:
-
----
-
 # ShowHub - Online Ticket Booking Application
 
 **ShowHub** is a modern online ticket booking platform that allows users to browse and book tickets for movies and events seamlessly. It is designed with scalability, speed, and a user-friendly interface in mind.

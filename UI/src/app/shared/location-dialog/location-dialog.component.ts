@@ -24,7 +24,8 @@ export class LocationDialogComponent implements OnInit {
   filteredOptions: string[] = [];
   cityControl = new FormControl('');
   constructor(private router: Router, private route: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any, public dS: DialogService) {
-    this.currLocation = data['location'];
+    console.log(data['location'])
+    this.currLocation = data['location'] ;
   }
   faSearch = faSearch;
   faLocationCrosshairs = faLocationCrosshairs;
@@ -43,9 +44,19 @@ export class LocationDialogComponent implements OnInit {
 
   selectedLocation(location: string) {
     let urlSegment = decodeURIComponent(this.router.url).split('/');
-    const index = urlSegment.indexOf(this.currLocation);
-    urlSegment[index] = ((location).split(" ").join("-")).toLowerCase();
-    const newUrlSegment = urlSegment.splice(1);
+    let index = -1;
+    let newUrlSegment = [];
+    const eventURL = `event-${this.currLocation}`;
+    if (urlSegment.includes(eventURL)) {
+      //handling for events-page
+      index = urlSegment.indexOf(eventURL);
+      urlSegment[index] = `event-${location.toLocaleLowerCase()}`;
+      newUrlSegment = urlSegment.splice(1);
+    } else {
+      index = urlSegment.indexOf(this.currLocation);
+      urlSegment[index] = ((location).split(" ").join("-")).toLowerCase();
+      newUrlSegment = urlSegment.splice(1);
+    }
     this.dS.closeDialog();
     this.router.navigate(newUrlSegment, { replaceUrl: true }).then(() => {
       window.location.reload();

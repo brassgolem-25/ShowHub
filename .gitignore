@@ -6,3 +6,6 @@
 /BE/client_secret_510243877519-ejmvr1k6l75c0ffom5oe8a8em5jt03i3.apps.googleusercontent.com.json
 /UI/.angular
 /UI/.vscode
+/UI/src/app/shared/graph
+/UI/src/app/shared/question
+/UI/src/assets/data.json

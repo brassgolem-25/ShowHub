@@ -43,6 +43,10 @@ export class HeaderComponent implements OnInit {
       this.isUserLoggedIn = response.loggedIn;
     })
     this.route.params.subscribe((params) => {
+      if(params['event-location']) {
+        this.currLocation = (params['event-location']).split("-")[1];
+        return;
+      }
       this.currLocation = params['location'] ? params['location'] : 'mumbai';
     })
     this.movieSer.getDefaultSuggestion().subscribe((movieArr: Movie[]) => {

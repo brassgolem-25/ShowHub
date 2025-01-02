@@ -11,6 +11,7 @@ import { AuthGaurd } from './core/auth-gaurd.service';
 import { LocationGuard } from './core/location-guard.service';
 import { GraphComponent } from './shared/graph/graph.component';
 import { EventsListComponent } from './shared/events-list/events-list.component';
+import { QuestionComponent } from './shared/question/question.component';
 
 export const routes: Routes = [
     {path:'explore/home/:location',component:HomeComponent,canActivate:[LocationGuard]},
@@ -22,6 +23,7 @@ export const routes: Routes = [
     {path:'seat',component:SeatSelectionComponent},
     {path:'signIn',component:SignInComponent,canActivate:[AuthGaurd]},
     {path:'login',component:SignInComponent,canActivate:[AuthGaurd]},
-    {path:'event-list',component:EventsListComponent},
+    {path:'explore/:event-location',component:EventsListComponent},
+    {path:'questionList',component:QuestionComponent},
     {path:'**',redirectTo:'explore/home/mumbai',pathMatch:'full'}
 ];

@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { GenericHeaderComponent } from '../generic-header/generic-header.component';
 import { CommonModule } from '@angular/common';
+import { LiveEventService } from '../../core/live-events.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-events-list',
   standalone: true,
-  imports: [LoadingSpinnerComponent,GenericHeaderComponent,CommonModule],
+  imports: [LoadingSpinnerComponent, GenericHeaderComponent, CommonModule],
   templateUrl: './events-list.component.html',
   styleUrl: './events-list.component.css'
 })
-export class EventsListComponent {
-  loading: boolean = false;
+export class EventsListComponent implements OnInit {
+  loading: boolean = true;
+  currLocation: string = "";
+  constructor(private liveEventsSer: LiveEventService, private route: ActivatedRoute) { }
 
   // Temporary data for filters
   dates = ['Today', 'Tomorrow', 'Weekend'];
@@ -79,5 +83,19 @@ export class EventsListComponent {
     } else if (filter === 'price') {
       this.selectedPrices = [];
     }
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      const locationRouteObj = params['event-location'] ? params['event-location'] : 'mumbai';
+      this.currLocation = locationRouteObj.split('-')[1];
+      this.liveEventsSer.getAllEventsByLocation({ city: this.currLocation }).subscribe((data) => {
+        this.loading = false;
+        if(data.length > 0) {
+          this.events = data;
+        }
+      });
+    })
+
   }
 }
