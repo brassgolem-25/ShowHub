@@ -189,7 +189,7 @@ export class LiveEventController{
     static  getAllEventsByLocation = async (req, res) => {
         try {
             const { city } = req.body;
-            const result = (await postgreClient.query(`select title,start_date,end_date,venue_name,event_code,genre from liveEventVenueDetails where lower(city) = lower($1)`, [city])).rows;
+            const result = (await postgreClient.query(`select title,start_date,end_date,venue_name,event_code,genre,cost from liveEventVenueDetails where lower(city) = lower($1)`, [city])).rows;
             res.json(result);
         } catch (error) {
             return res.status(500).json({ message: error.message });
