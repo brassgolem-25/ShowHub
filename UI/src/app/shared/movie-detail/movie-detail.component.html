@@ -30,7 +30,7 @@
   
     <!-- Movies Section -->
     <div class="movies">
-      <h2>Movies In Mumbai</h2>
+      <h2>Movies In {{currLocation}}</h2>
       <div class="movie-filters">
         <button [ngStyle]="{'background-color': selectedLanguages.includes(language) ? '#f14c4c' : '#fff'}" *ngFor="let language of languages" (click)="toggleLanguage(language)">{{ language }}</button>
       </div>

@@ -32,22 +32,25 @@ export class EventsListComponent implements OnInit {
       id: 1,
       title: 'Comedy Night',
       poster: 'https://via.placeholder.com/200',
-      category: 'Comedy',
+      genre: 'Comedy',
       rating: 8.5,
+      start_date:'10-Jan-2025',
     },
     {
       id: 2,
       title: 'Music Concert',
       poster: 'https://via.placeholder.com/200',
-      category: 'Music',
+      genre: 'Music',
       rating: 7.9,
+      start_date:'10-Jan-2025',
     },
     {
       id: 3,
       title: 'Live Show',
       poster: 'https://via.placeholder.com/200',
-      category: 'Live Show',
+      genre: 'Live Show',
       rating: 8.0,
+      start_date:'10-Jan-2025',
     }
   ];
 
@@ -85,11 +88,15 @@ export class EventsListComponent implements OnInit {
     }
   }
 
+  redirectToEventPage(event: any) {
+    this.liveEventsSer.redirectToEventPageByLocation(event, this.currLocation);
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const locationRouteObj = params['event-location'] ? params['event-location'] : 'mumbai';
-      this.currLocation = locationRouteObj.split('-')[1];
-      this.liveEventsSer.getAllEventsByLocation({ city: this.currLocation }).subscribe((data) => {
+      this.currLocation = (locationRouteObj.split('-')[1]).charAt(0).toUpperCase() + (locationRouteObj.split('-')[1]).slice(1);
+      this.liveEventsSer.getAllEventsByLocation({ city: this.currLocation.toLowerCase() }).subscribe((data) => {
         this.loading = false;
         if(data.length > 0) {
           this.events = data;

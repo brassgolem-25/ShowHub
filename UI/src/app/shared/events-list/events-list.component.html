@@ -31,18 +31,19 @@
 
   <!-- Events Section -->
   <div class="movies">
-    <h2>Events in Mumbai</h2>
+    <h2>Events in {{currLocation}}</h2>
     <div class="event-filters">
       <button [ngStyle]="{'background-color': selectedDates.includes(date) ? '#f14c4c' : '#fff'}" *ngFor="let date of dates" (click)="toggleDate(date)">{{ date }}</button>
     </div>
 
     <!-- Event Cards -->
     <div class="movie-grid">
-      <div *ngFor="let event of events" class="movie-card">
-        <a ><img src="https://via.placeholder.com/200" alt="Event Poster" /></a>
+      <div *ngFor="let event of events" class="movie-card" (click)="redirectToEventPage(event)"> 
+        <a ><img src="assets/event-image.jpg" alt="Event Poster" /></a>
         <div class="movie-details">
           <h3>{{ event.title }}</h3>
-          <p>{{ event.category }}</p>
+          <p>{{ event.genre }}</p>
+          <p>{{ event.start_date }}</p>
         </div>
       </div>
     </div>

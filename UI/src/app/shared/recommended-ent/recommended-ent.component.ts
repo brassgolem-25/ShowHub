@@ -159,9 +159,7 @@ export class RecommendedEntComponent implements OnInit {
   }
 
   redirectToEventPage(event: LiveEvents) {
-    const name = (event.title).toLowerCase().split(" ").join("-");
-    console.log(this.currLocation, name, event.event_code)
-    this.router.navigate(['/events', this.currLocation, name, event.event_code])
+    return this.liveEventSer.redirectToEventPageByLocation(event, this.currLocation);
   }
 
   get paginatedEvents() {
