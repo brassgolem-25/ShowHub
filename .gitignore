@@ -7,5 +7,7 @@
 /UI/.angular
 /UI/.vscode
 /UI/src/app/shared/graph
+/UI/src/app/shared/product
+/UI/src/app/shared/divya-login
 /UI/src/app/shared/question
 /UI/src/assets/data.json
