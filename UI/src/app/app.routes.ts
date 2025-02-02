@@ -13,6 +13,7 @@ import { GraphComponent } from './shared/graph/graph.component';
 import { EventsListComponent } from './shared/events-list/events-list.component';
 import { QuestionComponent } from './shared/question/question.component';
 import { EventGaurd } from './core/event-gaurd.service';
+import { DivyaLoginComponent } from './shared/divya-login/divya-login.component';
 
 export const routes: Routes = [
     {path:'explore/home/:location',component:HomeComponent,canActivate:[LocationGuard]},
@@ -26,5 +27,6 @@ export const routes: Routes = [
     {path:'login',component:SignInComponent,canActivate:[AuthGaurd]},
     {path:'explore/:event-location',component:EventsListComponent,canActivate:[EventGaurd]},
     {path:'questionList',component:QuestionComponent},
+    {path:'firebase-login',component:DivyaLoginComponent},
     {path:'**',redirectTo:'explore/home/mumbai',pathMatch:'full'}
 ];
