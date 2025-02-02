@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTab, MatTabsModule } from '@angular/material/tabs';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -10,12 +10,19 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrl: './tabs.component.css'
 })
 export class TabsComponent implements OnInit{
-  currLocation:string="";
-  constructor(private route:ActivatedRoute){}
+  redirectParams:string="";
+  redirectURL:string="";
+  constructor(private route:ActivatedRoute,private router: Router){}
 
   ngOnInit(): void {
+      const curURL = this.router.url;
       this.route.params.subscribe((params)=>{
-        this.currLocation = params['location'] ? params['location'] : "Mumbai";
+        if(curURL.includes('event')){
+          this.redirectParams=params['event-location'];
+        }else {
+          this.redirectParams=params['location'];
+        }
       })
+      
   }
 }

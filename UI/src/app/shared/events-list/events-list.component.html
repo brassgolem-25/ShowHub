@@ -38,8 +38,8 @@
 
     <!-- Event Cards -->
     <div class="movie-grid">
-      <div *ngFor="let event of events" class="movie-card" (click)="redirectToEventPage(event)"> 
-        <a ><img src="assets/event-image.jpg" alt="Event Poster" /></a>
+      <div *ngFor="let event of events" class="movie-card" (click)="redirectToEventPage(event)">
+        <a ><img src='assets/event-image.jpg' alt="Event Poster" /></a>
         <div class="movie-details">
           <h3>{{ event.title }}</h3>
           <p>{{ event.genre }}</p>

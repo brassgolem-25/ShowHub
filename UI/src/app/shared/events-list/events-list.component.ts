@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { GenericHeaderComponent } from '../generic-header/generic-header.component';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { LiveEventService } from '../../core/live-events.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-events-list',
@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EventsListComponent implements OnInit {
   loading: boolean = true;
   currLocation: string = "";
-  constructor(private liveEventsSer: LiveEventService, private route: ActivatedRoute) { }
+  constructor(private liveEventsSer: LiveEventService, private route: ActivatedRoute,private router: Router) { }
 
   // Temporary data for filters
   dates = ['Today', 'Tomorrow', 'Weekend'];
@@ -54,6 +54,22 @@ export class EventsListComponent implements OnInit {
     }
   ];
 
+  addQueryParamsToUrl(query: string, queryParams: any) {
+    let queryParamString = '';
+    for (const key in queryParams) {
+      if (queryParams.hasOwnProperty(key)) {
+        queryParamString += `${key}=${queryParams[key]}&`;
+      }
+    }
+    this.router.navigate([], {
+      relativeTo: this.route,
+      [query]: queryParams,
+      queryParamsHandling: 'merge'
+    }).then(() => {console.log('query params added')})
+  }
+  // boroplus -> 0.4
+  // parachute -> 0.3
+  //
   toggleDate(date: string) {
     if (this.selectedDates.includes(date)) {
       this.selectedDates = this.selectedDates.filter(d => d !== date);

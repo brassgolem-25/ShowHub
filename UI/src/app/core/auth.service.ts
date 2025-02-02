@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,6 @@ export class AuthService {
   logoutUser(): Observable<any> {
     return this.http.get(`${this.serverURL}/auth/logoutUser`, { withCredentials: true });
   }
+
+
 }
